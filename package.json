@@ -1,0 +1,11 @@
+{
+  "name": "pos",
+  "packageManager": "yarn@3.2.1",
+  "private": true,
+  "workspaces": [
+    "app/*"
+  ],
+  "devDependencies": {
+    "typescript": "^4.7.3"
+  }
+}

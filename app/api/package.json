@@ -1,0 +1,50 @@
+{
+  "name": "api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "babel index.js -d dist",
+    "dev": "nodemon --exec node -r dotenv/config src/index.js",
+    "docs": "apidoc -i src -o docs && apidoc-markdown -p docs -o DOCS.md",
+    "postdocs": "open-cli docs/index.html"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "celebrate": "^15.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "express-validator": "^6.14.0",
+    "express-winston": "^4.2.0",
+    "helmet": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "lightship": "^7.0.2",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "qs": "^6.10.3",
+    "sequelize": "^6.19.0",
+    "winston": "^3.7.2"
+  },
+  "devDependencies": {
+    "apidoc": "^0.51.1",
+    "apidoc-markdown": "^7.1.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier-standard": "^4.0.1",
+    "eslint-config-standard": "latest",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "hygen": "^6.2.0",
+    "nodemon": "^2.0.16",
+    "open-cli": "^7.0.1",
+    "prettier": "^2.6.2",
+    "prettier-config-standard": "^5.0.0"
+  }
+}
