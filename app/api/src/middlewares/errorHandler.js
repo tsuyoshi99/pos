@@ -3,7 +3,6 @@ const { logger } = require('../services/logger')
 const { HttpError } = require('../utils/httpError')
 
 const errorHandler = (err, _, res, next) => {
-
   if (err instanceof HttpError) {
     logger.warn(err)
     res.status(err.status)

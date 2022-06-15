@@ -25,6 +25,7 @@
     "passport-local": "^1.0.0",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
+    "prettier-config-standard": "^5.0.0",
     "qs": "^6.10.3",
     "sequelize": "^6.19.0",
     "winston": "^3.7.2"
@@ -32,7 +33,7 @@
   "devDependencies": {
     "apidoc": "^0.51.1",
     "apidoc-markdown": "^7.1.0",
-    "eslint": "^8.0.1",
+    "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-prettier-standard": "^4.0.1",
     "eslint-config-standard": "latest",
@@ -44,7 +45,6 @@
     "hygen": "^6.2.0",
     "nodemon": "^2.0.16",
     "open-cli": "^7.0.1",
-    "prettier": "^2.6.2",
-    "prettier-config-standard": "^5.0.0"
+    "prettier": "^2.6.2"
   }
 }

@@ -2,7 +2,7 @@ const toDTO = (product) => {
   return {
     name: product.name,
     price: product.price,
-    description: product.description,
+    description: product.description
   }
 }
 

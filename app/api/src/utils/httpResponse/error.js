@@ -22,5 +22,4 @@ const validationError = (res) => (error) => {
   throw error
 }
 
-module.exports= {notFound,validationError}
-
+module.exports = { notFound, validationError }

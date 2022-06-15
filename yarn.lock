@@ -1035,7 +1035,7 @@ __metadata:
     cookie-parser: ^1.4.6
     cors: ^2.8.5
     dotenv: ^16.0.0
-    eslint: ^8.0.1
+    eslint: ^8.17.0
     eslint-config-prettier: ^8.5.0
     eslint-config-prettier-standard: ^4.0.1
     eslint-config-standard: latest
@@ -3014,7 +3014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.17.0, eslint@npm:^8.0.1":
+"eslint@npm:8.17.0, eslint@npm:^8.17.0":
   version: 8.17.0
   resolution: "eslint@npm:8.17.0"
   dependencies:
@@ -6143,6 +6143,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "pos@workspace:."
   dependencies:
+    eslint: ^8.17.0
+    prettier: ^2.6.2
+    prettier-config-standard: ^5.0.0
     typescript: ^4.7.3
   languageName: unknown
   linkType: soft

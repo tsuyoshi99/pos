@@ -59,5 +59,4 @@ const getOperators = () => {
   return resultMap
 }
 
-
-module.exports = {deepPropSet,getOperators}
+module.exports = { deepPropSet, getOperators }

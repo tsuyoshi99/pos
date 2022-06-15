@@ -5,5 +5,4 @@ const success = (res, status) => (entity) => {
   return null
 }
 
-
-module.exports= {success}
+module.exports = { success }

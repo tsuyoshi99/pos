@@ -4,7 +4,7 @@ const { config } = require('../config')
 
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
-const {cookieExtractor} = require('../utils/jwt')
+const { cookieExtractor } = require('../utils/jwt')
 const opts = {
   jwtFromRequest: ExtractJwt.fromExtractors([
     ExtractJwt.fromAuthHeaderAsBearerToken(),
