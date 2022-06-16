@@ -12,4 +12,12 @@ const toDTO = (<%= name %>) => {
   }
 }
 
-module.exports = { toDTO }
+const toDatabase = (<%= name %>) => {
+  return {
+    <% for (let i=0;i<fields.length;i++) { -%>
+    <%=fields[i][0]%>: <%=name%>.<%=fields[i][0]%>,
+    <% } %>
+  }
+}
+
+module.exports = { toDTO, toDatabase }

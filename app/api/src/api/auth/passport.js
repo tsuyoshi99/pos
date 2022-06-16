@@ -4,6 +4,7 @@ const { config } = require('../../config')
 const { HttpError } = require('../../utils/httpError')
 const LocalStrategy = require('passport-local').Strategy
 const User = require('../../api/user/model')
+const core = require('core')
 
 passport.use(
   'login',
@@ -15,19 +16,19 @@ passport.use(
 
         if (!user) {
           return done(
-            new HttpError(400, appError.incorrectEmailPassword),
+            new HttpError(400, core.error.incorrectEmailPassword),
             false
           )
         }
 
         if (!user.password) {
-          return done(new HttpError(400, appError.userNoPassword), false)
+          return done(new HttpError(400, core.error.userNoPassword), false)
         }
 
         const passwordMatched = bcrypt.compareSync(password, user.password)
         if (!passwordMatched) {
           return done(
-            new HttpError(400, appError.incorrectEmailPassword),
+            new HttpError(400, core.error.incorrectEmailPassword),
             false
           )
         }
@@ -50,7 +51,7 @@ passport.use(
       try {
         const user = await User.count({ where: { email } })
         if (user) {
-          return done(new HttpError(400, appError.userAlreadyExist), false)
+          return done(new HttpError(400, core.error.userAlreadyExist), false)
         }
 
         const hashedPassword = bcrypt.hashSync(password, config.salt)

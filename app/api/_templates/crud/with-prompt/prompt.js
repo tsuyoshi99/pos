@@ -7,21 +7,26 @@ module.exports = [
   {
     type: 'list',
     name: 'fields',
-    message: 'What are the fields ? Example: "name:string, age:number"'
+    message: 'What are the fields ? Example: "name:string, description:string"'
   },
   {
     type: 'list',
     name: 'filtering',
-    message: 'Fields that allow filtering. Example: "name, age"'
+    message: 'Fields that allow filtering. Example: "name, description"'
   },
   {
     type: 'list',
     name: 'ordering',
-    message: 'Fields that allow ordering. Example: "name, age"'
+    message: 'Fields that allow ordering. Example: "name, description"'
   },
   {
-    type: 'confirm',
-    name: 'admin',
-    message: 'Admin Only ?'
+    type: 'list',
+    name: 'role',
+    message: 'Required Role ?. Example: admin, user'
+  },
+  {
+    type: 'list',
+    name: 'relationships',
+    message: 'In any relationship? Example: hasmany:product, manytomany:order'
   }
 ]

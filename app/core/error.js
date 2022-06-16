@@ -1,4 +1,4 @@
-const appError = {
+const error = {
   userAlreadyExist: {
     name: "USER_ALREADY_EXIST",
     description: "user with provided email already exist",
@@ -17,4 +17,4 @@ const appError = {
   },
 };
 
-module.exports = { appError };
+module.exports = { error };
