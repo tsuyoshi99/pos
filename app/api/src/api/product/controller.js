@@ -9,8 +9,8 @@ const Product = require('./model')
 
 const index = ({ query }, res, next) =>
   Product.findAndCountAll({
-    where: toWhere(query.filter, ['name', 'price']),
-    order: toOrder(query, ['name', 'price']),
+    where: toWhere(query.filter, ['name']),
+    order: toOrder(query, ['name']),
     ...toLimitAndOffset(query)
   })
     .then((result) => ({

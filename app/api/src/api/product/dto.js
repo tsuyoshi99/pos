@@ -1,9 +1,13 @@
 const toDTO = (product) => {
   return {
-    name: product.name,
-    price: product.price,
-    description: product.description
+    name: product.name
   }
 }
 
-module.exports = { toDTO }
+const toDatabase = (product) => {
+  return {
+    name: product.name
+  }
+}
+
+module.exports = { toDTO, toDatabase }
