@@ -1,10 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import ProductCard from '../components/ProductCard';
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import ProductCard from "../components/ProductCard";
 
 export default function Home() {
-  let title = ['Next.js', 'Next.js', 'Nuxt.js', 'Next.js', 'Next.js'];
+  let title = ["Next.js", "Next.js", "Nuxt.js", "Next.js", "Next.js"];
 
   return (
     <div className={styles.container}>
@@ -20,15 +20,13 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
 
         <div className={styles.grid}>
           {title.map((title, index) => {
-            return (
-              <ProductCard title={title} />
-            )
+            return <ProductCard title={title} />;
           })}
         </div>
       </main>
@@ -39,12 +37,12 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
+  );
 }

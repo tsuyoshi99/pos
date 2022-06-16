@@ -2528,6 +2528,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"conventional-commit-types@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "conventional-commit-types@npm:3.0.0"
+  checksum: b9552de6a310c91a271ee57a890ed70d2d94340e710fc33856aaca5b24928fb2162f04dda5484d155b68c1fbaa042d904014d7fad0b6751a6d68052a0616015d
+  languageName: node
+  linkType: hard
+
 "convert-source-map@npm:^1.5.0":
   version: 1.8.0
   resolution: "convert-source-map@npm:1.8.0"
@@ -2598,6 +2605,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cosmiconfig-typescript-loader@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "cosmiconfig-typescript-loader@npm:2.0.1"
+  dependencies:
+    cosmiconfig: ^7
+    ts-node: ^10.8.0
+  peerDependencies:
+    "@types/node": "*"
+    cosmiconfig: ">=7"
+    typescript: ">=3"
+  checksum: 8412f91c0c00150ffab8a4a1bf797cc5dc417b8b99c48d445daa11608722d87456aec5052b52c38d990868cdbb763708a272fd377f6f5c51e70d414bd69fafee
+  languageName: node
+  linkType: hard
+
 "cosmiconfig@npm:^6.0.0":
   version: 6.0.0
   resolution: "cosmiconfig@npm:6.0.0"
@@ -2608,6 +2629,26 @@ __metadata:
     path-type: ^4.0.0
     yaml: ^1.7.2
   checksum: 8eed7c854b91643ecb820767d0deb038b50780ecc3d53b0b19e03ed8aabed4ae77271198d1ae3d49c3b110867edf679f5faad924820a8d1774144a87cb6f98fc
+  languageName: node
+  linkType: hard
+
+"cosmiconfig@npm:^7, cosmiconfig@npm:^7.0.0":
+  version: 7.0.1
+  resolution: "cosmiconfig@npm:7.0.1"
+  dependencies:
+    "@types/parse-json": ^4.0.0
+    import-fresh: ^3.2.1
+    parse-json: ^5.0.0
+    path-type: ^4.0.0
+    yaml: ^1.10.0
+  checksum: 4be63e7117955fd88333d7460e4c466a90f556df6ef34efd59034d2463484e339666c41f02b523d574a797ec61f4a91918c5b89a316db2ea2f834e0d2d09465b
+  languageName: node
+  linkType: hard
+
+"create-require@npm:^1.1.0":
+  version: 1.1.1
+  resolution: "create-require@npm:1.1.1"
+  checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
   languageName: node
   linkType: hard
 
@@ -2633,6 +2674,42 @@ __metadata:
   version: 3.1.0
   resolution: "csstype@npm:3.1.0"
   checksum: 644e986cefab86525f0b674a06889cfdbb1f117e5b7d1ce0fc55b0423ecc58807a1ea42ecc75c4f18999d14fc42d1d255f84662a45003a52bb5840e977eb2ffd
+  languageName: node
+  linkType: hard
+
+"cz-conventional-changelog@npm:3.2.0":
+  version: 3.2.0
+  resolution: "cz-conventional-changelog@npm:3.2.0"
+  dependencies:
+    "@commitlint/load": ">6.1.1"
+    chalk: ^2.4.1
+    commitizen: ^4.0.3
+    conventional-commit-types: ^3.0.0
+    lodash.map: ^4.5.1
+    longest: ^2.0.1
+    word-wrap: ^1.0.3
+  dependenciesMeta:
+    "@commitlint/load":
+      optional: true
+  checksum: 5512b2e28a4582a92a68323027cbb5df4a405647c0ddbdc8408c2bad3c520ae964f19978dca1641122b12dd9db692c445ec5859b1f6bdb74c4661d13c02e2c6e
+  languageName: node
+  linkType: hard
+
+"cz-emoji@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "cz-emoji@npm:1.3.1"
+  dependencies:
+    cli-truncate: ^1.0.0
+    find-up: ^5.0.0
+    fuse.js: ^3.4.5
+    homedir: ^0.6.0
+    inquirer-autocomplete-prompt: ^0.12.0
+    inquirer-maxlength-input-prompt: ^1.0.1
+    pad: ^2.3.0
+    prettier: ^1.18.2
+    read-pkg-up: ^7.0.1
+    wrap-ansi: ^3.0.0
+  checksum: ebc96cb8bd68fc23a8dc7deff52fb79549531d52d2ec00f048c86bd23caaae8666e7b6c0c0a86f7d335e9cd70a2cc53fd43544ff94cc2b94179be047ab744f5b
   languageName: node
   linkType: hard
 
@@ -4159,7 +4236,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-root@npm:^1.1.0":
+"find-node-modules@npm:^2.1.2":
+  version: 2.1.3
+  resolution: "find-node-modules@npm:2.1.3"
+  dependencies:
+    findup-sync: ^4.0.0
+    merge: ^2.1.1
+  checksum: 4b8a194ffd56ccf1a1033de35e2ee8209869b05cce68ff7c4ab0dbf04e63fd7196283383eee4c84596c7b311755b2836815209d558234cadc330a87881e5a3f4
+  languageName: node
+  linkType: hard
+
+"find-root@npm:1.1.0, find-root@npm:^1.1.0":
   version: 1.1.0
   resolution: "find-root@npm:1.1.0"
   checksum: b2a59fe4b6c932eef36c45a048ae8f93c85640212ebe8363164814990ee20f154197505965f3f4f102efc33bfb1cbc26fd17c4a2fc739ebc51b886b137cbefaf
@@ -4748,6 +4835,29 @@ __metadata:
   dependencies:
     react-is: ^16.7.0
   checksum: b1538270429b13901ee586aa44f4cc3ecd8831c061d06cb8322e50ea17b3f5ce4d0e2e66394761e6c8e152cd8c34fb3b4b690116c6ce2bd45b18c746516cb9e8
+  languageName: node
+  linkType: hard
+
+"homedir-polyfill@npm:^1.0.1":
+  version: 1.0.3
+  resolution: "homedir-polyfill@npm:1.0.3"
+  dependencies:
+    parse-passwd: ^1.0.0
+  checksum: 18dd4db87052c6a2179d1813adea0c4bfcfa4f9996f0e226fefb29eb3d548e564350fa28ec46b0bf1fbc0a1d2d6922ceceb80093115ea45ff8842a4990139250
+  languageName: node
+  linkType: hard
+
+"homedir@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "homedir@npm:0.6.0"
+  checksum: 2c14ca7e44a3e2211f36c7a303ad12fef461fcf99f7f96390a3ddfbcea25a3bfde050d0c2f45230a43d2f0b0e8af653f9f6a73fcaf4999691bf931c887c91a5b
+  languageName: node
+  linkType: hard
+
+"hosted-git-info@npm:^2.1.4":
+  version: 2.8.9
+  resolution: "hosted-git-info@npm:2.8.9"
+  checksum: c955394bdab888a1e9bb10eb33029e0f7ce5a2ac7b3f158099dc8c486c99e73809dca609f5694b223920ca2174db33d32b12f9a2a47141dc59607c29da5a62dd
   languageName: node
   linkType: hard
 
@@ -7718,7 +7828,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.10.1, resolve@npm:^1.12.0, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.9.0":
+"resolve-global@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "resolve-global@npm:1.0.0"
+  dependencies:
+    global-dirs: ^0.1.1
+  checksum: c4e11d33e84bde7516b824503ffbe4b6cce863d5ce485680fd3db997b7c64da1df98321b1fd0703b58be8bc9bc83bc96bd83043f96194386b45eb47229efb6b6
+  languageName: node
+  linkType: hard
+
+"resolve@npm:^1.10.0, resolve@npm:^1.10.1, resolve@npm:^1.12.0, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.9.0":
   version: 1.22.0
   resolution: "resolve@npm:1.22.0"
   dependencies:
@@ -7741,7 +7860,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.10.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#~builtin<compat/resolve>":
+"resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#~builtin<compat/resolve>":
   version: 1.22.0
   resolution: "resolve@patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"
   dependencies:
@@ -8732,6 +8851,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tmp@npm:^0.0.33":
+  version: 0.0.33
+  resolution: "tmp@npm:0.0.33"
+  dependencies:
+    os-tmpdir: ~1.0.2
+  checksum: 902d7aceb74453ea02abbf58c203f4a8fc1cead89b60b31e354f74ed5b3fb09ea817f94fb310f884a5d16987dd9fa5a735412a7c2dd088dd3d415aa819ae3a28
+  languageName: node
+  linkType: hard
+
 "to-fast-properties@npm:^2.0.0":
   version: 2.0.0
   resolution: "to-fast-properties@npm:2.0.0"
@@ -9497,7 +9625,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^1.7.2":
+"yaml@npm:^1.10.0, yaml@npm:^1.7.2":
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f
