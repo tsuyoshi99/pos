@@ -1,6 +1,7 @@
 import * as React from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import pos from "../styles/pos.module.css";
 import ProductCard from "../components/ProductCard";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -18,29 +19,35 @@ export default function PointOfSale() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Stack spacing={2} sx={{ width: 300, mb: 2 }}>
-        <Autocomplete
-          freeSolo
-          id="free-solo-2-demo"
-          disableClearable
-          options={top100Films.map((option) => option.title)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search input"
-              InputProps={{
-                ...params.InputProps,
-                type: "search",
-              }}
+
+      <main className={styles.main}>
+        <div className={pos.wFull}>
+          <Stack spacing={2} sx={{ width: 300, mb: 2 }}>
+            <Autocomplete
+              freeSolo
+              id="free-solo-2-demo"
+              disableClearable
+              options={top100Films.map((option) => option.title)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Search input"
+                  InputProps={{
+                    ...params.InputProps,
+                    type: "search",
+                  }}
+                />
+              )}
             />
-          )}
-        />
-      </Stack>
-      <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
-        {top100Films.map((film, index) => (
-          <ProductCard key={index} title={film.title} />
-        ))}
-      </Grid>
+          </Stack>
+        </div>
+
+        <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
+          {top100Films.map((film, index) => (
+            <ProductCard key={index} title={film.title} />
+          ))}
+        </Grid>
+      </main>
     </div>
   );
 }
