@@ -27,7 +27,7 @@ export default function PointOfSale() {
               freeSolo
               id="free-solo-2-demo"
               disableClearable
-              options={top100Films.map((option) => option.title)}
+              options={products.map((option) => option.title)}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -41,18 +41,29 @@ export default function PointOfSale() {
             />
           </Stack>
         </div>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={9}>
+            <Grid container spacing={2}>
+              {products.map((film, index) => (
+                <ProductCard key={index} title={film.title} />
+              ))}
+            </Grid>
+          </Grid>
 
-        <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
-          {top100Films.map((film, index) => (
-            <ProductCard key={index} title={film.title} />
-          ))}
+          <Grid item xs={12} sm={6} md={3}>
+            <Stack direction="row" justifyContent="space-between">
+              <h3>Product</h3>
+              <h3>Quantity</h3>
+              <h3>Price</h3>
+            </Stack>
+          </Grid>
         </Grid>
       </main>
     </div>
   );
 }
 
-const top100Films = [
+const products = [
   { title: "The Shawshank Redemption", year: 1994 },
   { title: "The Godfather", year: 1972 },
   { title: "The Godfather: Part II", year: 1974 },
