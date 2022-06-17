@@ -26,7 +26,7 @@ export default function Home() {
 
         <div className={styles.grid}>
           {title.map((title, index) => {
-            return <ProductCard title={title} />;
+            return <ProductCard key={index} title={title} />;
           })}
         </div>
       </main>

@@ -6,10 +6,10 @@ This project is created as MonoRepository for Medical POS.
 
 Run `yarn install` to install all dependencies.
 
-### Frontend
-
-Go to `cd app/ui` and run `npm install` to install all dependencies required for the frontend.
-
 ## Development
 
-Go to `cd app/ui` and run `npm run dev` to start the development server.
+To start the development server:
+
+```
+yarn workpace ui dev
+```
