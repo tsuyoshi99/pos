@@ -42,7 +42,7 @@ export default function PointOfSale() {
           </Stack>
         </div>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={9}>
+          <Grid item xs>
             <Grid container spacing={2}>
               {products.map((film, index) => (
                 <ProductCard key={index} title={film.title} />
@@ -50,12 +50,18 @@ export default function PointOfSale() {
             </Grid>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <Stack direction="row" justifyContent="space-between">
-              <h3>Product</h3>
-              <h3>Quantity</h3>
-              <h3>Price</h3>
-            </Stack>
+          <Grid item xs={12} sm={6} md={3} lg={3}>
+            <Grid container direction="row" spacing={2}>
+              <Grid item xs={4}>
+                <h3>Product</h3>
+              </Grid>
+              <Grid item xs={4}>
+                <h3>Quantity</h3>
+              </Grid>
+              <Grid item xs={4}>
+                <h3>Price</h3>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </main>
