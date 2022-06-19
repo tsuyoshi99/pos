@@ -6450,6 +6450,45 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mobx-react-lite@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "mobx-react-lite@npm:3.4.0"
+  peerDependencies:
+    mobx: ^6.1.0
+    react: ^16.8.0 || ^17 || ^18
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 9294e127e281c8b37ec7bcaf17de479f50519e6ad485b58d7b991291900511541a5a718653759d3cf6503462c70325d025e1c2ed376d4584fb1b2d3aac9d9b48
+  languageName: node
+  linkType: hard
+
+"mobx-react@npm:^7.5.0":
+  version: 7.5.0
+  resolution: "mobx-react@npm:7.5.0"
+  dependencies:
+    mobx-react-lite: ^3.4.0
+  peerDependencies:
+    mobx: ^6.1.0
+    react: ^16.8.0 || ^17 || ^18
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: a1e3cf182bbec7d190eea247eaabeb81b9cbf8bbd5fe51513889de7c6f73d2ffe2655befece7873f41fb897996ab6e31834e309917b47ae7db7e111240cdd078
+  languageName: node
+  linkType: hard
+
+"mobx@npm:^6.6.0":
+  version: 6.6.0
+  resolution: "mobx@npm:6.6.0"
+  checksum: 369b8d6830ec286e9c856c80002c7a554d46bca739b7f76432cb56b3ce1fe0a7ed7e5a994b9793d30023beeff0dd16300a501e831fa97107104e4fedc7d4af8f
+  languageName: node
+  linkType: hard
+
 "moment-timezone@npm:^0.5.34":
   version: 0.5.34
   resolution: "moment-timezone@npm:0.5.34"
@@ -9152,6 +9191,8 @@ __metadata:
     "@mui/material": ^5.8.4
     eslint: 8.17.0
     eslint-config-next: 12.1.6
+    mobx: ^6.6.0
+    mobx-react: ^7.5.0
     next: 12.1.6
     react: 18.1.0
     react-dom: 18.1.0
