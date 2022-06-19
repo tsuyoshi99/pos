@@ -12,7 +12,7 @@ passport.use(
     { usernameField: 'email', passwordField: 'password', session: false },
     async function verify(email, password, done) {
       try {
-        const user = await User.scope('admin').findOne({ where: { email } })
+        const user = await User.findOne({ where: { email } })
 
         if (!user) {
           return done(

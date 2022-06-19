@@ -8,12 +8,12 @@ const router = new Router()
  * @api {get} /products?limit=1 Retrieve products
  * @apiName RetrieveProducts
  * @apiGroup Product
- * @apiPermission admin,user
+ * @apiPermission user
  * @apiBody {String} [name] Product's name.
  * @apiUse listParams
  * @apiSuccess {Object[]} products List of products.
  * @apiError {Object} 400 Some parameters or body may contain invalid values.
- * @apiError 401 Admin access only.
+ * @apiError 401 user access only.
  */
 router.get(
   '/',
@@ -24,15 +24,13 @@ router.get(
         order: Joi.string(),
         limit: Joi.number().integer(),
         page: Joi.number().integer()
-      })
+      }),
+      [Segments.BODY]: {
+        name: Joi.string()
+      }
     },
     { abortEarly: false }
   ),
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string()
-    }
-  }),
   index
 )
 
@@ -40,7 +38,7 @@ router.get(
  * @api {post} /products Create product
  * @apiName CreateProduct
  * @apiGroup Product
- * @apiPermission admin,user
+ * @apiPermission user
  * @apiBody {String} [name] Product's name.
  * @apiSuccess (Sucess 201) {Object} product Product's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -59,15 +57,18 @@ router.post(
  * @api {put} /products/1 Update product
  * @apiName UpdateProduct
  * @apiGroup Product
- * @apiPermission admin,user
+ * @apiPermission user
  * @apiBody {String} [name] Product's name.
  * @apiSuccess {Object} product Product's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Product not found.
  */
 router.put(
-  '/',
+  '/:id',
   celebrate({
+    [Segments.PARAMS]: Joi.object({
+      id: Joi.number().required()
+    }),
     [Segments.BODY]: {
       name: Joi.string()
     }
@@ -79,7 +80,7 @@ router.put(
  * @api {delete} /products/1 Delete product
  * @apiName DeleteProduct
  * @apiGroup Product
- * @apiPermission admin,user
+ * @apiPermission user
  * @apiBody {String} [name] Product's name.
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 404 Product not found.

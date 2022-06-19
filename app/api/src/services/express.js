@@ -6,27 +6,35 @@ const winston = require('winston')
 const expressWinston = require('express-winston')
 const { config } = require('../config')
 const helmet = require('helmet')
+const api = require('../api')
+const errorHandler = require('../middlewares/errorHandler')
 
-const app = express()
+const loadExpress = () => {
+  const app = express()
 
-app.use(helmet())
-if (config.env === 'production') {
-  app.use(
-    expressWinston.logger({
-      transports: [
-        new winston.transports.Console({
-          json: true,
-          colorize: true
-        })
-      ],
-      expressFormat: true,
-      colorize: false
-    })
-  )
+  app.use(helmet())
+  if (config.env === 'production') {
+    app.use(
+      expressWinston.logger({
+        transports: [
+          new winston.transports.Console({
+            json: true,
+            colorize: true
+          })
+        ],
+        expressFormat: true,
+        colorize: false
+      })
+    )
+  }
+  app.use(passport.initialize())
+  app.use(cookieParser())
+  app.use(express.json())
+  app.use(cors())
+  app.use(api)
+  app.use(errorHandler)
+
+  return app
 }
-app.use(passport.initialize())
-app.use(cookieParser())
-app.use(express.json())
-app.use(cors())
 
-module.exports = app
+module.exports = loadExpress

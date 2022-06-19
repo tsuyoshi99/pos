@@ -22,7 +22,7 @@ module.exports = [
   {
     type: 'list',
     name: 'role',
-    message: 'Required Role ?. Example: admin, user'
+    message: 'Required Role ?. Example:  user'
   },
   {
     type: 'list',

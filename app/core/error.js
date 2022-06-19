@@ -15,6 +15,15 @@ const error = {
     name: "FORBIDDEN",
     description: "you're not allowed to access these resources",
   },
+  filterInvalidExpression: {
+    name: "FILTER_INVALID_EXPRESSION",
+  },
+  filterInvalidField: {
+    name: "FILTER_INVALID_FIELD",
+  },
+  filterInvalidOperator: {
+    name: "FILTER_INVALID_OPERATOR",
+  },
 };
 
 module.exports = { error };

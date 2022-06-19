@@ -5,6 +5,7 @@ const {
   toWhere,
   toLimitAndOffset
 } = require('../../utils/httpToSequelize')
+const { toDTO } = require('./dto')
 const User = require('./model')
 
 const index = ({ query }, res, next) =>
@@ -17,19 +18,27 @@ const index = ({ query }, res, next) =>
       total: result.count,
       limit: query.limit,
       page: query.page,
-      data: result.rows
+      data: result.rows.map((row) => toDTO(row))
     }))
     .then(success(res))
     .catch(next)
 
 const create = ({ body }, res, next) =>
   User.create(body)
+    .then((user) => {
+      return { data: toDTO(user) }
+    })
     .then(success(res, 201))
     .catch(validationError(res))
     .catch(next)
 
-const update = ({ body }, res, next) =>
-  User.update(body).then(success(res)).catch(next)
+const update = ({ body, params: { id } }, res, next) =>
+  User.update(body, { where: { id: +id }, returning: true })
+    .then(([_, [user]]) => {
+      return { data: toDTO(user) }
+    })
+    .then(success(res))
+    .catch(next)
 
 const destroy = ({ params: { id } }, res, next) =>
   User.findByPk(id)

@@ -1,4 +1,5 @@
 const { HttpError } = require('../utils/httpError')
+const core = require('core')
 
 const checkRole = (roles) => {
   return (req, res, next) => {
@@ -12,7 +13,7 @@ const checkRole = (roles) => {
         return
       }
 
-      next(new HttpError(403, appError.forbidden))
+      next(new HttpError(403, core.error.forbidden))
       return
     }
 
@@ -22,10 +23,10 @@ const checkRole = (roles) => {
         return
       }
 
-      next(new HttpError(403, appError.forbidden))
+      next(new HttpError(403, core.error.forbidden))
     }
 
-    next(new HttpError(403, appError.forbidden))
+    next(new HttpError(403, core.error.forbidden))
   }
 }
 

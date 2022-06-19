@@ -24,7 +24,7 @@ const router = new Router()
  * @apiUse listParams
  * @apiSuccess {Object[]} <%=pluralName%> List of <%=pluralName%>.
  * @apiError {Object} 400 Some parameters or body may contain invalid values.
- * @apiError 401 Admin access only.
+ * @apiError 401 user access only.
  */
 router.get(
   '/',
@@ -35,17 +35,16 @@ router.get(
         order: Joi.string(),
         limit: Joi.number().integer(),
         page: Joi.number().integer()
-      })
+
+      }),
+      [Segments.BODY]: {
+        <% for (let i=0;i<fields.length;i++) { -%>
+          <%=fields[i][0]%>: Joi.<%=fields[i][1]%>(),
+        <% } -%>
+      }
     },
     { abortEarly: false }
   ),
-  celebrate({
-    [Segments.BODY]: {
-      <% for (let i=0;i<fields.length;i++) { -%>
-        <%=fields[i][0]%>: Joi.<%=fields[i][1]%>(),
-      <% } -%>
-    }
-  }),
   index
 )
 
@@ -85,8 +84,11 @@ router.post(
  * @apiError 404 <%=capitalizedName%> not found.
  */
 router.put(
-  '/',
+  '/:id',
   celebrate({
+    [Segments.PARAMS]: Joi.object({
+      id: Joi.number().required()
+    }),
     [Segments.BODY]: {
       <% for (let i=0;i<fields.length;i++) { -%>
         <%=fields[i][0]%>: Joi.<%=fields[i][1]%>(),
