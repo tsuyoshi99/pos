@@ -8,8 +8,8 @@ const errorHandler = (err, _, res, next) => {
     res.status(err.status)
     res.json({
       error: {
-        message: err.message,
-        details: err.details
+        name: err.message,
+        description: err.details
       }
     })
 
@@ -17,12 +17,13 @@ const errorHandler = (err, _, res, next) => {
   }
 
   if (isCelebrateError(err)) {
-    logger.warn(err)
     res.status(400)
     const obj = {}
     for (const [key, value] of err.details) {
       obj[key] = value.details.map((detail) => detail.message)
     }
+    err.details = obj
+    logger.warn(err)
     res.json({
       error: {
         message: err.message,

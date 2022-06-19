@@ -11,7 +11,7 @@ const notFound = (res) => (entity) => {
 const validationError = (res) => (error) => {
   // handle sequlize error
   if (error instanceof ValidationError) {
-    res.status(401).send({
+    res.status(400).send({
       message: error.message,
       details: error.errors.map((err) => ({ message: err.message }))
     })

@@ -12,7 +12,7 @@ const router = new Router()
  * @apiUse listParams
  * @apiSuccess {Object[]} users List of users.
  * @apiError {Object} 400 Some parameters or body may contain invalid values.
- * @apiError 401 Admin access only.
+ * @apiError 401 need to login.
  */
 router.get(
   '/',
@@ -23,12 +23,7 @@ router.get(
         order: Joi.string(),
         limit: Joi.number().integer(),
         page: Joi.number().integer()
-      })
-    },
-    { abortEarly: false }
-  ),
-  celebrate(
-    {
+      }),
       [Segments.BODY]: Joi.object({
         name: Joi.string()
       }).unknown()
@@ -56,10 +51,9 @@ router.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      email: Joi.string().required(),
-      name: Joi.string(),
-      image: Joi.string(),
-      role: Joi.bool()
+      email: Joi.string().email().required(),
+      name: Joi.string().max(255),
+      role: Joi.string().allow('OWNER').required()
     }
   }),
   create
@@ -74,17 +68,19 @@ router.post(
  * @apiBody {String} [picture] User's picture.
  * @apiSuccess {Object} user User's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Current user or admin access only.
+ * @apiError 401 Current user or need to login.
  * @apiError 404 User not found.
  */
 router.put(
-  '/',
+  '/:id',
   celebrate({
+    [Segments.PARAMS]: Joi.object({
+      id: Joi.number().required()
+    }),
     [Segments.BODY]: {
-      email: Joi.string(),
-      name: Joi.string(),
-      image: Joi.string(),
-      role: Joi.bool()
+      email: Joi.string().email(),
+      name: Joi.string().max(255),
+      role: Joi.string().allow('OWNER')
     }
   }),
   update
@@ -96,7 +92,7 @@ router.put(
  * @apiGroup User
  * @apiPermission admin
  * @apiSuccess (Success 204) 204 No Content.
- * @apiError 401 Admin access only.
+ * @apiError 401 need to login.
  * @apiError 404 User not found.
  */
 router.delete('/:id', destroy)

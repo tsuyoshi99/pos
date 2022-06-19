@@ -15,6 +15,7 @@ const {
   toLimitAndOffset
 } = require('../../utils/httpToSequelize')
 const <%= capitalizedName %> = require('./model')
+const { toDTO } = require('./dto')
 
 const index = ({ query }, res, next) =>
   <%= capitalizedName %>.findAndCountAll({
@@ -26,19 +27,27 @@ const index = ({ query }, res, next) =>
       total: result.count,
       limit: query.limit,
       page: query.page,
-      data: result.rows
+      data: result.rows.map((row) => toDTO(row))
     }))
     .then(success(res))
     .catch(next)
 
 const create = ({ body }, res, next) =>
   <%= capitalizedName %>.create(body)
+    .then((<%= name %>) => {
+      return { data: toDTO(<%= name %>) }
+    })
     .then(success(res, 201))
     .catch(validationError(res))
     .catch(next)
 
-const update = ({ body }, res, next) =>
-  <%= capitalizedName %>.update(body).then(success(res)).catch(next)
+const update = ({ body, params: { id } }, res, next) =>
+  <%= capitalizedName %>.update(body, { where: { id: +id }, returning: true })
+    .then(([_, [<%=name%>]]) => {
+      return { data: toDTO(<%=name%>) }
+    })
+    .then(success(res))
+    .catch(next)
 
 const destroy = ({ params: { id } }, res, next) =>
   <%= capitalizedName %>.findByPk(id)

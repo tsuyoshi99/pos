@@ -2,15 +2,15 @@ const { Router } = require('express')
 const user = require('./user')
 const auth = require('./auth')
 const product = require('./product')
+const passport = require('passport')
+
+// this is important
+require('../middlewares/authorization')
 
 const router = new Router()
 
 /**
- * @apiDefine admin Admin access only
- * You must pass `access_token` a Bearer Token authorization header
- * to access this endpoint.
- *
- * @apiDefine user User access only
+ * @apiDefine owner Owner access only
  * You must pass `access_token` a Bearer Token authorization header
  * to access this endpoint.
  *
@@ -22,7 +22,11 @@ const router = new Router()
  * @apiParam {String} [orderBy=asc] Order of returned items.
  */
 router.use('/auth', auth)
-router.use('/users', user)
-router.use('/products', product)
+router.use('/users', passport.authenticate('jwt', { session: false }), user)
+router.use(
+  '/products',
+  passport.authenticate('jwt', { session: false }),
+  product
+)
 
 module.exports = router

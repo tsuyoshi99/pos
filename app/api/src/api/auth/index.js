@@ -22,8 +22,8 @@ router.post(
   celebrate(
     {
       [Segments.BODY]: Joi.object({
-        email: Joi.string().email().required(),
-        password: Joi.string().min(8).required()
+        email: Joi.string().email().max(200).required(),
+        password: Joi.string().min(8).max(300).required()
       })
     },
     { abortEarly: false }

@@ -1,18 +1,13 @@
 const { config } = require('./config')
-const app = require('./services/express')
-const api = require('./api')
 const sequelize = require('./services/sequelize')
 const { createLightship } = require('lightship')
-const errorHandler = require('./middlewares/errorHandler')
+const loadExpress = require('./services/express')
 
 ;(async () => {
   const configuration = {}
   const lightship = await createLightship(configuration)
-  sequelize.sync({ force: true })
 
-  app.use(api)
-
-  app.use(errorHandler)
+  const app = loadExpress()
 
   const server = app.listen(config.port, () => {
     lightship.signalReady()
