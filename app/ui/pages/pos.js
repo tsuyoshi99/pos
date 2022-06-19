@@ -24,6 +24,7 @@ export default function PointOfSale() {
       </Head>
 
       <main className={styles.main}>
+        {/* Search Bar */}
         <div className={pos.wFull}>
           <Stack spacing={2} sx={{ width: 300, mb: 2 }}>
             <Autocomplete
@@ -44,25 +45,35 @@ export default function PointOfSale() {
             />
           </Stack>
         </div>
+
+        {/* Product List */}
         <Grid container spacing={2}>
           <Grid item xs>
             <Grid container spacing={2}>
-              {products.map((film, index) => (
-                <ProductCard key={index} title={film.title} />
+              {products.map((product, index) => (
+                <ProductCard
+                  key={index}
+                  title={product.title}
+                  price={product.price}
+                />
               ))}
             </Grid>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3} lg={3}>
+          {/* Order List */}
+          <Grid item xs={12} sm={6} md={4} lg={4}>
             <Grid container direction="row" spacing={2}>
-              <Grid item xs={4}>
+              <Grid item xs>
                 <h3>Product</h3>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs>
                 <h3>Quantity</h3>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs>
                 <h3>Price</h3>
+              </Grid>
+              <Grid item xs="auto">
+                <div style={{ width: 40 }}></div>
               </Grid>
             </Grid>
 
@@ -77,15 +88,15 @@ export default function PointOfSale() {
 }
 
 const products = [
-  { title: "The Shawshank Redemption", year: 1994 },
-  { title: "The Godfather", year: 1972 },
-  { title: "The Godfather: Part II", year: 1974 },
-  { title: "The Dark Knight", year: 2008 },
-  { title: "12 Angry Men", year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: "Pulp Fiction", year: 1994 },
+  { title: "Synthroid", price: 1994 },
+  { title: "Crestor", price: 1972 },
+  { title: "Ventolin", price: 1974 },
+  { title: "Nexium", price: 2008 },
+  { title: "Advair Diskus", price: 1957 },
+  { title: "Lantus Solostar", price: 1993 },
+  { title: "Vyvanse", price: 1994 },
   {
-    title: "The Lord of the Rings: The Return of the King",
-    year: 2003,
+    title: "Lyrica",
+    price: 2003,
   },
 ];
