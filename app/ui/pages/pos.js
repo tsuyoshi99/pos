@@ -26,7 +26,7 @@ export default function PointOfSale() {
       <main className={styles.main}>
         {/* Search Bar */}
         <div className={pos.wFull}>
-          <Stack spacing={2} sx={{ width: 300, mb: 2 }}>
+          <Stack spacing={2} sx={{ maxWidth: 300, mb: 2, pr: 2 }}>
             <Autocomplete
               freeSolo
               id="free-solo-2-demo"
@@ -63,17 +63,14 @@ export default function PointOfSale() {
           {/* Order List */}
           <Grid item xs={12} sm={6} md={4} lg={4}>
             <Grid container direction="row" spacing={2}>
-              <Grid item xs>
+              <Grid item xs={4}>
                 <h3>Product</h3>
               </Grid>
-              <Grid item xs>
+              <Grid item xs={4}>
                 <h3>Quantity</h3>
               </Grid>
-              <Grid item xs>
+              <Grid item xs={4}>
                 <h3>Price</h3>
-              </Grid>
-              <Grid item xs="auto">
-                <div style={{ width: 40 }}></div>
               </Grid>
             </Grid>
 

@@ -8,16 +8,20 @@ import DeleteIcon from "@mui/icons-material/Delete";
 export default function OrderItem({ title, quantity, price }) {
   return (
     <Grid container direction="row" spacing={2}>
-      <Grid item xs>
+      <Grid item xs={4}>
         <p>Product</p>
       </Grid>
-      <Grid item xs>
-        <p>Quantity</p>
+      <Grid item xs={4}>
+        <p>x Quantity</p>
       </Grid>
-      <Grid item xs>
-        <p>Price</p>
-      </Grid>
-      <Grid item xs="auto" alignItems="center">
+      <Grid
+        item
+        xs={4}
+        container
+        justifyContent="space-between"
+        direction="row"
+      >
+        <p>$ Price</p>
         <IconButton aria-label="delete" color="error">
           <DeleteIcon />
         </IconButton>
