@@ -1,11 +1,11 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../../services/sequelize')
-const Product = require('../product/model')
+const { Product } = require('../product/model')
 
 const Sale = sequelize.define('sales', {})
 
 const SalesProducts = sequelize.define(
-  'sales_products',
+  'salesProducts',
   {
     productId: {
       type: DataTypes.INTEGER,

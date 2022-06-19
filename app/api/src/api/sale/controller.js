@@ -7,7 +7,7 @@ const {
 } = require('../../utils/httpToSequelize')
 const Sale = require('./model')
 const { toDTO } = require('./dto')
-const Product = require('../product/model')
+const { Product } = require('../product/model')
 
 const index = async ({ query }, res, next) => {
   try {

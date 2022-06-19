@@ -26,12 +26,7 @@ router.get(
         order: Joi.string(),
         limit: Joi.number().integer(),
         page: Joi.number().integer()
-      }),
-      [Segments.BODY]: {
-        name: Joi.string(),
-        description: Joi.string(),
-        price: Joi.number()
-      }
+      })
     },
     { abortEarly: false }
   ),
@@ -55,7 +50,19 @@ router.post(
     [Segments.BODY]: {
       name: Joi.string(),
       description: Joi.string(),
-      price: Joi.number()
+      price: Joi.number(),
+      forms: Joi.array()
+        .items(
+          Joi.object({
+            name: Joi.string().required(),
+            price: Joi.number().required(),
+            coefficient: Joi.number().required()
+          })
+        )
+        .min(1)
+        .max(10)
+        .required(),
+      inventory: Joi.object({ quantity: Joi.number().required() }).required()
     }
   }),
   create
@@ -82,7 +89,18 @@ router.put(
     [Segments.BODY]: {
       name: Joi.string(),
       description: Joi.string(),
-      price: Joi.number()
+      price: Joi.number(),
+      forms: Joi.array()
+        .items(
+          Joi.object({
+            name: Joi.string(),
+            price: Joi.number(),
+            coefficient: Joi.number()
+          })
+        )
+        .min(1)
+        .max(10),
+      inventory: Joi.object({ quantity: Joi.number() })
     }
   }),
   update

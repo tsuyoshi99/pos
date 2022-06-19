@@ -1,7 +1,7 @@
 const request = require('supertest')
 const { createUser } = require('../utils/user')
 const { createProduct } = require('../utils/product')
-const Product = require('../../src/api/product/model')
+const { Product } = require('../../src/api/product/model')
 const sequelize = require('../../src/services/sequelize')
 const loadExpress = require('../../src/services/express')
 const { generateToken } = require('../utils/auth')

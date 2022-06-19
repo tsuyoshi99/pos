@@ -34,6 +34,19 @@ const errorHandler = (err, _, res, next) => {
     return next()
   }
 
+  if (err instanceof SyntaxError) {
+    logger.warn(err)
+    res.status(err.status)
+    res.json({
+      error: {
+        name: err.message,
+        description: err.details
+      }
+    })
+
+    return next()
+  }
+
   logger.error(err)
 
   res.status(500)

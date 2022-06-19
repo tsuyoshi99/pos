@@ -17,7 +17,7 @@ const {
 const <%= capitalizedName %> = require('./model')
 const { toDTO } = require('./dto')
 
-const index = ({ query }, res, next) => {
+const index = async ({ query }, res, next) => {
   try {
     const result = await <%= capitalizedName %>.findAndCountAll({
       where: toWhere(query.filter, [<%- filtering.map(v=>`"${v}"`).join(", ") %>]),
@@ -25,7 +25,7 @@ const index = ({ query }, res, next) => {
       ...toLimitAndOffset(query)
     })
 
-    return success({
+    return success(res)({
       total: result.count,
       limit: query.limit,
       page: query.page,
@@ -34,6 +34,7 @@ const index = ({ query }, res, next) => {
   } catch (error) {
     return next(error)
   }
+}
 
 const create = ({ body }, res, next) =>
   <%= capitalizedName %>.create(body)
