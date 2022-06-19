@@ -2,11 +2,14 @@ import * as React from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import pos from "../styles/pos.module.sass";
-import ProductCard from "../components/ProductCard";
+
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
+
+import ProductCard from "../components/ProductCard";
+import OrderItem from "../components/OrderItem";
 
 export default function PointOfSale() {
   return (
@@ -62,6 +65,10 @@ export default function PointOfSale() {
                 <h3>Price</h3>
               </Grid>
             </Grid>
+
+            <OrderItem />
+            <OrderItem />
+            <OrderItem />
           </Grid>
         </Grid>
       </main>
