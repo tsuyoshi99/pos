@@ -8,21 +8,20 @@ const {
 const Product = require('./model')
 const { toDTO } = require('./dto')
 
-const index = ({ query }, res, next) => {
+const index = async ({ query }, res, next) => {
   try {
-    Product.findAndCountAll({
-      where: toWhere(query.filter, ['name']),
-      order: toOrder(query, ['name']),
+    const result = await Product.findAndCountAll({
+      where: toWhere(query.filter, ['name', 'description', 'price']),
+      order: toOrder(query, ['name', 'description', 'price']),
       ...toLimitAndOffset(query)
     })
-      .then((result) => ({
-        total: result.count,
-        limit: query.limit,
-        page: query.page,
-        data: result.rows.map((row) => toDTO(row))
-      }))
-      .then(success(res))
-      .catch(next)
+
+    return success(res)({
+      total: result.count,
+      limit: query.limit,
+      page: query.page,
+      data: result.rows.map((row) => toDTO(row))
+    })
   } catch (error) {
     return next(error)
   }

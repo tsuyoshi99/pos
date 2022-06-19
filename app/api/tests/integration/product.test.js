@@ -9,7 +9,9 @@ const { clearDatabase } = require('../utils/database')
 
 describe('product routes', () => {
   const productData = {
-    name: 'test'
+    name: 'test product',
+    description: 'test description',
+    price: 10.0
   }
   const app = loadExpress()
   let token
@@ -48,16 +50,16 @@ describe('product routes', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(productData)
         .expect(201)
-      expect(res.body.data).toMatchObject({
-        name: 'test'
-      })
+      expect(res.body.data).toMatchObject(productData)
 
       const createdProduct = await Product.findOne({
         where: { id: res.body.data.id }
       })
+
       expect(createdProduct.get()).toBeDefined()
       expect(createdProduct.get()).toMatchObject({
-        name: 'test'
+        ...productData,
+        price: productData.price.toFixed(2)
       })
     })
 
@@ -69,26 +71,27 @@ describe('product routes', () => {
   describe('put /products/:id', () => {
     test('should return updated user', async () => {
       const createdProduct = await createProduct(productData)
+      const updatedProductData = {
+        name: 'updatedName',
+        description: 'updatedDescription',
+        price: 15.0
+      }
 
       const res = await request(app)
         .put(`/products/${createdProduct.get().id}`)
         .set('Authorization', `Bearer ${token}`)
-        .send({
-          name: 'test2'
-        })
+        .send(updatedProductData)
         .expect(200)
 
-      expect(res.body.data).toMatchObject({
-        name: 'test2'
-      })
+      expect(res.body.data).toMatchObject(updatedProductData)
 
       const updatedProduct = await Product.findOne({
         where: { id: createdProduct.id }
       })
       expect(updatedProduct.get()).toBeDefined()
       expect(updatedProduct.get()).toMatchObject({
-        // confirm if it actually updated in the database here
-        name: 'test2'
+        ...updatedProductData,
+        price: updatedProductData.price.toFixed(2)
       })
     })
   })

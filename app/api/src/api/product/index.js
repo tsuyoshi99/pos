@@ -10,6 +10,8 @@ const router = new Router()
  * @apiGroup Product
  * @apiPermission user
  * @apiBody {String} [name] Product's name.
+ * @apiBody {String} [description] Product's description.
+ * @apiBody {Number} [price] Product's price.
  * @apiUse listParams
  * @apiSuccess {Object[]} products List of products.
  * @apiError {Object} 400 Some parameters or body may contain invalid values.
@@ -26,7 +28,9 @@ router.get(
         page: Joi.number().integer()
       }),
       [Segments.BODY]: {
-        name: Joi.string()
+        name: Joi.string(),
+        description: Joi.string(),
+        price: Joi.number()
       }
     },
     { abortEarly: false }
@@ -40,6 +44,8 @@ router.get(
  * @apiGroup Product
  * @apiPermission user
  * @apiBody {String} [name] Product's name.
+ * @apiBody {String} [description] Product's description.
+ * @apiBody {Number} [price] Product's price.
  * @apiSuccess (Sucess 201) {Object} product Product's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
@@ -47,7 +53,9 @@ router.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      name: Joi.string()
+      name: Joi.string(),
+      description: Joi.string(),
+      price: Joi.number()
     }
   }),
   create
@@ -59,6 +67,8 @@ router.post(
  * @apiGroup Product
  * @apiPermission user
  * @apiBody {String} [name] Product's name.
+ * @apiBody {String} [description] Product's description.
+ * @apiBody {Number} [price] Product's price.
  * @apiSuccess {Object} product Product's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Product not found.
@@ -70,7 +80,9 @@ router.put(
       id: Joi.number().required()
     }),
     [Segments.BODY]: {
-      name: Joi.string()
+      name: Joi.string(),
+      description: Joi.string(),
+      price: Joi.number()
     }
   }),
   update
@@ -82,6 +94,8 @@ router.put(
  * @apiGroup Product
  * @apiPermission user
  * @apiBody {String} [name] Product's name.
+ * @apiBody {String} [description] Product's description.
+ * @apiBody {Number} [price] Product's price.
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 404 Product not found.
  */

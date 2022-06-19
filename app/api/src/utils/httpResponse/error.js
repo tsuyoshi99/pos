@@ -12,8 +12,8 @@ const validationError = (res) => (error) => {
   // handle sequlize error
   if (error instanceof ValidationError) {
     res.status(400).send({
-      message: error.message,
-      details: error.errors.map((err) => ({ message: err.message }))
+      name: error.message,
+      description: error.errors.map((err) => ({ message: err.message }))
     })
 
     return

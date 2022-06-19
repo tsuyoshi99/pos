@@ -82,7 +82,7 @@ describe('<%= name %> routes', () => {
   })
 
   describe('put /<%= pluralName %>/:id', () => {
-    test('should return updated user', async () => {
+    test('should return updated <%= name %>', async () => {
       const created<%=capitalizedName%> = await create<%=capitalizedName%>(<%=name%>Data)
 
       const res = await request(app)

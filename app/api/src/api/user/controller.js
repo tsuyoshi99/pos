@@ -8,20 +8,24 @@ const {
 const { toDTO } = require('./dto')
 const User = require('./model')
 
-const index = ({ query }, res, next) =>
-  User.findAndCountAll({
-    where: toWhere(query.filter, ['id']),
-    order: toOrder(query, ['name', 'email']),
-    ...toLimitAndOffset(query)
-  })
-    .then((result) => ({
+const index = async ({ query }, res, next) => {
+  try {
+    const result = await User.findAndCountAll({
+      where: toWhere(query.filter, ['id']),
+      order: toOrder(query, ['name', 'email']),
+      ...toLimitAndOffset(query)
+    })
+
+    return success(res)({
       total: result.count,
       limit: query.limit,
       page: query.page,
       data: result.rows.map((row) => toDTO(row))
-    }))
-    .then(success(res))
-    .catch(next)
+    })
+  } catch (error) {
+    return next(error)
+  }
+}
 
 const create = ({ body }, res, next) =>
   User.create(body)

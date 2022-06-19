@@ -6,16 +6,18 @@ to: src/api/<%=name%>/dto.js
 -%>
 const toDTO = (<%= name %>) => {
   return {
+    id: <%=name%>.id,
     <% for (let i=0;i<fields.length;i++) { -%>
     <%=fields[i][0]%>: <%=name%>.<%=fields[i][0]%>,
     <% } %>
   }
 }
 
-const toDatabase = (<%= name %>) => {
+const toDatabase = (body) => {
   return {
+    id: body.id,
     <% for (let i=0;i<fields.length;i++) { -%>
-    <%=fields[i][0]%>: <%=name%>.<%=fields[i][0]%>,
+    <%=fields[i][0]%>: body.<%=fields[i][0]%>,
     <% } %>
   }
 }

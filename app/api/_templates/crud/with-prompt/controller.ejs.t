@@ -17,20 +17,23 @@ const {
 const <%= capitalizedName %> = require('./model')
 const { toDTO } = require('./dto')
 
-const index = ({ query }, res, next) =>
-  <%= capitalizedName %>.findAndCountAll({
-    where: toWhere(query.filter, [<%- filtering.map(v=>`"${v}"`).join(", ") %>]),
-    order: toOrder(query, [<%- ordering.map(v=>`"${v}"`).join(", ") %>]),
-    ...toLimitAndOffset(query)
-  })
-    .then((result) => ({
+const index = ({ query }, res, next) => {
+  try {
+    const result = await <%= capitalizedName %>.findAndCountAll({
+      where: toWhere(query.filter, [<%- filtering.map(v=>`"${v}"`).join(", ") %>]),
+      order: toOrder(query, [<%- ordering.map(v=>`"${v}"`).join(", ") %>]),
+      ...toLimitAndOffset(query)
+    })
+
+    return success({
       total: result.count,
       limit: query.limit,
       page: query.page,
       data: result.rows.map((row) => toDTO(row))
-    }))
-    .then(success(res))
-    .catch(next)
+    })
+  } catch (error) {
+    return next(error)
+  }
 
 const create = ({ body }, res, next) =>
   <%= capitalizedName %>.create(body)
