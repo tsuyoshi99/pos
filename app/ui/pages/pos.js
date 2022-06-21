@@ -11,7 +11,11 @@ import Grid from "@mui/material/Grid";
 import ProductCard from "../components/ProductCard";
 import OrderItem from "../components/OrderItem";
 
-export default function PointOfSale() {
+import { inject, observer } from "mobx-react";
+
+function PointOfSale(props) {
+  const { cart, addToCart, removeFromCart, clearCart, cartTotal } = props.cartStore;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -55,6 +59,7 @@ export default function PointOfSale() {
                   key={index}
                   title={product.title}
                   price={product.price}
+                  onClick={() => addToCart(product)}
                 />
               ))}
             </Grid>
@@ -74,9 +79,9 @@ export default function PointOfSale() {
               </Grid>
             </Grid>
 
-            <OrderItem />
-            <OrderItem />
-            <OrderItem />
+            {cart.map((product, index) => (
+              <OrderItem product={product} key={index}/>
+            ))}
           </Grid>
         </Grid>
       </main>
@@ -84,16 +89,15 @@ export default function PointOfSale() {
   );
 }
 
+export default inject("cartStore")(observer(PointOfSale));
+
 const products = [
-  { title: "Synthroid", price: 1994 },
-  { title: "Crestor", price: 1972 },
-  { title: "Ventolin", price: 1974 },
-  { title: "Nexium", price: 2008 },
-  { title: "Advair Diskus", price: 1957 },
-  { title: "Lantus Solostar", price: 1993 },
-  { title: "Vyvanse", price: 1994 },
-  {
-    title: "Lyrica",
-    price: 2003,
-  },
+  { title: "Synthroid", price: 1994, quantity: 1 },
+  { title: "Crestor", price: 1972, quantity: 3 },
+  { title: "Ventolin", price: 1974, quantity: 5 },
+  { title: "Nexium", price: 2008, quantity: 4 },
+  { title: "Advair Diskus", price: 1957, quantity: 2 },
+  { title: "Lantus Solostar", price: 1993, quantity: 7 },
+  { title: "Vyvanse", price: 1994, quantity: 12 },
+  { title: "Lyrica", price: 2003, quantity: 4 },
 ];
