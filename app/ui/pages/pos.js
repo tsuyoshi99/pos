@@ -13,8 +13,9 @@ import OrderItem from "../components/OrderItem";
 
 import { inject, observer } from "mobx-react";
 
+// const PointOfSale = observer((props) => {
 function PointOfSale(props) {
-  const { cart, addToCart, removeFromCart, clearCart, cartTotal } = props.cartStore;
+  const { cart, addToCart } = props.cartStore;
 
   return (
     <div className={styles.container}>
@@ -55,12 +56,16 @@ function PointOfSale(props) {
           <Grid item xs>
             <Grid container spacing={2}>
               {products.map((product, index) => (
-                <ProductCard
+                <a
+                  href="#"
+                  onClick={() => {
+                    addToCart(product);
+                    console.log(product);
+                  }}
                   key={index}
-                  title={product.title}
-                  price={product.price}
-                  onClick={() => addToCart(product)}
-                />
+                >
+                  <ProductCard title={product.title} price={product.price} />
+                </a>
               ))}
             </Grid>
           </Grid>
@@ -80,7 +85,7 @@ function PointOfSale(props) {
             </Grid>
 
             {cart.map((product, index) => (
-              <OrderItem product={product} key={index}/>
+              <OrderItem product={product} key={index} />
             ))}
           </Grid>
         </Grid>
@@ -90,14 +95,15 @@ function PointOfSale(props) {
 }
 
 export default inject("cartStore")(observer(PointOfSale));
+// export default PointOfSale;
 
 const products = [
-  { title: "Synthroid", price: 1994, quantity: 1 },
-  { title: "Crestor", price: 1972, quantity: 3 },
-  { title: "Ventolin", price: 1974, quantity: 5 },
-  { title: "Nexium", price: 2008, quantity: 4 },
-  { title: "Advair Diskus", price: 1957, quantity: 2 },
-  { title: "Lantus Solostar", price: 1993, quantity: 7 },
-  { title: "Vyvanse", price: 1994, quantity: 12 },
-  { title: "Lyrica", price: 2003, quantity: 4 },
+  { id: 1, title: "Synthroid", price: 1994, quantity: 1 },
+  { id: 2, title: "Crestor", price: 1972, quantity: 3 },
+  { id: 3, title: "Ventolin", price: 1974, quantity: 5 },
+  { id: 4, title: "Nexium", price: 2008, quantity: 4 },
+  { id: 5, title: "Advair Diskus", price: 1957, quantity: 2 },
+  { id: 6, title: "Lantus Solostar", price: 1993, quantity: 7 },
+  { id: 7, title: "Vyvanse", price: 1994, quantity: 12 },
+  { id: 8, title: "Lyrica", price: 2003, quantity: 4 },
 ];

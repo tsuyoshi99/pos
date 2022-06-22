@@ -5,14 +5,14 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function OrderItem(product) {
+export default function OrderItem(props) {
   return (
     <Grid container direction="row" spacing={2}>
       <Grid item xs={4}>
-        <p>{product.title}</p>
+        <p>{props.product.title}</p>
       </Grid>
       <Grid item xs={4}>
-        <p>x {product.quantity}</p>
+        <p>x {props.product.quantity}</p>
       </Grid>
       <Grid
         item
@@ -21,7 +21,7 @@ export default function OrderItem(product) {
         justifyContent="space-between"
         direction="row"
       >
-        <p>$ {product.price}</p>
+        <p>$ {props.product.price}</p>
         <IconButton aria-label="delete" color="error">
           <DeleteIcon />
         </IconButton>
