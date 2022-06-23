@@ -7,15 +7,15 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
 
 import ProductCard from "../components/ProductCard";
 import OrderItem from "../components/OrderItem";
 
 import { inject, observer } from "mobx-react";
 
-// const PointOfSale = observer((props) => {
 function PointOfSale(props) {
-  const { cart, addToCart } = props.cartStore;
+  const { cart, addToCart, cartTotal } = props.cartStore;
 
   return (
     <div className={styles.container}>
@@ -60,7 +60,6 @@ function PointOfSale(props) {
                   href="#"
                   onClick={() => {
                     addToCart(product);
-                    console.log(product);
                   }}
                   key={index}
                 >
@@ -71,23 +70,39 @@ function PointOfSale(props) {
           </Grid>
 
           {/* Order List */}
-          <Grid item xs={12} sm={6} md={4} lg={4}>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={4}>
-                <h3>Product</h3>
+          {cart.length !== 0 && (
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <Grid container direction="row" spacing={2}>
+                <Grid item xs={4}>
+                  <h3>Product</h3>
+                </Grid>
+                <Grid item xs={4}>
+                  <h3>Quantity</h3>
+                </Grid>
+                <Grid item xs={4}>
+                  <h3>Price</h3>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <h3>Quantity</h3>
-              </Grid>
-              <Grid item xs={4}>
-                <h3>Price</h3>
-              </Grid>
-            </Grid>
 
-            {cart.map((product, index) => (
-              <OrderItem product={product} key={index} />
-            ))}
-          </Grid>
+              {cart.map((product, index) => (
+                <OrderItem product={product} key={index} />
+              ))}
+              <div>
+                <Divider light />
+                <Grid container direction="row" spacing={2}>
+                  <Grid item xs={4}>
+                    {/* <h3>Product</h3> */}
+                  </Grid>
+                  <Grid item xs={4}>
+                    <h3>Total</h3>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <h3>$ {cartTotal}</h3>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+          )}
         </Grid>
       </main>
     </div>
@@ -95,7 +110,6 @@ function PointOfSale(props) {
 }
 
 export default inject("cartStore")(observer(PointOfSale));
-// export default PointOfSale;
 
 const products = [
   { id: 1, title: "Synthroid", price: 1994, quantity: 1 },

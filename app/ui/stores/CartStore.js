@@ -10,7 +10,6 @@ class CartStore {
   @action
   addToCart = (product) => {
     if (this.productExist(product)) {
-      console.log("this product already exist");
       this.cart = this.cart.map((obj) => {
         if (obj.id === product.id) {
           return { ...obj, quantity: obj.quantity + 1 };
