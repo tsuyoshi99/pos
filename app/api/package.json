@@ -7,6 +7,8 @@
     "dev": "docker-compose up -d && nodemon --exec node -r dotenv/config src/index.js",
     "docs": "apidoc -i src -o docs && apidoc-markdown -p docs -o DOCS.md",
     "postdocs": "open-cli docs/index.html",
+    "lint": "eslint **/*.js --ignore-pattern node_modules/",
+    "lint:fix": "eslint **/*.js --ignore-pattern node_modules/ --fix",
     "test": "docker-compose up -d && jest -i --colors --verbose"
   },
   "dependencies": {

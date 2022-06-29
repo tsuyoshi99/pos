@@ -5,31 +5,34 @@ const {
   toWhere,
   toLimitAndOffset
 } = require('../../utils/httpToSequelize')
-const Product = require('./model')
+const { Product, Inventory } = require('./model')
 const { toDTO } = require('./dto')
 
-const index = ({ query }, res, next) => {
+const index = async ({ query }, res, next) => {
   try {
-    Product.findAndCountAll({
-      where: toWhere(query.filter, ['name']),
-      order: toOrder(query, ['name']),
-      ...toLimitAndOffset(query)
+    const result = await Product.findAndCountAll({
+      where: toWhere(query.filter, ['name', 'description', 'price']),
+      order: toOrder(query, ['name', 'description', 'price']),
+      ...toLimitAndOffset(query),
+      include: Inventory
     })
-      .then((result) => ({
-        total: result.count,
-        limit: query.limit,
-        page: query.page,
-        data: result.rows.map((row) => toDTO(row))
-      }))
-      .then(success(res))
-      .catch(next)
+
+    return success(res)({
+      total: result.count,
+      limit: query.limit,
+      page: query.page,
+      data: result.rows.map((row) => toDTO(row))
+    })
   } catch (error) {
     return next(error)
   }
 }
 
 const create = ({ body }, res, next) =>
-  Product.create(body)
+  Product.create(
+    { ...body, inventory: { quantity: body.inventory.quantity } },
+    { include: Inventory }
+  )
     .then((product) => {
       return { data: toDTO(product) }
     })
@@ -38,8 +41,23 @@ const create = ({ body }, res, next) =>
     .catch(next)
 
 const update = ({ body, params: { id } }, res, next) =>
-  Product.update(body, { where: { id: +id }, returning: true })
-    .then(([_, [product]]) => {
+  Product.update(body, {
+    where: { id: +id }
+  })
+    .then(() => Product.findByPk(id, { include: Inventory }))
+    .then(async (product) => {
+      if (!body.inventory) {
+        return product
+      }
+
+      await Inventory.update(body.inventory, {
+        where: { id: product.inventory.id }
+      })
+
+      return product
+    })
+    .then((product) => Product.findByPk(product.id, { include: Inventory }))
+    .then((product) => {
       return { data: toDTO(product) }
     })
     .then(success(res))

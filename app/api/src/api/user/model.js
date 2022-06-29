@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../../services/sequelize')
+const Sale = require('../sale/model')
 
 const User = sequelize.define('users', {
   name: {
@@ -20,5 +21,8 @@ const User = sequelize.define('users', {
     type: DataTypes.STRING
   }
 })
+
+User.hasMany(Sale)
+Sale.belongsTo(User)
 
 module.exports = User

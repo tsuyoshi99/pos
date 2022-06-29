@@ -10,6 +10,8 @@ const router = new Router()
  * @apiGroup Product
  * @apiPermission user
  * @apiBody {String} [name] Product's name.
+ * @apiBody {String} [description] Product's description.
+ * @apiBody {Number} [price] Product's price.
  * @apiUse listParams
  * @apiSuccess {Object[]} products List of products.
  * @apiError {Object} 400 Some parameters or body may contain invalid values.
@@ -24,10 +26,7 @@ router.get(
         order: Joi.string(),
         limit: Joi.number().integer(),
         page: Joi.number().integer()
-      }),
-      [Segments.BODY]: {
-        name: Joi.string()
-      }
+      })
     },
     { abortEarly: false }
   ),
@@ -40,6 +39,8 @@ router.get(
  * @apiGroup Product
  * @apiPermission user
  * @apiBody {String} [name] Product's name.
+ * @apiBody {String} [description] Product's description.
+ * @apiBody {Number} [price] Product's price.
  * @apiSuccess (Sucess 201) {Object} product Product's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
@@ -47,7 +48,21 @@ router.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      name: Joi.string()
+      name: Joi.string(),
+      description: Joi.string(),
+      price: Joi.number(),
+      forms: Joi.array()
+        .items(
+          Joi.object({
+            name: Joi.string().required(),
+            price: Joi.number().required(),
+            coefficient: Joi.number().required()
+          })
+        )
+        .min(1)
+        .max(10)
+        .required(),
+      inventory: Joi.object({ quantity: Joi.number().required() }).required()
     }
   }),
   create
@@ -59,6 +74,8 @@ router.post(
  * @apiGroup Product
  * @apiPermission user
  * @apiBody {String} [name] Product's name.
+ * @apiBody {String} [description] Product's description.
+ * @apiBody {Number} [price] Product's price.
  * @apiSuccess {Object} product Product's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Product not found.
@@ -70,7 +87,20 @@ router.put(
       id: Joi.number().required()
     }),
     [Segments.BODY]: {
-      name: Joi.string()
+      name: Joi.string(),
+      description: Joi.string(),
+      price: Joi.number(),
+      forms: Joi.array()
+        .items(
+          Joi.object({
+            name: Joi.string(),
+            price: Joi.number(),
+            coefficient: Joi.number()
+          })
+        )
+        .min(1)
+        .max(10),
+      inventory: Joi.object({ quantity: Joi.number() })
     }
   }),
   update
@@ -82,6 +112,8 @@ router.put(
  * @apiGroup Product
  * @apiPermission user
  * @apiBody {String} [name] Product's name.
+ * @apiBody {String} [description] Product's description.
+ * @apiBody {Number} [price] Product's price.
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 404 Product not found.
  */

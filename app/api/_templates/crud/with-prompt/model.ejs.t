@@ -32,8 +32,8 @@ const <%= capitalizedName %> = sequelize.define('<%= pluralName %>', {
     <%= capitalizedName %>.hasMany(<%= h.inflection.capitalize(relationships[i][1]) %>)
     <%= h.inflection.capitalize(relationships[i][1]) %>.belongsTo(<%= capitalizedName %>)
   <% } else if (relationships[i][0] === "manytomany") { -%>  
-    <%= capitalizedName %>.belongsToMany(<%= h.inflection.capitalize(relationships[i][1]) %>)
-    <%= h.inflection.capitalize(relationships[i][1]) %>.belongsToMany(<%= capitalizedName %>)
+    <%= capitalizedName %>.belongsToMany(<%= h.inflection.capitalize(relationships[i][1]) %> , { through: '<%= pluralName %><%=h.inflection.pluralize(h.inflection.capitalize(relationships[i][1]))%>' })
+    <%= h.inflection.capitalize(relationships[i][1]) %>.belongsToMany(<%= capitalizedName %>, { through: '<%= pluralName %><%=h.inflection.pluralize(h.inflection.capitalize(relationships[i][1]))%>' })
   <% } -%>
 <% } -%>
 

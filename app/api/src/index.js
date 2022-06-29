@@ -9,6 +9,8 @@ const loadExpress = require('./services/express')
 
   const app = loadExpress()
 
+  // sequelize.sync({ force: true })
+
   const server = app.listen(config.port, () => {
     lightship.signalReady()
   })
