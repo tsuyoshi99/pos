@@ -5,14 +5,18 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function OrderItem({ title, quantity, price }) {
+import { inject, observer } from "mobx-react";
+
+function OrderItem(props) {
+  const { removeFromCart } = props.cartStore;
+
   return (
     <Grid container direction="row" spacing={2}>
       <Grid item xs={4}>
-        <p>Product</p>
+        <p>{props.product.title}</p>
       </Grid>
       <Grid item xs={4}>
-        <p>x Quantity</p>
+        <p>x {props.product.quantity}</p>
       </Grid>
       <Grid
         item
@@ -21,11 +25,19 @@ export default function OrderItem({ title, quantity, price }) {
         justifyContent="space-between"
         direction="row"
       >
-        <p>$ Price</p>
-        <IconButton aria-label="delete" color="error">
+        <p>$ {props.product.price}</p>
+        <IconButton
+          aria-label="delete"
+          color="error"
+          onClick={() => {
+            removeFromCart(props.product);
+          }}
+        >
           <DeleteIcon />
         </IconButton>
       </Grid>
     </Grid>
   );
 }
+
+export default inject("cartStore")(observer(OrderItem));
