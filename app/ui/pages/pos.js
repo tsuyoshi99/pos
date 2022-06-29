@@ -1,7 +1,7 @@
 import * as React from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import pos from "../styles/pos.module.sass";
+import pos from "../styles/index.module.scss";
 
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
