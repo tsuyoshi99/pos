@@ -1573,6 +1573,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mui/utils@npm:^5.8.6":
+  version: 5.8.6
+  resolution: "@mui/utils@npm:5.8.6"
+  dependencies:
+    "@babel/runtime": ^7.17.2
+    "@types/prop-types": ^15.7.5
+    "@types/react-is": ^16.7.1 || ^17.0.0
+    prop-types: ^15.8.1
+    react-is: ^17.0.2
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+  checksum: 5141fa15050defe8981041d9a699a595e1b554d5a20125d8e4de2188fb37b37a45907c36ca9885840290f32133af2cb4340e724afdd0f59d27dcf8b863f927bf
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:12.1.6":
   version: 12.1.6
   resolution: "@next/env@npm:12.1.6"
@@ -11295,11 +11310,13 @@ __metadata:
     "@emotion/styled": ^11.9.3
     "@mui/icons-material": ^5.8.4
     "@mui/material": ^5.8.4
+    "@mui/utils": ^5.8.6
     eslint: 8.17.0
     eslint-config-next: 12.1.6
     mobx: ^6.6.0
     mobx-react: ^7.5.0
     next: 12.1.6
+    prop-types: ^15.8.1
     react: 18.1.0
     react-dom: 18.1.0
     sass: ^1.52.3
