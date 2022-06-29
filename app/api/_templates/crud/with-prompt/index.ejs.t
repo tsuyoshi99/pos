@@ -17,7 +17,9 @@ const router = new Router()
  * @api {get} /<%=pluralName%>?limit=1 Retrieve <%=pluralName%>
  * @apiName Retrieve<%=capitalizedPluralName%>
  * @apiGroup <%=capitalizedName%>
+<% if (role) { -%>
  * @apiPermission <%= role %>
+<% } -%>
 <% for (let i=0;i<fields.length;i++) { -%>
  * @apiBody {<%= h.inflection.capitalize(fields[i][1]) %>} [<%= fields[i][0] %>] <%=capitalizedName%>'s <%= fields[i][0] %>.
 <% } -%>
@@ -52,7 +54,9 @@ router.get(
  * @api {post} /<%=pluralName%> Create <%=name%>
  * @apiName Create<%=capitalizedName%>
  * @apiGroup <%=capitalizedName%>
+<% if (role) { -%>
  * @apiPermission <%= role %>
+<% } -%>
 <% for (let i=0;i<fields.length;i++) { -%>
  * @apiBody {<%= h.inflection.capitalize(fields[i][1]) %>} [<%= fields[i][0] %>] <%=capitalizedName%>'s <%= fields[i][0] %>.
 <% } -%>
@@ -75,7 +79,9 @@ router.post(
  * @api {put} /<%=pluralName%>/1 Update <%=name%>
  * @apiName Update<%=capitalizedName%>
  * @apiGroup <%=capitalizedName%>
+<% if (role) { -%>
  * @apiPermission <%= role %>
+<% } -%>
 <% for (let i=0;i<fields.length;i++) { -%>
  * @apiBody {<%= h.inflection.capitalize(fields[i][1]) %>} [<%= fields[i][0] %>] <%=capitalizedName%>'s <%= fields[i][0] %>.
 <% } -%>
@@ -102,13 +108,21 @@ router.put(
  * @api {delete} /<%=pluralName%>/1 Delete <%=name%>
  * @apiName Delete<%=capitalizedName%>
  * @apiGroup <%=capitalizedName%>
+<% if (role) { -%>
  * @apiPermission <%= role %>
+<% } -%>
 <% for (let i=0;i<fields.length;i++) { -%>
  * @apiBody {<%= h.inflection.capitalize(fields[i][1]) %>} [<%= fields[i][0] %>] <%=capitalizedName%>'s <%= fields[i][0] %>.
 <% } -%>
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 404 <%=capitalizedName%> not found.
  */
-router.delete('/:id', destroy)
+router.delete('/:id',
+  celebrate({
+    [Segments.PARAMS]: Joi.object({
+      id: Joi.number().required()
+    }),
+  }),
+  destroy)
 
 module.exports = router

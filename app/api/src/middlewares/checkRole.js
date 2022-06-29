@@ -24,6 +24,7 @@ const checkRole = (roles) => {
       }
 
       next(new HttpError(403, core.error.forbidden))
+      return
     }
 
     next(new HttpError(403, core.error.forbidden))
