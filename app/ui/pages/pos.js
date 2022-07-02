@@ -16,6 +16,7 @@ import { inject, observer } from "mobx-react";
 
 function PointOfSale(props) {
   const { cart, addToCart, cartTotal } = props.cartStore;
+  const { products } = props.productStore;
 
   return (
     <div className={styles.container}>
@@ -109,15 +110,4 @@ function PointOfSale(props) {
   );
 }
 
-export default inject("cartStore")(observer(PointOfSale));
-
-const products = [
-  { id: 1, title: "Synthroid", price: 1994, quantity: 1 },
-  { id: 2, title: "Crestor", price: 1972, quantity: 3 },
-  { id: 3, title: "Ventolin", price: 1974, quantity: 5 },
-  { id: 4, title: "Nexium", price: 2008, quantity: 4 },
-  { id: 5, title: "Advair Diskus", price: 1957, quantity: 2 },
-  { id: 6, title: "Lantus Solostar", price: 1993, quantity: 7 },
-  { id: 7, title: "Vyvanse", price: 1994, quantity: 12 },
-  { id: 8, title: "Lyrica", price: 2003, quantity: 4 },
-];
+export default inject("cartStore", "productStore")(observer(PointOfSale));

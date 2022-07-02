@@ -26,6 +26,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 
 import AddProduct from "../components/AddProduct";
+import { inject, observer } from "mobx-react";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -78,7 +79,13 @@ const headCells = [
     id: "quantity",
     numeric: true,
     disablePadding: false,
-    label: "Quantity (pills)",
+    label: "Quantity",
+  },
+  {
+    id: "indicator",
+    numeric: false,
+    disablePadding: false,
+    label: "Indicator",
   },
 ];
 
@@ -209,12 +216,14 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function ProductManagement() {
+function ProductManagement(props) {
   const [selected, setSelected] = useState([]);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("id");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const { products } = props.productStore;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -337,6 +346,7 @@ export default function ProductManagement() {
                             <TableCell>{row.title}</TableCell>
                             <TableCell align="right">{row.price}</TableCell>
                             <TableCell align="right">{row.quantity}</TableCell>
+                            <TableCell>{row.indicator}</TableCell>
                           </TableRow>
                         );
                       })}
@@ -379,13 +389,4 @@ export default function ProductManagement() {
   );
 }
 
-const products = [
-  { id: 1, title: "Synthroid", price: 1994, quantity: 1 },
-  { id: 2, title: "Crestor", price: 1972, quantity: 3 },
-  { id: 3, title: "Ventolin", price: 1974, quantity: 5 },
-  { id: 4, title: "Nexium", price: 2008, quantity: 4 },
-  { id: 5, title: "Advair Diskus", price: 1957, quantity: 2 },
-  { id: 6, title: "Lantus Solostar", price: 1993, quantity: 7 },
-  { id: 7, title: "Vyvanse", price: 1994, quantity: 12 },
-  { id: 8, title: "Lyrica", price: 2003, quantity: 4 },
-];
+export default inject("productStore")(observer(ProductManagement));
