@@ -279,7 +279,7 @@ export default function ProductManagement() {
 
       <main className={styles.main}>
         <Grid container spacing={2}>
-          <Grid item xs>
+          <Grid item xs container alignItems="center">
             <Paper sx={{ width: "100%", mb: 2 }}>
               <EnhancedTableToolbar numSelected={selected.length} />
               <TableContainer>
@@ -302,7 +302,6 @@ export default function ProductManagement() {
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
                       )
-                      //.sort(getComparator(order, orderBy))
                       .map((row, index) => {
                         const isItemSelected = isSelected(row.id);
                         const labelId = `enhanced-table-checkbox-${index}`;
@@ -335,7 +334,6 @@ export default function ProductManagement() {
                             >
                               {row.id}
                             </TableCell>
-                            {/* <TableCell align="right">{row.calories}</TableCell> */}
                             <TableCell>{row.title}</TableCell>
                             <TableCell align="right">{row.price}</TableCell>
                             <TableCell align="right">{row.quantity}</TableCell>
@@ -370,6 +368,8 @@ export default function ProductManagement() {
             md={12}
             lg={4}
             sx={{ justifyContent: "center", width: "100%" }}
+            container
+            alignItems="center"
           >
             <AddProduct />
           </Grid>
