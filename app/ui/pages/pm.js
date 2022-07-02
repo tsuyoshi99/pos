@@ -18,10 +18,14 @@ import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
+
+import AddProduct from "../components/AddProduct";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -59,7 +63,7 @@ const headCells = [
     label: "Product ID",
   },
   {
-    id: "name",
+    id: "title",
     numeric: false,
     disablePadding: false,
     label: "Product name",
@@ -173,7 +177,14 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Medicine
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<AddCircleOutlineOutlinedIcon />}
+            color="primary"
+          >
+            Add Product
+          </Button>
         </Typography>
       )}
 
@@ -213,7 +224,7 @@ export default function ProductManagement() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = products.map((n) => n.name);
+      const newSelecteds = products.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
@@ -354,8 +365,13 @@ export default function ProductManagement() {
               />
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={4}>
-            Product Config
+          <Grid
+            item
+            md={12}
+            lg={4}
+            sx={{ justifyContent: "center", width: "100%" }}
+          >
+            <AddProduct />
           </Grid>
         </Grid>
       </main>
