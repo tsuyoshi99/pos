@@ -1,7 +1,6 @@
 import * as React from "react";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import pos from "../styles/index.module.scss";
+import styles from "../styles/index.module.scss";
 
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -31,7 +30,7 @@ function PointOfSale(props) {
 
       <main className={styles.main}>
         {/* Search Bar */}
-        <div className={pos.wFull}>
+        <div className={styles.wFull}>
           <Stack spacing={2} sx={{ maxWidth: 300, mb: 2, pr: 2 }}>
             <Autocomplete
               freeSolo
