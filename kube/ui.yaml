@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pos-ui
+  namespace: pos
+  labels:
+    app: pos-ui
+spec:
+  selector:
+    matchLabels:
+      app: pos-ui
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: pos-ui
+    spec:
+      containers:
+        - name: pos-ui
+          image: registry.hunvikran.com/pos-ui
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            periodSeconds: 10
+          ports:
+            - containerPort: 3000
+              name: pos-ui
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pos-ui
+  namespace: pos
+spec:
+  selector:
+    app: pos-ui
+  type: ClusterIP
+  ports:
+    - name: pos-ui
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

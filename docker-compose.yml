@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: ./app/ui/Dockerfile
+    image: registry.hunvikran.com/pos-ui
+    ports:
+      - "3000:3000"
+
+  api:
+    build:
+      context: .
+      dockerfile: ./app/api/Dockerfile
+    image: registry.hunvikran.com/pos-api
+    ports:
+      - "7070:7070"
+
+  db:
+    image: postgis/postgis:14-3.1-alpine
+    environment:
+      POSTGRES_USER: rest
+      POSTGRES_PASSWORD: rest123
+
+  adminer:
+    image: adminer
+    ports:
+      - "8001:8080"
+    depends_on:
+      - db

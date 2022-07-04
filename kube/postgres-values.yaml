@@ -1,0 +1,11 @@
+auth:
+  enablePostgresUser: true
+  postgresPassword: "pos123"
+  username: "pos"
+  password: "pos123"
+  database: "pos"
+
+primary:
+  persistence:
+    enabled: true
+    existingClaim: "postgres"

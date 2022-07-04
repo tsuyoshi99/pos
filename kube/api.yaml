@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pos-api
+  namespace: pos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pos-api
+  template:
+    metadata:
+      labels:
+        app: pos-api
+    spec:
+      containers:
+        - name: pos-api
+          image: registry.hunvikran.com/pos-api:latest
+          envFrom:
+            - secretRef:
+                name: pos-api
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 7070
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pos-api
+  namespace: pos
+spec:
+  selector:
+    app: pos-api
+  type: ClusterIP
+  ports:
+    - name: pos-api
+      protocol: TCP
+      port: 7070
+      targetPort: 7070
