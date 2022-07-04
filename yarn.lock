@@ -11353,7 +11353,8 @@ __metadata:
     "@emotion/styled": ^11.9.3
     "@mui/icons-material": ^5.8.4
     "@mui/material": ^5.8.4
-    eslint: ^8.17.0
+    "@mui/utils": ^5.8.6
+    eslint: ^8.19.0
     eslint-config-next: 12.1.6
     mobx: ^6.6.0
     mobx-react: ^7.5.0
