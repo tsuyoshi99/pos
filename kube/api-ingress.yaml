@@ -4,21 +4,14 @@ metadata:
   name: pos-api
   namespace: pos
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - host: pos.hunvikran.com
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: pos-ui
-                port:
-                  number: 3000
           - path: /api(/|$)(.*)
             pathType: Prefix
             backend:

@@ -43,9 +43,6 @@ COPY --from=builder /app/app/ui/ ./app/ui/
 
 COPY --from=builder /app/app/core/ ./app/core/
 
-RUN ls -a
-RUN ls -a /app/app
-
 EXPOSE 3000
 
 ENV PORT 3000

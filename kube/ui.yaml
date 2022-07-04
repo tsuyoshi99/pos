@@ -41,6 +41,7 @@ spec:
           ports:
             - containerPort: 3000
               name: pos-ui
+          imagePullPolicy: Always
       imagePullSecrets:
         - name: regcred
       restartPolicy: Always
