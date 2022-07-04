@@ -1,5 +1,3 @@
-import posStyles from "../styles/pos.module.sass";
-
 import Grid from "@mui/material/Grid";
 
 import IconButton from "@mui/material/IconButton";
@@ -16,7 +14,9 @@ function OrderItem(props) {
         <p>{props.product.title}</p>
       </Grid>
       <Grid item xs={4}>
-        <p>x {props.product.quantity}</p>
+        <p>
+          x {props.product.quantity} {props.product.indicator}
+        </p>
       </Grid>
       <Grid
         item
