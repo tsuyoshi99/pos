@@ -15,7 +15,14 @@ import AdbIcon from "@mui/icons-material/Adb";
 import Link from "next/link";
 import Drawer from "@mui/material/Drawer";
 
-const pages = ["Products", "Pricing", "Blog"];
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import InventoryIcon from "@mui/icons-material/Inventory";
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const menu = [
   {
@@ -31,6 +38,7 @@ const menu = [
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [state, setState] = React.useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -46,6 +54,45 @@ const NavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState(open);
+  };
+
+  const DrawerList = () => (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer("left", false)}
+      onKeyDown={toggleDrawer("left", false)}
+    >
+      <List>
+        {menu.map((page, index) => (
+          <Link href={page.link} key={page.title}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? (
+                    <AddShoppingCartIcon />
+                  ) : (
+                    <InventoryIcon />
+                  )}
+                </ListItemIcon>
+                <ListItemText primary={page.title} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+    </Box>
+  );
 
   return (
     <AppBar position="static">
@@ -76,42 +123,18 @@ const NavBar = () => {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={toggleDrawer("left", true)}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            {/* <Drawer
-              anchor={anchor}
-              open={state[anchor]}
-              onClose={toggleDrawer(anchor, false)}
+            <Drawer
+              anchor="left"
+              open={state}
+              onClose={toggleDrawer("left", false)}
             >
-              {list(anchor)}
-            </Drawer> */}
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              <DrawerList />
+            </Drawer>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
@@ -130,7 +153,7 @@ const NavBar = () => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            Medical POS
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {menu.map((page) => (
