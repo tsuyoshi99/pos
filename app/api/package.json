@@ -6,7 +6,6 @@
     "start": "node src/index",
     "dev": "nodemon --exec node -r dotenv/config src/index.js",
     "docs": "apidoc -i src -o docs && apidoc-markdown -p docs -o DOCS.md",
-    "postdocs": "open-cli docs/index.html",
     "lint": "eslint **/*.js --ignore-pattern node_modules/",
     "lint:fix": "eslint **/*.js --ignore-pattern node_modules/ --fix",
     "test": "jest -i --colors --verbose"
@@ -37,6 +36,7 @@
   "devDependencies": {
     "apidoc": "^0.51.1",
     "apidoc-markdown": "^7.1.0",
+    "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-prettier-standard": "^4.0.1",
     "eslint-config-standard": "latest",
@@ -48,7 +48,7 @@
     "hygen": "^6.2.0",
     "jest": "^28.1.1",
     "nodemon": "^2.0.16",
-    "open-cli": "^7.0.1",
+    "prettier": "^2.7.1",
     "supertest": "^6.2.3"
   }
 }

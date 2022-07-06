@@ -16,10 +16,10 @@ const router = new Router()
  * to access this endpoint.
  *
  * @apiDefine listParams
- * @apiParam {String} [fields] Query to search.
+ * @apiParam {string} [fields] Query to search.
  * @apiParam {Number{1..30}} [page=1] Page number.
  * @apiParam {Number{1..100}} [limit=30] Amount of returned items.
- * @apiParam {String} [sort=name:asc] Order of returned items.
+ * @apiParam {string} [sort=name:asc] Order of returned items.
  */
 router.use('/auth', auth)
 router.use('/users', passport.authenticate('jwt', { session: false }), user)

@@ -12,10 +12,15 @@ const router = new Router()
  * @apiName Login
  * @apiGroup Auth
  * @apiPermission user
- * @apiBody {String} email User's email.
- * @apiBody {String{6..}} password User's password.
- * @apiSuccess (Sucess 200) {Object} user User's data.
- * @apiError {Object} 400 Some body may contain invalid values.
+ * @apiBody {string} email User's email.
+ * @apiBody {string{8..}} password User's password.
+ * @apiSuccess (200) {string} name
+ * @apiSuccess (200) {string} email
+ * @apiSuccess (200) {string} image
+ * @apiSuccess (200) {string} role
+ * @apiSuccess (200) {string} createdAt
+ * @apiSuccess (200) {string} updatedAt
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
  */
 router.post(
   '/login',
@@ -46,11 +51,16 @@ router.post(
  * @apiName Register
  * @apiGroup Auth
  * @apiPermission user
- * @apiBody {String} email User's email.
- * @apiBody {String{6..}} password User's password.
- * @apiSuccess (Sucess 201) {Object} user User's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 409 Username already registered.
+ * @apiBody {string} email User's email.
+ * @apiBody {string{8..}} password User's password.
+ * @apiSuccess (201) {string} name
+ * @apiSuccess (201) {string} email
+ * @apiSuccess (201) {string} image
+ * @apiSuccess (201) {string} role
+ * @apiSuccess (201) {string} createdAt
+ * @apiSuccess (201) {string} updatedAt
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (409) Conflict email already registered.
  */
 router.post(
   '/register',

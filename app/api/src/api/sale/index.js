@@ -10,9 +10,12 @@ const router = new Router()
  * @apiGroup Sale
  * @apiPermission user
  * @apiUse listParams
- * @apiSuccess {Object[]} sales List of sales.
- * @apiError {Object} 400 Some parameters or body may contain invalid values.
- * @apiError 401 user access only.
+ * @apiSuccess (200) {Number} id
+ * @apiSuccess (200) {Number} total calculated total
+ * @apiSuccess (200) {Number} userId user that create the sale
+ * @apiSuccess (200) {Array} items Example: [{id: string, name: string, description: string, price: number, quantity: number}]
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (401) Unauthorized user access only.
  */
 router.get(
   '/',
@@ -35,8 +38,16 @@ router.get(
  * @apiName CreateSale
  * @apiGroup Sale
  * @apiPermission user
- * @apiSuccess (Sucess 201) {Object} sale Sale's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiBody {Number} id
+ * @apiBody {Number} total calculated total
+ * @apiBody {Number} userId user that create the sale
+ * @apiBody {Array} items Example: [{id: string, name: string, description: string, price: number, quantity: number}]
+ * @apiSuccess (200) {Number} id
+ * @apiSuccess (200) {Number} total calculated total
+ * @apiSuccess (200) {Number} userId user that create the sale
+ * @apiSuccess (200) {Array} items Example: [{id: string, name: string, description: string, price: number, quantity: number}]
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (401) Unauthorized user access only.
  */
 router.post(
   '/',
@@ -59,8 +70,8 @@ router.post(
  * @apiName DeleteSale
  * @apiGroup Sale
  * @apiPermission user
- * @apiSuccess (Success 204) 204 No Content.
- * @apiError 404 Sale not found.
+ * @apiSuccess (204) Success No Content
+ * @apiError (404) NotFound Not found
  */
 router.delete('/:id', destroy)
 
