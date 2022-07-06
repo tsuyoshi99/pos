@@ -24,6 +24,7 @@ import ListItemText from "@mui/material/ListItemText";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import InventoryIcon from "@mui/icons-material/Inventory";
 
+const profile = ["Profile", "Logout"];
 const menu = [
   {
     title: "Point of Sale",
@@ -165,7 +166,7 @@ const NavBar = () => {
             ))}
           </Box>
 
-          {/* <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -187,13 +188,15 @@ const NavBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+              {profile.map((setting) => (
+                <Link href="/login" key={setting}>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
-          </Box> */}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
