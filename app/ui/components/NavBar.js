@@ -1,4 +1,5 @@
 import * as React from "react";
+import styles from "../styles/index.module.scss";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,7 +24,6 @@ import ListItemText from "@mui/material/ListItemText";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import InventoryIcon from "@mui/icons-material/Inventory";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const menu = [
   {
     title: "Point of Sale",
@@ -77,7 +77,7 @@ const NavBar = () => {
         {menu.map((page, index) => (
           <Link href={page.link} key={page.title}>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton sx={{ pl: 3 }}>
                 <ListItemIcon>
                   {index % 2 === 0 ? (
                     <AddShoppingCartIcon />
@@ -95,11 +95,11 @@ const NavBar = () => {
   );
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={styles.appbar}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
+            className={styles.navBarTitle}
             variant="h6"
             noWrap
             component="a"
@@ -107,14 +107,12 @@ const NavBar = () => {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            LOGO
+            Medical POS
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -136,7 +134,6 @@ const NavBar = () => {
               <DrawerList />
             </Drawer>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -148,7 +145,6 @@ const NavBar = () => {
               flexGrow: 1,
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
@@ -159,8 +155,9 @@ const NavBar = () => {
             {menu.map((page) => (
               <Link href={page.link} key={page.title}>
                 <Button
+                  className={styles.menuItem}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ px: 2, my: 2, display: "block" }}
                 >
                   {page.title}
                 </Button>
@@ -168,7 +165,7 @@ const NavBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -196,7 +193,7 @@ const NavBar = () => {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>
