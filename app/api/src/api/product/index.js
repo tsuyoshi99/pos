@@ -9,13 +9,20 @@ const router = new Router()
  * @apiName RetrieveProducts
  * @apiGroup Product
  * @apiPermission user
- * @apiBody {String} [name] Product's name.
- * @apiBody {String} [description] Product's description.
- * @apiBody {Number} [price] Product's price.
+ * @apiBody {string} name
+ * @apiBody {string} description
+ * @apiBody {Number} price
+ * @apiBody {Array} forms example: [{coefficient: number, name: string, price: number}]
+ * @apiBody {Object} inventory example: {quantity: number}
  * @apiUse listParams
- * @apiSuccess {Object[]} products List of products.
- * @apiError {Object} 400 Some parameters or body may contain invalid values.
- * @apiError 401 user access only.
+ * @apiSuccess (200) {Number} id
+ * @apiSuccess (200) {string} name
+ * @apiSuccess (200) {string} description
+ * @apiSuccess (200) {string} price
+ * @apiSuccess (200) {Array} forms example: [{coefficient: number, name: string, price: number}]
+ * @apiSuccess (200) {Object} inventory example: {quantity: number}
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (401) Unauthorized user access only.
  */
 router.get(
   '/',
@@ -38,11 +45,19 @@ router.get(
  * @apiName CreateProduct
  * @apiGroup Product
  * @apiPermission user
- * @apiBody {String} [name] Product's name.
- * @apiBody {String} [description] Product's description.
- * @apiBody {Number} [price] Product's price.
- * @apiSuccess (Sucess 201) {Object} product Product's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiBody {string} name
+ * @apiBody {string} description
+ * @apiBody {Number} price
+ * @apiBody {Array} forms example: [{coefficient: number, name: string, price: number}]
+ * @apiBody {Object} inventory example: {quantity: number}
+ * @apiSuccess (200) {Number} id
+ * @apiSuccess (200) {string} name
+ * @apiSuccess (200) {string} description
+ * @apiSuccess (200) {string} price
+ * @apiSuccess (200) {Array} forms example: [{coefficient: number, name: string, price: number}]
+ * @apiSuccess (200) {Object} inventory example: {quantity: number}
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (401) Unauthorized user access only.
  */
 router.post(
   '/',
@@ -73,12 +88,20 @@ router.post(
  * @apiName UpdateProduct
  * @apiGroup Product
  * @apiPermission user
- * @apiBody {String} [name] Product's name.
- * @apiBody {String} [description] Product's description.
- * @apiBody {Number} [price] Product's price.
- * @apiSuccess {Object} product Product's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 404 Product not found.
+ * @apiBody {string} name
+ * @apiBody {string} description
+ * @apiBody {Number} price
+ * @apiBody {Array} forms example: [{coefficient: number, name: string, price: number}]
+ * @apiBody {Object} inventory example: {quantity: number}
+ * @apiSuccess (200) {Number} id
+ * @apiSuccess (200) {string} name
+ * @apiSuccess (200) {string} description
+ * @apiSuccess (200) {string} price
+ * @apiSuccess (200) {Array} forms example: [{coefficient: number, name: string, price: number}]
+ * @apiSuccess (200) {Object} inventory example: {quantity: number}
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (401) Unauthorized user access only.
+ * @apiError (404) NotFound maybe wrong id ?.
  */
 router.put(
   '/:id',
@@ -111,11 +134,8 @@ router.put(
  * @apiName DeleteProduct
  * @apiGroup Product
  * @apiPermission user
- * @apiBody {String} [name] Product's name.
- * @apiBody {String} [description] Product's description.
- * @apiBody {Number} [price] Product's price.
- * @apiSuccess (Success 204) 204 No Content.
- * @apiError 404 Product not found.
+ * @apiSuccess (204) Success No Content
+ * @apiError (404) NotFound Not found
  */
 router.delete('/:id', destroy)
 

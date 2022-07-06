@@ -10,9 +10,14 @@ const router = new Router()
  * @apiGroup User
  * @apiPermission admin
  * @apiUse listParams
- * @apiSuccess {Object[]} users List of users.
- * @apiError {Object} 400 Some parameters or body may contain invalid values.
- * @apiError 401 need to login.
+ * @apiSuccess (201) {string} name
+ * @apiSuccess (201) {string} email
+ * @apiSuccess (201) {string} image
+ * @apiSuccess (201) {string} role
+ * @apiSuccess (201) {string} createdAt
+ * @apiSuccess (201) {string} updatedAt
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (401) Unauthorized user access only.
  */
 router.get(
   '/',
@@ -38,14 +43,18 @@ router.get(
  * @apiName CreateUser
  * @apiGroup User
  * @apiPermission admin
- * @apiBody {String} username User's username.
- * @apiBody {String{6..}} password User's password.
- * @apiBody {String} [name] User's name.
- * @apiBody {String} [image] User's profile picture.
- * @apiBody {String=user,admin} [role=user] User's role.
- * @apiSuccess (Sucess 201) {Object} user User's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 409 Username already registered.
+ * @apiBody {string} name
+ * @apiBody {string} email
+ * @apiBody {string} image
+ * @apiBody {string} role
+ * @apiSuccess (201) {string} name
+ * @apiSuccess (201) {string} email
+ * @apiSuccess (201) {string} image
+ * @apiSuccess (201) {string} role
+ * @apiSuccess (201) {string} createdAt
+ * @apiSuccess (201) {string} updatedAt
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (409) Conflict email already registered.
  */
 router.post(
   '/',
@@ -64,12 +73,20 @@ router.post(
  * @apiName UpdateUser
  * @apiGroup User
  * @apiPermission user
- * @apiBody {String} [name] User's name.
- * @apiBody {String} [picture] User's picture.
- * @apiSuccess {Object} user User's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Current user or need to login.
- * @apiError 404 User not found.
+ * @apiBody {string} name
+ * @apiBody {string} email
+ * @apiBody {string} image
+ * @apiBody {string} role
+ * @apiSuccess (200) {string} name
+ * @apiSuccess (200) {string} email
+ * @apiSuccess (200) {string} image
+ * @apiSuccess (200) {string} role
+ * @apiSuccess (200) {string} createdAt
+ * @apiSuccess (200) {string} updatedAt
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (409) Conflict email already registered.
+ * @apiError (401) Unauthorized need to login first
+ * @apiError (404) NotFound not found.
  */
 router.put(
   '/:id',
@@ -91,9 +108,8 @@ router.put(
  * @apiName DeleteUser
  * @apiGroup User
  * @apiPermission admin
- * @apiSuccess (Success 204) 204 No Content.
- * @apiError 401 need to login.
- * @apiError 404 User not found.
+ * @apiSuccess (204) Success No Content
+ * @apiError (404) NotFound Not found
  */
 router.delete('/:id', destroy)
 

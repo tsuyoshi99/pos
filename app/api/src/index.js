@@ -9,6 +9,7 @@ const loadExpress = require('./services/express')
     return
   }
 
+
   const configuration = {}
   const lightship = await createLightship(configuration)
 
