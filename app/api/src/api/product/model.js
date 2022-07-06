@@ -20,7 +20,8 @@ const Inventory = sequelize.define(
   'inventories',
   {
     quantity: {
-      type: DataTypes.DECIMAL(12, 2)
+      type: DataTypes.DECIMAL(12, 2),
+      defaultValue: 0
     }
   },
   { timestamps: false }

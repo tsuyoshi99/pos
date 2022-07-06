@@ -11,7 +11,25 @@ describe('product routes', () => {
   const productData = {
     name: 'test product',
     description: 'test description',
-    price: 10.0
+    price: 10.0,
+    inventory: { quantity: 10 },
+    forms: [
+      {
+        name: 'box',
+        price: 10,
+        coefficient: 0
+      },
+      {
+        name: 'tablet',
+        price: 5,
+        coefficient: 10
+      },
+      {
+        name: 'pill',
+        price: 1,
+        coefficient: 10
+      }
+    ]
   }
   const app = loadExpress()
   let token
@@ -58,8 +76,27 @@ describe('product routes', () => {
 
       expect(createdProduct.get()).toBeDefined()
       expect(createdProduct.get()).toMatchObject({
-        ...productData,
-        price: productData.price.toFixed(2)
+        id: 1,
+        name: 'test product',
+        description: 'test description',
+        price: '10.00',
+        forms: [
+          {
+            name: 'box',
+            price: 10,
+            coefficient: 0
+          },
+          {
+            name: 'tablet',
+            price: 5,
+            coefficient: 10
+          },
+          {
+            name: 'pill',
+            price: 1,
+            coefficient: 10
+          }
+        ]
       })
     })
 

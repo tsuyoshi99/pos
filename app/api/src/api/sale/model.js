@@ -27,7 +27,12 @@ const SalesProducts = sequelize.define(
   { timestamps: false }
 )
 
-Sale.belongsToMany(Product, { through: SalesProducts })
-Product.belongsToMany(Sale, { through: SalesProducts })
+Sale.belongsToMany(Product, {
+  through: { model: SalesProducts }
+})
+
+Product.belongsToMany(Sale, {
+  through: { model: SalesProducts }
+})
 
 module.exports = Sale

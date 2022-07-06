@@ -43,7 +43,7 @@ const create = async ({ body, user }, res, next) =>
       return sale
     })
     .then((sale) => Sale.findByPk(sale.id, { include: Product }))
-    .then(toDTO)
+    .then((sale) => ({ data: toDTO(sale) }))
     .then(success(res, 201))
     .catch(validationError(res))
     .catch(next)
