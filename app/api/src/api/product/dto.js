@@ -4,8 +4,14 @@ const toDTO = (product) => {
     name: product.name,
     description: product.description,
     price: parseFloat(product.price),
-    forms: product.forms,
-    inventory: { quantity: product.inventory.quantity }
+    forms: product.forms.map((form) => {
+      return {
+        name: form.name,
+        coefficient: form.coefficient,
+        price: parseFloat(form.price)
+      }
+    }),
+    inventory: { quantity: parseFloat(product.inventory.quantity) }
   }
 }
 

@@ -5,8 +5,8 @@ const toDTO = (sale) => {
       id: item.id,
       name: item.name,
       description: item.description,
-      price: item.salesProducts.price,
-      quantity: item.salesProducts.quantity
+      price: parseFloat(item.salesProducts.price),
+      quantity: parseFloat(item.salesProducts.quantity)
     })),
     total: sale.products.reduce((total, item) => {
       total +=

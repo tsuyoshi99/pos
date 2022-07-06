@@ -53,13 +53,15 @@ router.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      items: Joi.array().items(
-        Joi.object({
-          id: Joi.number().integer().required(),
-          quantity: Joi.number().required(),
-          price: Joi.number().required()
-        })
-      )
+      items: Joi.array()
+        .items(
+          Joi.object({
+            id: Joi.number().integer().required(),
+            quantity: Joi.number().required(),
+            price: Joi.number().required()
+          }).required()
+        )
+        .min(1)
     }
   }),
   create
