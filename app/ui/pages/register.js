@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { inject, observer } from "mobx-react";
+import { useSnackbar } from "notistack";
 
 function Copyright(props) {
   return (
@@ -37,10 +38,28 @@ const theme = createTheme();
 
 function Register(props) {
   const { register } = props.authStore;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  const queueSnackbar = (message, options) => {
+    enqueueSnackbar(message, {
+      ...options,
+      action: (key) => (
+        <Button
+          key={key}
+          style={{ color: "white" }}
+          size="small"
+          onClick={() => closeSnackbar(key)}
+        >
+          CLOSE
+        </Button>
+      ),
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    queueSnackbar("Registering...", { variant: "info" });
     // console.log({
     //   email: data.get("email"),
     //   password: data.get("password"),
@@ -101,7 +120,7 @@ function Register(props) {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign up
+              Register
             </Typography>
             <Box
               component="form"
@@ -149,7 +168,7 @@ function Register(props) {
                     label="Password"
                     type="password"
                     id="password"
-                    autoComplete="new-password"
+                    // autoComplete="new-password"
                   />
                 </Grid>
                 <Grid item xs={12}>
