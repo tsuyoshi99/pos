@@ -1,13 +1,17 @@
 import "../styles/globals.css";
 
 import { Provider } from "mobx-react";
-import NavBar from "../components/NavBar";
 import CartStore from "../stores/CartStore";
 import ProductStore from "../stores/ProductStore";
+import AuthStore from "../stores/AuthStore";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Provider cartStore={CartStore} productStore={ProductStore}>
+    <Provider
+      cartStore={CartStore}
+      productStore={ProductStore}
+      authStore={AuthStore}
+    >
       <Component {...pageProps} />
     </Provider>
   );

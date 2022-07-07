@@ -13,6 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { inject, observer } from "mobx-react";
 
 function Copyright(props) {
   return (
@@ -34,14 +35,26 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Register() {
-  const handleSubmit = (event) => {
+function Register(props) {
+  const { register } = props.authStore;
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+    await register({
       email: data.get("email"),
       password: data.get("password"),
-    });
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
   };
 
   return (
@@ -171,3 +184,5 @@ export default function Register() {
     </ThemeProvider>
   );
 }
+
+export default inject("authStore")(observer(Register));

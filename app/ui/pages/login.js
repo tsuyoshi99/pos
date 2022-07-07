@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { inject, observer } from "mobx-react";
 
 function Copyright(props) {
   return (
@@ -33,14 +34,26 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function LogIn() {
-  const handleSubmit = (event) => {
+function LogIn(props) {
+  const { login } = props.authStore;
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+    await login({
       email: data.get("email"),
       password: data.get("password"),
-    });
+    })
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   };
 
   return (
@@ -147,3 +160,5 @@ export default function LogIn() {
     </ThemeProvider>
   );
 }
+
+export default inject("authStore")(observer(LogIn));
