@@ -3884,7 +3884,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core@0.1.0, core@workspace:app/core":
+"core@0.1.0, core@workspace:^, core@workspace:app/core":
   version: 0.0.0-use.local
   resolution: "core@workspace:app/core"
   dependencies:
@@ -11403,6 +11403,7 @@ __metadata:
     "@mui/material": ^5.8.4
     "@mui/utils": ^5.8.6
     axios: ^0.27.2
+    core: "workspace:^"
     eslint: ^8.19.0
     eslint-config-next: 12.1.6
     mobx: ^6.6.0

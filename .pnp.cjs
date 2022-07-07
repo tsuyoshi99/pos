@@ -14033,6 +14033,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mui/material", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:5.8.4"],\
             ["@mui/utils", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:5.8.6"],\
             ["axios", "npm:0.27.2"],\
+            ["core", "workspace:app/core"],\
             ["eslint", "npm:8.19.0"],\
             ["eslint-config-next", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:12.1.6"],\
             ["mobx", "npm:6.6.0"],\
