@@ -4,6 +4,7 @@ const auth = require('./auth')
 const product = require('./product')
 const sale = require('./sale')
 const passport = require('passport')
+const profile = require('./profile')
 
 // this is important
 require('../middlewares/authorization')
@@ -29,5 +30,10 @@ router.use(
   product
 )
 router.use('/sales', passport.authenticate('jwt', { session: false }), sale)
+router.use(
+  '/profile',
+  passport.authenticate('jwt', { session: false }),
+  profile
+)
 
 module.exports = router

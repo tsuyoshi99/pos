@@ -25,6 +25,7 @@ spec:
               cpu: "100m"
           ports:
             - containerPort: 7070
+          imagePullPolicy: Always
       imagePullSecrets:
         - name: regcred
 ---
