@@ -1,16 +1,13 @@
 const request = require('supertest')
 const { createUser } = require('../utils/user')
-const { createProfile } = require('../utils/profile')
-const Profile = require('../../src/api/profile/model')
 const sequelize = require('../../src/services/sequelize')
 const loadExpress = require('../../src/services/express')
 const { generateToken } = require('../utils/auth')
 const { clearDatabase } = require('../utils/database')
+const User = require('../../src/api/user/model')
 
 describe('profile routes', () => {
-  const profileData = {
-            name: '',
-      }
+  let loggedInUser
   const app = loadExpress()
   let token
 
@@ -21,7 +18,7 @@ describe('profile routes', () => {
       email: 'owner@example.com',
       role: 'OWNER'
     }
-    const loggedInUser = await createUser(loggedInUserData)
+    loggedInUser = await createUser(loggedInUserData)
     token = await generateToken(loggedInUser.get())
   })
 
@@ -29,80 +26,41 @@ describe('profile routes', () => {
     sequelize.close()
   })
 
-  describe('get /profiles', () => {
+  describe('get /profile', () => {
     test('should return list of profiles', async () => {
       const res = await request(app)
-        .get('/profiles')
+        .get('/profile')
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
-      expect(Array.isArray(res.body.data)).toBe(true)
+      expect(res.body.data).toBeDefined()
+      expect(res.body.data.name).toBe('test name')
 
       return true
     })
   })
 
-  describe('post /profiles', () => {
-    test('should return created profile', async () => {
-      const res = await request(app)
-        .post('/profiles')
-        .set('Authorization', `Bearer ${token}`)
-        .send(profileData)
-        .expect(201)
-      expect(res.body.data).toMatchObject({
-                    name: '',
-              })
-
-      const createdProfile = await Profile.findOne({
-        where: { id: res.body.data.id }
-      })
-      expect(createdProfile.get()).toBeDefined()
-      expect(createdProfile.get()).toMatchObject({
-                    name: '',
-              })
-    })
-
-    test('should return 401 if did not put token', async () => {
-      await request(app).post('/profiles').send(profileData).expect(401)
-    })
-  })
-
-  describe('put /profiles/:id', () => {
+  describe('put /profile', () => {
     test('should return updated profile', async () => {
-      const createdProfile = await createProfile(profileData)
-
       const res = await request(app)
-        .put(`/profiles/${createdProfile.get().id}`)
+        .put(`/profile`)
         .set('Authorization', `Bearer ${token}`)
-        .send({ 
-            // update sth here 
+        .send({
+          name: 'hello'
         })
         .expect(200)
 
+      expect(res.body.data).toBeDefined()
       expect(res.body.data).toMatchObject({
-        // confirm if the data is updated here
+        name: 'hello'
       })
 
-      const updatedProfile = await Profile.findOne({
-        where: { id: createdProfile.id }
+      const updatedProfile = await User.findOne({
+        where: { id: loggedInUser.id }
       })
       expect(updatedProfile.get()).toBeDefined()
       expect(updatedProfile.get()).toMatchObject({
-        // confirm if it actually updated in the database here
-                    name: '',
-              })
-    })
-  })
-
-  describe('delete /profiles/:id', () => {
-    test('should return status 204', async () => {
-      const createdProfile = await createProfile(profileData)
-
-      await request(app)
-        .delete(`/profiles/${createdProfile.id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(204)
-
-      return true
+        name: 'hello'
+      })
     })
   })
 })
