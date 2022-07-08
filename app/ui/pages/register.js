@@ -15,6 +15,13 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
 function Copyright(props) {
   return (
@@ -25,8 +32,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://pos.hunvikran.com/">
+        Hun Vikran
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -39,6 +46,11 @@ const theme = createTheme();
 function Register(props) {
   const { register } = props.authStore;
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [values, setValues] = React.useState({
+    email: "",
+    password: "",
+    showPassword: false,
+  });
 
   const queueSnackbar = (message, options) => {
     enqueueSnackbar(message, {
@@ -56,17 +68,28 @@ function Register(props) {
     });
   };
 
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    // const data = new FormData(event.currentTarget);
     queueSnackbar("Registering...", { variant: "info" });
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
     await register({
-      email: data.get("email"),
-      password: data.get("password"),
+      email: values.email,
+      password: values.password,
     })
       .then((res) => {
         console.log(res.data);
@@ -129,7 +152,7 @@ function Register(props) {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <TextField
                     autoComplete="given-name"
                     name="name"
@@ -140,7 +163,7 @@ function Register(props) {
                     autoFocus
                   />
                 </Grid>
-                {/* <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
@@ -158,18 +181,39 @@ function Register(props) {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    value={values.email}
+                    onChange={handleChange("email")}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    // autoComplete="new-password"
-                  />
+                  <FormControl fullWidth required variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="password"
+                      type={values.showPassword ? "text" : "password"}
+                      value={values.password}
+                      onChange={handleChange("password")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {values.showPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                    />
+                  </FormControl>
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
