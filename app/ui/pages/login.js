@@ -45,6 +45,8 @@ const theme = createTheme();
 
 function LogIn(props) {
   const { login, setAuthenticatedUser } = props.authStore;
+  const { errorMessage, getErrorMessage, addErrorMessage, removeErrorMessage } =
+    props.errorMsgStore;
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [values, setValues] = React.useState({
@@ -52,39 +54,6 @@ function LogIn(props) {
     password: "",
     showPassword: false,
   });
-
-  const validateEmail = (email) => {
-    const re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const validatePassword = (password) => {
-    const re =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return re.test(String(password));
-  };
-
-  const validateForm = () => {
-    if (values.email === "" || values.password === "") {
-      enqueueSnackbar("Please fill in all fields", { variant: "error" });
-      return false;
-    }
-
-    if (!validateEmail(values.email)) {
-      enqueueSnackbar("Please enter a valid email address", {
-        variant: "error",
-      });
-      return false;
-    }
-
-    // if (!validatePassword(values.password)) {
-    //   enqueueSnackbar("Please enter a valid password", { variant: "error" });
-    //   return false;
-    // }
-
-    return true;
-  };
 
   const queueSnackbar = (message, options) => {
     enqueueSnackbar(message, {
@@ -117,6 +86,39 @@ function LogIn(props) {
     event.preventDefault();
   };
 
+  const validateEmail = (email) => {
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validatePassword = (password) => {
+    const re =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return re.test(String(password));
+  };
+
+  const validateForm = () => {
+    if (values.email === "" || values.password === "") {
+      queueSnackbar("Please fill in all fields", { variant: "error" });
+      return false;
+    }
+
+    if (!validateEmail(values.email)) {
+      queueSnackbar("Please enter a valid email address", {
+        variant: "error",
+      });
+      return false;
+    }
+
+    // if (!validatePassword(values.password)) {
+    //   enqueueSnackbar("Please enter a valid password", { variant: "error" });
+    //   return false;
+    // }
+
+    return true;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validateForm()) return;
@@ -127,13 +129,13 @@ function LogIn(props) {
       password: values.password,
     })
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         setAuthenticatedUser(result.data.data);
         queueSnackbar("Logged in successfully", { variant: "success" });
         router.push("/");
       })
       .catch((error) => {
-        console.log(error.response.data);
+        // console.log(error.response.data);
         if (error.response.data.error.description) {
           queueSnackbar(capitalize(error.response.data.error.description), {
             variant: "error",
@@ -203,7 +205,6 @@ function LogIn(props) {
               sx={{ mt: 1 }}
             >
               <TextField
-                margin="normal"
                 required
                 fullWidth
                 id="email"
@@ -213,6 +214,7 @@ function LogIn(props) {
                 autoFocus
                 value={values.email}
                 onChange={handleChange("email")}
+                sx={{ my: 2 }}
               />
               <FormControl fullWidth required variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">
@@ -275,4 +277,4 @@ function LogIn(props) {
   );
 }
 
-export default inject("authStore")(observer(LogIn));
+export default inject("authStore", "errorMsgStore")(observer(LogIn));

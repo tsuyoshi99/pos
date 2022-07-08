@@ -11,6 +11,10 @@ class ErrorMessageStore {
     this.errorMessage = errorMessage;
   };
 
+  @action getErrorMessage = () => {
+    return this.errorMessage[0];
+  };
+
   @action addErrorMessage = (errorMessage) => {
     this.errorMessage.push(errorMessage);
   };

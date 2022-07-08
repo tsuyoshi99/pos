@@ -54,39 +54,6 @@ function Register(props) {
     showPassword: false,
   });
 
-  const validateEmail = (email) => {
-    const re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const validatePassword = (password) => {
-    const re =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return re.test(String(password));
-  };
-
-  const validateForm = () => {
-    if (values.email === "" || values.password === "") {
-      enqueueSnackbar("Please fill in all fields", { variant: "error" });
-      return false;
-    }
-
-    if (!validateEmail(values.email)) {
-      enqueueSnackbar("Please enter a valid email address", {
-        variant: "error",
-      });
-      return false;
-    }
-
-    // if (!validatePassword(values.password)) {
-    //   enqueueSnackbar("Please enter a valid password", { variant: "error" });
-    //   return false;
-    // }
-
-    return true;
-  };
-
   const queueSnackbar = (message, options) => {
     enqueueSnackbar(message, {
       ...options,
@@ -118,9 +85,41 @@ function Register(props) {
     event.preventDefault();
   };
 
+  const validateEmail = (email) => {
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validatePassword = (password) => {
+    const re =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return re.test(String(password));
+  };
+
+  const validateForm = () => {
+    if (values.email === "" || values.password === "") {
+      queueSnackbar("Please fill in all fields", { variant: "error" });
+      return false;
+    }
+
+    if (!validateEmail(values.email)) {
+      queueSnackbar("Please enter a valid email address", {
+        variant: "error",
+      });
+      return false;
+    }
+
+    // if (!validatePassword(values.password)) {
+    //   enqueueSnackbar("Please enter a valid password", { variant: "error" });
+    //   return false;
+    // }
+
+    return true;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
     if (!validateForm()) return;
     queueSnackbar("Registering...", { variant: "info" });
     await register({
@@ -128,12 +127,12 @@ function Register(props) {
       password: values.password,
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         queueSnackbar("Successfully registered", { variant: "success" });
         router.push("/login");
       })
       .catch((error) => {
-        console.log(error.response.data);
+        // console.log(error.response.data);
         queueSnackbar(capitalize(error.response.data.error.description), {
           variant: "error",
         });
@@ -196,7 +195,7 @@ function Register(props) {
               onSubmit={handleSubmit}
               sx={{ mt: 3 }}
             >
-              <Grid container spacing={2}>
+              <Grid container>
                 {/* <Grid item xs={12}>
                   <TextField
                     autoComplete="given-name"
@@ -230,7 +229,7 @@ function Register(props) {
                     onChange={handleChange("email")}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ mt: 2 }}>
                   <FormControl fullWidth required variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
                       Password
@@ -265,7 +264,7 @@ function Register(props) {
                     control={
                       <Checkbox value="allowExtraEmails" color="primary" />
                     }
-                    label="I want to receive inspiration, marketing promotions and updates via email."
+                    label="I have agreed to the terms and conditions"
                   />
                 </Grid>
               </Grid>
