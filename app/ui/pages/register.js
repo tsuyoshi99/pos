@@ -22,6 +22,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
+import { useRouter } from "next/router";
 
 function Copyright(props) {
   return (
@@ -33,7 +34,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://pos.hunvikran.com/">
-        Hun Vikran
+        Hun Vikran POS
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -45,12 +46,46 @@ const theme = createTheme();
 
 function Register(props) {
   const { register } = props.authStore;
+  const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [values, setValues] = React.useState({
     email: "",
     password: "",
     showPassword: false,
   });
+
+  const validateEmail = (email) => {
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validatePassword = (password) => {
+    const re =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return re.test(String(password));
+  };
+
+  const validateForm = () => {
+    if (values.email === "" || values.password === "") {
+      enqueueSnackbar("Please fill in all fields", { variant: "error" });
+      return false;
+    }
+
+    if (!validateEmail(values.email)) {
+      enqueueSnackbar("Please enter a valid email address", {
+        variant: "error",
+      });
+      return false;
+    }
+
+    // if (!validatePassword(values.password)) {
+    //   enqueueSnackbar("Please enter a valid password", { variant: "error" });
+    //   return false;
+    // }
+
+    return true;
+  };
 
   const queueSnackbar = (message, options) => {
     enqueueSnackbar(message, {
@@ -86,6 +121,7 @@ function Register(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = new FormData(event.currentTarget);
+    if (!validateForm()) return;
     queueSnackbar("Registering...", { variant: "info" });
     await register({
       email: values.email,
@@ -93,10 +129,19 @@ function Register(props) {
     })
       .then((res) => {
         console.log(res.data);
+        queueSnackbar("Successfully registered", { variant: "success" });
+        router.push("/login");
       })
       .catch((error) => {
         console.log(error.response.data);
+        queueSnackbar(capitalize(error.response.data.error.description), {
+          variant: "error",
+        });
       });
+  };
+
+  const capitalize = (s) => {
+    return s[0].toUpperCase() + s.substring(1);
   };
 
   return (
