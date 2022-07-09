@@ -1,5 +1,5 @@
-const toMultiLevel = () => {};
+const toMultiLevel = (quantity, coefficient, forms) => {};
 
-const toSingleLevel = () => {};
+const toSingleLevel = (quantity, coefficient, forms) => {};
 
 module.exports = { toMultiLevel, toSingleLevel };

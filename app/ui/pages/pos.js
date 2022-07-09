@@ -16,7 +16,18 @@ import { inject, observer } from "mobx-react";
 
 function PointOfSale(props) {
   const { cart, addToCart, cartTotal } = props.cartStore;
-  const { products } = props.productStore;
+  const { products, setProducts, getAllProducts } = props.productStore;
+
+  // React.useEffect(() => {
+  //   getAllProducts()
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setProducts(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response.data);
+  //     });
+  // }, [getAllProducts, setProducts]);
 
   return (
     <React.Fragment>
