@@ -14,6 +14,14 @@ To start the development server:
 yarn workpace ui dev
 ```
 
+## Documentation
+
+For API Documentation:
+
+```
+yarn workspace api docs
+```
+
 ## Committing Changes to Remote Repository
 
 Staging All Changes:
