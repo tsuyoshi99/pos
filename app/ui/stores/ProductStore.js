@@ -45,6 +45,10 @@ class ProductStore {
 
   @observable addProductVisible = false;
 
+  @action toggleAddProductVisible = (boolean) => {
+    this.addProductVisible = boolean;
+  };
+
   @action setProducts = (products) => {
     this.products = products;
   };

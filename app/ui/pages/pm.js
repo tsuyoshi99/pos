@@ -159,9 +159,9 @@ function ProductManagement(props) {
   const [orderBy, setOrderBy] = useState("id");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [newProduct, setNewProduct] = useState(false);
 
-  const { products } = props.productStore;
+  const { products, addProductVisible, toggleAddProductVisible } =
+    props.productStore;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -251,7 +251,7 @@ function ProductManagement(props) {
               size="small"
               startIcon={<AddCircleOutlineOutlinedIcon />}
               color="primary"
-              onClick={() => setNewProduct(true)}
+              onClick={() => toggleAddProductVisible(true)}
             >
               Add Product
             </Button>
@@ -381,7 +381,7 @@ function ProductManagement(props) {
                 />
               </Paper>
             </Grid>
-            {newProduct && (
+            {addProductVisible && (
               <Grid
                 item
                 xs
