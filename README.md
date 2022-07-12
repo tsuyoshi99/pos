@@ -6,7 +6,7 @@ This project is created as MonoRepository for Medical POS.
 
 Run `yarn install` to install all dependencies.
 
-## Development
+## Frontend Repo
 
 To start the development server:
 
@@ -14,7 +14,13 @@ To start the development server:
 yarn workpace ui dev
 ```
 
-## Documentation
+## API Repo
+
+Run API in Local Environment: 
+
+```
+yarn workspace api dev
+```
 
 For API Documentation:
 
