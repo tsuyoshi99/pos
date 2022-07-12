@@ -1,4 +1,5 @@
 import { observable, action, computed, makeObservable } from "mobx";
+import axios from "../axios";
 
 class ProductStore {
   @observable products = [
@@ -41,6 +42,24 @@ class ProductStore {
     },
     { id: 8, title: "Lyrica", price: 2003, quantity: 4, indicator: "Pill(s)" },
   ];
+
+  @observable addProductVisible = false;
+
+  @action toggleAddProductVisible = (boolean) => {
+    this.addProductVisible = boolean;
+  };
+
+  @action setProducts = (products) => {
+    this.products = products;
+  };
+
+  @action getAllProducts = () => {
+    return axios.get("/products");
+  };
+
+  @computed get allProducts() {
+    return this.products;
+  }
 
   constructor() {
     makeObservable(this);

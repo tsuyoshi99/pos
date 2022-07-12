@@ -1,4 +1,5 @@
 import * as React from "react";
+import styles from "../styles/index.module.scss";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,8 +16,15 @@ import AdbIcon from "@mui/icons-material/Adb";
 import Link from "next/link";
 import Drawer from "@mui/material/Drawer";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import InventoryIcon from "@mui/icons-material/Inventory";
+
+const profile = ["Profile", "Logout"];
 const menu = [
   {
     title: "Point of Sale",
@@ -31,6 +39,7 @@ const menu = [
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [state, setState] = React.useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -47,12 +56,51 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState(open);
+  };
+
+  const DrawerList = () => (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer("left", false)}
+      onKeyDown={toggleDrawer("left", false)}
+    >
+      <List>
+        {menu.map((page, index) => (
+          <Link href={page.link} key={page.title}>
+            <ListItem disablePadding>
+              <ListItemButton sx={{ pl: 3 }}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? (
+                    <AddShoppingCartIcon />
+                  ) : (
+                    <InventoryIcon />
+                  )}
+                </ListItemIcon>
+                <ListItemText primary={page.title} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={styles.appbar}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
+            className={styles.navBarTitle}
             variant="h6"
             noWrap
             component="a"
@@ -60,14 +108,12 @@ const NavBar = () => {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            LOGO
+            Medical POS
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -76,44 +122,19 @@ const NavBar = () => {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={toggleDrawer("left", true)}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            {/* <Drawer
-              anchor={anchor}
-              open={state[anchor]}
-              onClose={toggleDrawer(anchor, false)}
+            <Drawer
+              anchor="left"
+              open={state}
+              onClose={toggleDrawer("left", false)}
             >
-              {list(anchor)}
-            </Drawer> */}
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              <DrawerList />
+            </Drawer>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -125,19 +146,19 @@ const NavBar = () => {
               flexGrow: 1,
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            LOGO
+            Medical POS
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {menu.map((page) => (
               <Link href={page.link} key={page.title}>
                 <Button
+                  className={styles.menuItem}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ px: 2, my: 2, display: "block" }}
                 >
                   {page.title}
                 </Button>
@@ -167,10 +188,12 @@ const NavBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+              {profile.map((setting) => (
+                <Link href="/login" key={setting}>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
