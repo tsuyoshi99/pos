@@ -21,10 +21,15 @@ router.get('/', index)
  * @apiName UpdateProfile
  * @apiGroup Profile
  * @apiPermission user
- * @apiBody {String} [name] Profile's name.
- * @apiSuccess {Object} profile Profile's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 404 Profile not found.
+ * @apiBody {String} name
+ * @apiSuccess (201) {string} name
+ * @apiSuccess (201) {string} email
+ * @apiSuccess (201) {string} image
+ * @apiSuccess (201) {string} role
+ * @apiSuccess (201) {string} createdAt
+ * @apiSuccess (201) {string} updatedAt
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ * @apiError (401) Unauthorized user access only.
  */
 router.put(
   '/',

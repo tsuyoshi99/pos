@@ -4,7 +4,7 @@ const User = require('../user/model')
 
 const index = async ({ user }, res, next) => {
   try {
-    const result = await User.findOne({ id: user.id })
+    const result = await User.findOne({ where: { id: user.id } })
     return success(res)({
       data: toDTO(result)
     })
