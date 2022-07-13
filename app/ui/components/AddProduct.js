@@ -12,7 +12,7 @@ import { inject, observer } from "mobx-react";
 function createConfig(quantity, indicator, price) {
   return {
     quantity: quantity,
-    indicator: indicator,
+    name: indicator,
     price: price,
   };
 }
@@ -22,13 +22,13 @@ function AddProduct(props) {
 
   const [productConfigCount, setProductConfigCount] = React.useState(1);
   const [configList, setConfigList] = React.useState([
-    createConfig(null, "", ""),
+    createConfig("", "", ""),
   ]);
   const [name, setName] = React.useState("");
 
   function handleAddConfig() {
     setProductConfigCount(productConfigCount + 1);
-    setConfigList([...configList, createConfig(null, "", "")]);
+    setConfigList([...configList, createConfig("", "", "")]);
   }
 
   function handleRemoveConfig() {
@@ -46,7 +46,18 @@ function AddProduct(props) {
     };
   }
 
-  function handleSubmit() {
+  function selectOnFocus(event) {
+    event.target.select();
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    // format configList
+    configList.forEach((element) => {
+      element.quantity = Number(element.quantity);
+      element.price = Number(element.price);
+    });
+
     const obj = {
       name: name,
       forms: configList,
@@ -56,87 +67,92 @@ function AddProduct(props) {
 
   return (
     <Box sx={{ px: { sm: "5rem", md: "10rem", lg: "0" } }}>
-      <Box sx={{ mb: 2 }}>
-        <TextField
-          required
-          fullWidth
-          id="name"
-          label="Product Name"
-          variant="outlined"
-          value={name}
-          onChange={(text) => setName(text.target.value)}
-        />
-      </Box>
-      {configList.map((config, index) => {
-        return (
-          <Box key={index}>
-            <Box
-              sx={{
-                display: "flex",
-                mb: 2,
-              }}
-            >
-              <TextField
-                id={`quantity${index}`}
-                label="Has:"
-                type="number"
-                value={configList[index].quantity}
-                onChange={(text) => {
-                  handleConfigChange(index, "quantity")(text);
-                }}
-                sx={{ width: "50%", pr: 1 }}
-              />
-              <TextField
-                id={`indicator${index}`}
-                label="Indicator:"
-                value={configList[index].indicator}
-                onChange={(text) => {
-                  handleConfigChange(index, "indicator")(text);
-                }}
-                sx={{ width: "50%" }}
-              />
+      <form onSubmit={handleSubmit}>
+        <Box sx={{ mb: 2 }}>
+          <TextField
+            required
+            fullWidth
+            id="name"
+            label="Product Name"
+            variant="outlined"
+            value={name}
+            onChange={(text) => setName(text.target.value)}
+          />
+        </Box>
+        {configList.map((config, index) => {
+          return (
+            <Box key={index}>
               <Box
-                sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
+                sx={{
+                  display: "flex",
+                  mb: 2,
+                }}
               >
-                <IconButton aria-label="remove" onClick={handleRemoveConfig}>
-                  <RemoveCircleOutlineOutlinedIcon />
-                </IconButton>
+                <TextField
+                  id={`quantity${index}`}
+                  label="Has:"
+                  type="number"
+                  onFocus={selectOnFocus}
+                  value={configList[index].quantity}
+                  onChange={(text) => {
+                    handleConfigChange(index, "quantity")(text);
+                  }}
+                  sx={{ width: "50%", pr: 1 }}
+                />
+                <TextField
+                  id={`indicator${index}`}
+                  label="Indicator:"
+                  value={configList[index].setName}
+                  onChange={(text) => {
+                    handleConfigChange(index, "name")(text);
+                  }}
+                  onFocus={selectOnFocus}
+                  sx={{ width: "50%" }}
+                />
+                <Box
+                  sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
+                >
+                  <IconButton aria-label="remove" onClick={handleRemoveConfig}>
+                    <RemoveCircleOutlineOutlinedIcon />
+                  </IconButton>
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex", mb: 2 }}>
+                <TextField
+                  fullWidth
+                  onFocus={selectOnFocus}
+                  id={`price${index}`}
+                  label="Price for Each:"
+                  variant="outlined"
+                  value={configList[index].price}
+                  onChange={(text) => {
+                    handleConfigChange(index, "price")(text);
+                  }}
+                />
+                <Box
+                  sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
+                >
+                  <IconButton aria-label="add-new" onClick={handleAddConfig}>
+                    <AddCircleOutlineOutlinedIcon />
+                  </IconButton>
+                </Box>
               </Box>
             </Box>
-            <Box sx={{ display: "flex", mb: 2 }}>
-              <TextField
-                fullWidth
-                id={`price${index}`}
-                label="Price for Each:"
-                variant="outlined"
-                value={configList[index].price}
-                onChange={(text) => {
-                  handleConfigChange(index, "price")(text);
-                }}
-              />
-              <Box
-                sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
-              >
-                <IconButton aria-label="add-new" onClick={handleAddConfig}>
-                  <AddCircleOutlineOutlinedIcon />
-                </IconButton>
-              </Box>
-            </Box>
-          </Box>
-        );
-      })}
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button
-          variant="outlined"
-          sx={{ mr: 2 }}
-          onClick={() => toggleAddProductVisible(false)}
-        >
-          Cancel
-        </Button>
-        <Button variant="contained" onClick={handleSubmit}>
-          Create
-        </Button>
-      </Box>
+          );
+        })}
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            variant="outlined"
+            sx={{ mr: 2 }}
+            onClick={() => toggleAddProductVisible(false)}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" variant="contained">
+            Create
+          </Button>
+        </Box>
+      </form>
     </Box>
   );
 }
