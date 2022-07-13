@@ -66,93 +66,95 @@ function AddProduct(props) {
   }
 
   return (
-    <Box sx={{ px: { sm: "5rem", md: "10rem", lg: "0" } }}>
-      <form onSubmit={handleSubmit}>
-        <Box sx={{ mb: 2 }}>
-          <TextField
-            required
-            fullWidth
-            id="name"
-            label="Product Name"
-            variant="outlined"
-            value={name}
-            onChange={(text) => setName(text.target.value)}
-          />
-        </Box>
-        {configList.map((config, index) => {
-          return (
-            <Box key={index}>
-              <Box
-                sx={{
-                  display: "flex",
-                  mb: 2,
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{ px: { sm: "5rem", md: "10rem", lg: "0" } }}
+    >
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          required
+          fullWidth
+          id="name"
+          label="Product Name"
+          variant="outlined"
+          value={name}
+          onChange={(text) => setName(text.target.value)}
+        />
+      </Box>
+      {configList.map((config, index) => {
+        return (
+          <Box key={index}>
+            <Box
+              sx={{
+                display: "flex",
+                mb: 2,
+              }}
+            >
+              <TextField
+                id={`quantity${index}`}
+                label="Has:"
+                type="number"
+                onFocus={selectOnFocus}
+                value={configList[index].quantity}
+                onChange={(text) => {
+                  handleConfigChange(index, "quantity")(text);
                 }}
+                sx={{ width: "50%", pr: 1 }}
+              />
+              <TextField
+                id={`indicator${index}`}
+                label="Indicator:"
+                value={configList[index].setName}
+                onChange={(text) => {
+                  handleConfigChange(index, "name")(text);
+                }}
+                onFocus={selectOnFocus}
+                sx={{ width: "50%" }}
+              />
+              <Box
+                sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
               >
-                <TextField
-                  id={`quantity${index}`}
-                  label="Has:"
-                  type="number"
-                  onFocus={selectOnFocus}
-                  value={configList[index].quantity}
-                  onChange={(text) => {
-                    handleConfigChange(index, "quantity")(text);
-                  }}
-                  sx={{ width: "50%", pr: 1 }}
-                />
-                <TextField
-                  id={`indicator${index}`}
-                  label="Indicator:"
-                  value={configList[index].setName}
-                  onChange={(text) => {
-                    handleConfigChange(index, "name")(text);
-                  }}
-                  onFocus={selectOnFocus}
-                  sx={{ width: "50%" }}
-                />
-                <Box
-                  sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
-                >
-                  <IconButton aria-label="remove" onClick={handleRemoveConfig}>
-                    <RemoveCircleOutlineOutlinedIcon />
-                  </IconButton>
-                </Box>
-              </Box>
-              <Box sx={{ display: "flex", mb: 2 }}>
-                <TextField
-                  fullWidth
-                  onFocus={selectOnFocus}
-                  id={`price${index}`}
-                  label="Price for Each:"
-                  variant="outlined"
-                  value={configList[index].price}
-                  onChange={(text) => {
-                    handleConfigChange(index, "price")(text);
-                  }}
-                />
-                <Box
-                  sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
-                >
-                  <IconButton aria-label="add-new" onClick={handleAddConfig}>
-                    <AddCircleOutlineOutlinedIcon />
-                  </IconButton>
-                </Box>
+                <IconButton aria-label="remove" onClick={handleRemoveConfig}>
+                  <RemoveCircleOutlineOutlinedIcon />
+                </IconButton>
               </Box>
             </Box>
-          );
-        })}
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button
-            variant="outlined"
-            sx={{ mr: 2 }}
-            onClick={() => toggleAddProductVisible(false)}
-          >
-            Cancel
-          </Button>
-          <Button type="submit" variant="contained">
-            Create
-          </Button>
-        </Box>
-      </form>
+            <Box sx={{ display: "flex", mb: 2 }}>
+              <TextField
+                fullWidth
+                onFocus={selectOnFocus}
+                id={`price${index}`}
+                label="Price for Each:"
+                variant="outlined"
+                value={configList[index].price}
+                onChange={(text) => {
+                  handleConfigChange(index, "price")(text);
+                }}
+              />
+              <Box
+                sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
+              >
+                <IconButton aria-label="add-new" onClick={handleAddConfig}>
+                  <AddCircleOutlineOutlinedIcon />
+                </IconButton>
+              </Box>
+            </Box>
+          </Box>
+        );
+      })}
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          variant="outlined"
+          sx={{ mr: 2 }}
+          onClick={() => toggleAddProductVisible(false)}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" variant="contained">
+          Create
+        </Button>
+      </Box>
     </Box>
   );
 }

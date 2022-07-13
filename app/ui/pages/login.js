@@ -22,6 +22,11 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { useRouter } from "next/router";
+import {
+  validateEmpty,
+  validateEmail,
+  validatePassword,
+} from "core/validation";
 
 function Copyright(props) {
   return (
@@ -84,18 +89,6 @@ function LogIn(props) {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-  };
-
-  const validateEmail = (email) => {
-    const re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const validatePassword = (password) => {
-    const re =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return re.test(String(password));
   };
 
   const validateForm = () => {
