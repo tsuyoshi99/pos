@@ -8,6 +8,7 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import Button from "@mui/material/Button";
 import { inject, observer } from "mobx-react";
+import { validateNumber } from "core/validation";
 
 function createConfig(quantity, indicator, price) {
   return {
@@ -58,6 +59,9 @@ function AddProduct(props) {
       element.price = Number(element.price);
     });
 
+    // validate configList
+    // ToDo: validate configList
+
     const obj = {
       name: name,
       forms: configList,
@@ -96,6 +100,11 @@ function AddProduct(props) {
                 label="Has:"
                 type="number"
                 onFocus={selectOnFocus}
+                onInput={(e) => {
+                  e.target.value = Math.max(0, parseInt(e.target.value))
+                    .toString()
+                    .slice(0, 12);
+                }}
                 value={configList[index].quantity}
                 onChange={(text) => {
                   handleConfigChange(index, "quantity")(text);
