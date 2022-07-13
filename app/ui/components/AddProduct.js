@@ -8,24 +8,42 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import Button from "@mui/material/Button";
 import { inject, observer } from "mobx-react";
+import { useSnackbar } from "notistack";
 import { validateNumber } from "core/validation";
 
-function createConfig(quantity, indicator, price) {
+function createConfig(coefficient, indicator, price) {
   return {
-    quantity: quantity,
+    coefficient: coefficient,
     name: indicator,
     price: price,
   };
 }
 
 function AddProduct(props) {
-  const { toggleAddProductVisible } = props.productStore;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { toggleAddProductVisible, addProduct } = props.productStore;
 
   const [productConfigCount, setProductConfigCount] = React.useState(1);
   const [configList, setConfigList] = React.useState([
     createConfig("", "", ""),
   ]);
   const [name, setName] = React.useState("");
+
+  function queueSnackbar(message, options) {
+    enqueueSnackbar(message, {
+      ...options,
+      action: (key) => (
+        <Button
+          key={key}
+          style={{ color: "white" }}
+          size="small"
+          onClick={() => closeSnackbar(key)}
+        >
+          CLOSE
+        </Button>
+      ),
+    });
+  }
 
   function handleAddConfig() {
     setProductConfigCount(productConfigCount + 1);
@@ -34,8 +52,8 @@ function AddProduct(props) {
 
   function handleRemoveConfig() {
     if (productConfigCount > 1) {
-      setProductConfigCount(productConfigCount - 1);
       setConfigList([...configList.slice(0, -1)]);
+      setProductConfigCount(productConfigCount - 1);
     }
   }
 
@@ -55,7 +73,7 @@ function AddProduct(props) {
     event.preventDefault();
     // format configList
     configList.forEach((element) => {
-      element.quantity = Number(element.quantity);
+      element.coefficient = Number(element.coefficient);
       element.price = Number(element.price);
     });
 
@@ -65,8 +83,22 @@ function AddProduct(props) {
     const obj = {
       name: name,
       forms: configList,
+      inventory: {
+        quantity: 0,
+      },
     };
     console.log(obj);
+    queueSnackbar("Creating New Product...", { variant: "info" });
+    addProduct(obj)
+      .then((res) => {
+        console.log(res);
+        toggleAddProductVisible(false);
+        queueSnackbar("Product Created", { variant: "success" });
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        queueSnackbar(err.response.data, { variant: "error" });
+      });
   }
 
   return (
@@ -96,22 +128,6 @@ function AddProduct(props) {
               }}
             >
               <TextField
-                id={`quantity${index}`}
-                label="Has:"
-                type="number"
-                onFocus={selectOnFocus}
-                onInput={(e) => {
-                  e.target.value = Math.max(0, parseInt(e.target.value))
-                    .toString()
-                    .slice(0, 12);
-                }}
-                value={configList[index].quantity}
-                onChange={(text) => {
-                  handleConfigChange(index, "quantity")(text);
-                }}
-                sx={{ width: "50%", pr: 1 }}
-              />
-              <TextField
                 id={`indicator${index}`}
                 label="Indicator:"
                 value={configList[index].setName}
@@ -119,6 +135,23 @@ function AddProduct(props) {
                   handleConfigChange(index, "name")(text);
                 }}
                 onFocus={selectOnFocus}
+                sx={{ width: "50%", pr: 1 }}
+              />
+              <TextField
+                id={`coefficient${index}`}
+                label="Coefficient:"
+                type="number"
+                onFocus={selectOnFocus}
+                onInput={(e) => {
+                  e.target.value = Math.max(0, parseInt(e.target.value))
+                    .toString()
+                    .slice(0, 12);
+                }}
+                inputProps={{ readOnly: index == 0 ? true : false }}
+                value={index == 0 ? 1 : configList[index].coefficient}
+                onChange={(text) => {
+                  handleConfigChange(index, "coefficient")(text);
+                }}
                 sx={{ width: "50%" }}
               />
               <Box
@@ -140,6 +173,7 @@ function AddProduct(props) {
                 onChange={(text) => {
                   handleConfigChange(index, "price")(text);
                 }}
+                type="number"
               />
               <Box
                 sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}

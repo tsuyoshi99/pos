@@ -57,6 +57,10 @@ class ProductStore {
     return axios.get("/products");
   };
 
+  @action addProduct(product) {
+    return axios.post("/products", product);
+  }
+
   @computed get allProducts() {
     return this.products;
   }
