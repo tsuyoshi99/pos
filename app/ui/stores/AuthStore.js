@@ -9,6 +9,10 @@ class AuthStore {
     makeObservable(this);
   }
 
+  @action isLoggedIn = () => {
+    return !!this.token;
+  };
+
   @action register = (user) => {
     return axios.post("/auth/register", user); // returns a promise
   };
