@@ -4,8 +4,11 @@ import axios from "../axios";
 class ProductStore {
   @observable products = [];
   @observable productCounts = 0;
-
   @observable addProductVisible = false;
+
+  constructor() {
+    makeObservable(this);
+  }
 
   @action toggleAddProductVisible = (boolean) => {
     this.addProductVisible = boolean;
@@ -31,12 +34,12 @@ class ProductStore {
     return axios.post("/products", product);
   }
 
-  @computed get allProducts() {
-    return this.products;
+  @action deleteProduct(id) {
+    return axios.delete(`/products/${id}`);
   }
 
-  constructor() {
-    makeObservable(this);
+  @computed get allProducts() {
+    return this.products;
   }
 }
 

@@ -21,13 +21,15 @@ function createConfig(coefficient, indicator, price) {
 
 function AddProduct(props) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { toggleAddProductVisible, addProduct } = props.productStore;
+  const { toggleAddProductVisible, addProduct, getAllProducts } =
+    props.productStore;
 
   const [productConfigCount, setProductConfigCount] = React.useState(1);
   const [configList, setConfigList] = React.useState([
     createConfig("", "", ""),
   ]);
   const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
 
   function queueSnackbar(message, options) {
     enqueueSnackbar(message, {
@@ -82,6 +84,7 @@ function AddProduct(props) {
 
     const obj = {
       name: name,
+      description: description,
       forms: configList,
       inventory: {
         quantity: 0,
@@ -91,6 +94,7 @@ function AddProduct(props) {
     queueSnackbar("Creating New Product...", { variant: "info" });
     addProduct(obj)
       .then((res) => {
+        getAllProducts();
         console.log(res);
         toggleAddProductVisible(false);
         queueSnackbar("Product Created", { variant: "success" });
@@ -116,6 +120,17 @@ function AddProduct(props) {
           variant="outlined"
           value={name}
           onChange={(text) => setName(text.target.value)}
+        />
+      </Box>
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          fullWidth
+          multiline
+          id="description"
+          label="Description"
+          variant="outlined"
+          value={description}
+          onChange={(text) => setDescription(text.target.value)}
         />
       </Box>
       {configList.map((config, index) => {

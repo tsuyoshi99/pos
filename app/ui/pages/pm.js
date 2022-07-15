@@ -23,8 +23,10 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
+import { useSnackbar } from "notistack";
 
 import NavBar from "../components/NavBar";
 import AddProduct from "../components/AddProduct";
@@ -76,6 +78,12 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: "Description",
+  },
+  {
+    id: "action",
+    numeric: false,
+    disablePadding: false,
+    label: "",
   },
   // {
   //   id: "quantity",
@@ -166,11 +174,13 @@ function ProductManagement(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const {
     products,
     addProductVisible,
     toggleAddProductVisible,
     getAllProducts,
+    deleteProduct,
   } = props.productStore;
 
   const handleRequestSort = (event, property) => {
@@ -289,9 +299,32 @@ function ProductManagement(props) {
     numSelected: PropTypes.number.isRequired,
   };
 
+  function queueSnackbar(message, options) {
+    enqueueSnackbar(message, {
+      ...options,
+      action: (key) => (
+        <Button
+          key={key}
+          style={{ color: "white" }}
+          size="small"
+          onClick={() => closeSnackbar(key)}
+        >
+          CLOSE
+        </Button>
+      ),
+    });
+  }
+
+  function handleDeleteProduct(id) {
+    deleteProduct(id).then((res) => {
+      queueSnackbar("Product Deleted!", { variant: "success" });
+      getAllProducts();
+    });
+  }
+
   React.useEffect(() => {
     getAllProducts();
-  }, [getAllProducts]);
+  }, []);
 
   return (
     <React.Fragment>
@@ -365,6 +398,21 @@ function ProductManagement(props) {
                               </TableCell>
                               <TableCell>{row.name}</TableCell>
                               <TableCell>{row.description}</TableCell>
+                              <TableCell align="center">
+                                <Tooltip title="Update">
+                                  <IconButton aria-label="edit" color="warning">
+                                    <BorderColorIcon />
+                                  </IconButton>
+                                </Tooltip>
+                                <Tooltip
+                                  title="Delete"
+                                  // onClick={handleDeleteProduct(row.id)}
+                                >
+                                  <IconButton aria-label="delete" color="error">
+                                    <DeleteIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              </TableCell>
                               {/* <TableCell align="right">
                                 {row.forms[0].coefficient}
                               </TableCell>
