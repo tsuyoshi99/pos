@@ -66,29 +66,35 @@ const headCells = [
     label: "Product ID",
   },
   {
-    id: "title",
+    id: "name",
     numeric: false,
     disablePadding: false,
     label: "Product name",
   },
   {
-    id: "price",
-    numeric: true,
-    disablePadding: false,
-    label: "Price (USD)",
-  },
-  {
-    id: "quantity",
-    numeric: true,
-    disablePadding: false,
-    label: "Quantity",
-  },
-  {
-    id: "indicator",
+    id: "description",
     numeric: false,
     disablePadding: false,
-    label: "Indicator",
+    label: "Description",
   },
+  // {
+  //   id: "quantity",
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: "Coefficient",
+  // },
+  // {
+  //   id: "indicator",
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: "Indicator",
+  // },
+  // {
+  //   id: "price",
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: "Price (USD)",
+  // },
 ];
 
 function EnhancedTableHead(props) {
@@ -160,8 +166,12 @@ function ProductManagement(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const { products, addProductVisible, toggleAddProductVisible } =
-    props.productStore;
+  const {
+    products,
+    addProductVisible,
+    toggleAddProductVisible,
+    getAllProducts,
+  } = props.productStore;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -279,6 +289,10 @@ function ProductManagement(props) {
     numSelected: PropTypes.number.isRequired,
   };
 
+  React.useEffect(() => {
+    getAllProducts();
+  }, [getAllProducts]);
+
   return (
     <React.Fragment>
       <NavBar />
@@ -349,12 +363,15 @@ function ProductManagement(props) {
                               >
                                 {row.id}
                               </TableCell>
-                              <TableCell>{row.title}</TableCell>
-                              <TableCell align="right">{row.price}</TableCell>
-                              <TableCell align="right">
-                                {row.quantity}
+                              <TableCell>{row.name}</TableCell>
+                              <TableCell>{row.description}</TableCell>
+                              {/* <TableCell align="right">
+                                {row.forms[0].coefficient}
                               </TableCell>
-                              <TableCell>{row.indicator}</TableCell>
+                              <TableCell>{row.forms[0].name}</TableCell>
+                              <TableCell align="right">
+                                {row.forms[0].price}
+                              </TableCell> */}
                             </TableRow>
                           );
                         })}
