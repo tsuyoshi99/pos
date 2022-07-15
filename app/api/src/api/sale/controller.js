@@ -30,7 +30,7 @@ const index = async ({ query }, res, next) => {
 }
 
 const create = async ({ body, user }, res, next) =>
-  Sale.create({ userId: user.id }, { include: Product })
+  Sale.create({ userId: user.id })
     .then(async (sale) => {
       const addingProducts = body.items.map((item) => {
         return sale.addProduct(item.id, {
