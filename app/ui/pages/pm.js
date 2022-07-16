@@ -30,6 +30,7 @@ import { useSnackbar } from "notistack";
 
 import NavBar from "../components/NavBar";
 import AddProduct from "../components/AddProduct";
+import ConfirmDialog from "../components/ConfirmDialog";
 import { inject, observer } from "mobx-react";
 
 function descendingComparator(a, b, orderBy) {
@@ -412,6 +413,17 @@ function ProductManagement(props) {
                                     <DeleteIcon />
                                   </IconButton>
                                 </Tooltip>
+                                {/* <ConfirmDialog
+                                  title="Are you sure?"
+                                  message="You want to delete this product?"
+                                  actions={[
+                                    { title: "Cancel", close: true },
+                                    {
+                                      title: "Delete",
+                                      close: true,
+                                    },
+                                  ]}
+                                /> */}
                               </TableCell>
                               {/* <TableCell align="right">
                                 {row.forms[0].coefficient}
