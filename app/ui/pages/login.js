@@ -1,52 +1,14 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import { useRouter } from "next/router";
 import {
   validateEmpty,
   validateEmail,
   validatePassword,
 } from "core/validation";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://pos.hunvikran.com/">
-        Hun Vikran POS
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
 
 function LogIn(props) {
   const { login, setAuthenticatedUser } = props.authStore;
@@ -116,19 +78,16 @@ function LogIn(props) {
     event.preventDefault();
     if (!validateForm()) return;
     queueSnackbar("Logging in...", { variant: "info" });
-    // const data = new FormData(event.currentTarget);
     await login({
       email: values.email,
       password: values.password,
     })
       .then((result) => {
-        // console.log(result.data);
         setAuthenticatedUser(result.data.data);
         queueSnackbar("Logged in successfully", { variant: "success" });
         router.push("/");
       })
       .catch((error) => {
-        // console.log(error.response.data);
         if (error.response.data.error.description) {
           queueSnackbar(capitalize(error.response.data.error.description), {
             variant: "error",
@@ -147,9 +106,17 @@ function LogIn(props) {
 
   return (
     <section className="relative flex flex-wrap lg:h-screen lg:items-center">
+      <div className="relative w-full h-64 sm:h-96 lg:w-1/2 lg:h-full">
+        <img
+          className="absolute inset-0 object-cover w-full h-full"
+          src="https://source.unsplash.com/random"
+          alt=""
+        />
+      </div>
+
       <div className="w-full px-4 py-12 lg:w-1/2 sm:px-6 lg:px-8 sm:py-16 lg:py-24">
         <div className="max-w-lg mx-auto text-center">
-          <h1 className="text-2xl font-bold sm:text-3xl">Get started today!</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">Welcome back!</h1>
 
           <p className="mt-4 text-gray-500">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero
@@ -171,6 +138,8 @@ function LogIn(props) {
                 type="email"
                 className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
                 placeholder="Enter email"
+                value={values.email}
+                onChange={handleChange("email")}
               />
 
               <span className="absolute inset-y-0 inline-flex items-center right-4">
@@ -198,12 +167,17 @@ function LogIn(props) {
             </label>
             <div className="relative">
               <input
-                type="password"
+                type={values.showPassword ? "text" : "password"}
                 className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
                 placeholder="Enter password"
+                value={values.password}
+                onChange={handleChange("password")}
               />
 
-              <span className="absolute inset-y-0 inline-flex items-center right-4">
+              <span
+                className="absolute inset-y-0 inline-flex items-center right-4 cursor-pointer"
+                onClick={handleClickShowPassword}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-5 h-5 text-gray-400"
@@ -231,9 +205,12 @@ function LogIn(props) {
           <div className="flex items-center justify-between">
             <p className="text-sm text-gray-500">
               No account?
-              <a className="underline" href="">
+              <Link
+                href="/register"
+                className="text-blue-500 hover:text-blue-700 transition-colors duration-200 ease-in-out"
+              >
                 Sign up
-              </a>
+              </Link>
             </p>
 
             <button
@@ -244,14 +221,6 @@ function LogIn(props) {
             </button>
           </div>
         </form>
-      </div>
-
-      <div className="relative w-full h-64 sm:h-96 lg:w-1/2 lg:h-full">
-        <img
-          className="absolute inset-0 object-cover w-full h-full"
-          src="https://www.hyperui.dev/photos/team-1.jpeg"
-          alt=""
-        />
       </div>
     </section>
   );
