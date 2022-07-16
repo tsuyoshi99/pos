@@ -18,16 +18,9 @@ function PointOfSale(props) {
   const { cart, addToCart, cartTotal } = props.cartStore;
   const { products, setProducts, getAllProducts } = props.productStore;
 
-  // React.useEffect(() => {
-  //   getAllProducts()
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setProducts(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response.data);
-  //     });
-  // }, [getAllProducts, setProducts]);
+  React.useEffect(() => {
+    getAllProducts();
+  }, [getAllProducts, setProducts]);
 
   return (
     <React.Fragment>
@@ -77,7 +70,10 @@ function PointOfSale(props) {
                     }}
                     key={index}
                   >
-                    <ProductCard title={product.title} price={product.price} />
+                    <ProductCard
+                      title={product.name}
+                      description={product.description}
+                    />
                   </a>
                 ))}
               </Grid>

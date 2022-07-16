@@ -1,10 +1,10 @@
 import styles from "../styles/index.module.scss";
 
-export default function ProductCard({ title, price }) {
+export default function ProductCard({ title, description }) {
   return (
     <div className={styles.card}>
       <h2>{title} &rarr;</h2>
-      <p>$ {price}</p>
+      <p>{description}</p>
     </div>
   );
 }

@@ -11,7 +11,7 @@ function OrderItem(props) {
   return (
     <Grid container direction="row" spacing={2}>
       <Grid item xs={4}>
-        <p>{props.product.title}</p>
+        <p>{props.product.name}</p>
       </Grid>
       <Grid item xs={4}>
         <p>
