@@ -96,7 +96,7 @@ function Register(props) {
   };
 
   return (
-    <section className="relative flex flex-wrap lg:h-screen lg:items-center">
+    <section className="relative flex flex-wrap h-screen lg:items-center">
       <div className="relative w-full h-64 sm:h-96 lg:w-1/2 lg:h-full">
         <img
           className="absolute inset-0 object-cover w-full h-full"
@@ -110,8 +110,7 @@ function Register(props) {
           <h1 className="text-2xl font-bold sm:text-3xl">Create New Account</h1>
 
           <p className="mt-4 text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero
-            nulla eaque error neque ipsa culpa autem, at itaque nostrum!
+            Brought to you by 2 ambitious individuals.
           </p>
         </div>
 

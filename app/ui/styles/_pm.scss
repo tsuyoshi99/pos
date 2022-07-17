@@ -1,3 +1,14 @@
 .wide {
     width: 100%;
 }
+ .indicator {
+    display: flex;
+    width: 100% !important;
+    // background-color: #f2f2f2;
+    padding: 16px;
+    border-bottom-color: #f2f2f2;
+    border-bottom-width: 1px;
+    &:hover {
+        background-color: #f2f2f2;
+    }
+ }
