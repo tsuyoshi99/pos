@@ -1,5 +1,3 @@
-const { ValidationError } = require('sequelize')
-
 const notFound = (res) => (entity) => {
   if (entity) {
     return entity
@@ -8,18 +6,12 @@ const notFound = (res) => (entity) => {
   return null
 }
 
-const validationError = (res) => (error) => {
+const sequelizeValidationHandler = (res, error) => {
   // handle sequlize error
-  if (error instanceof ValidationError) {
-    res.status(400).send({
-      name: error.message,
-      description: error.errors.map((err) => ({ message: err.message }))
-    })
-
-    return
-  }
-
-  throw error
+  res.status(400).send({
+    name: error.message,
+    description: error.errors.map((err) => ({ message: err.message }))
+  })
 }
 
-module.exports = { notFound, validationError }
+module.exports = { notFound, sequelizeValidationHandler }

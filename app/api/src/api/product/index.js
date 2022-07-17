@@ -1,6 +1,7 @@
 const { celebrate, Joi, Segments } = require('celebrate')
 const { Router } = require('express')
 const { create, index, update, destroy } = require('./controller')
+const core = require('core')
 
 const router = new Router()
 
@@ -62,23 +63,7 @@ router.get(
 router.post(
   '/',
   celebrate({
-    [Segments.BODY]: {
-      name: Joi.string(),
-      description: Joi.string(),
-      price: Joi.number(),
-      forms: Joi.array()
-        .items(
-          Joi.object({
-            name: Joi.string().required(),
-            price: Joi.number().required(),
-            coefficient: Joi.number().required()
-          })
-        )
-        .min(1)
-        .max(10)
-        .required(),
-      inventory: Joi.object({ quantity: Joi.number().required() }).required()
-    }
+    [Segments.BODY]: core.product.validation.create
   }),
   create
 )
@@ -109,22 +94,7 @@ router.put(
     [Segments.PARAMS]: Joi.object({
       id: Joi.number().required()
     }),
-    [Segments.BODY]: {
-      name: Joi.string(),
-      description: Joi.string(),
-      price: Joi.number(),
-      forms: Joi.array()
-        .items(
-          Joi.object({
-            name: Joi.string(),
-            price: Joi.number(),
-            coefficient: Joi.number()
-          })
-        )
-        .min(1)
-        .max(10),
-      inventory: Joi.object({ quantity: Joi.number() })
-    }
+    [Segments.BODY]: core.product.validation.update
   }),
   update
 )

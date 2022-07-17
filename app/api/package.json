@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node src/index",
-    "dev": "docker-compose up -d && nodemon --exec node -r dotenv/config src/index.js",
+    "dev": "docker-compose up -d && dotenv -- nodemon --exec node src/index.js",
     "docs": "apidoc -i src -o docs && apidoc-markdown -p docs -o DOCS.md",
     "lint": "eslint **/*.js --ignore-pattern node_modules/",
     "lint:fix": "eslint **/*.js --ignore-pattern node_modules/ --fix",
-    "test": "jest -i --colors --verbose"
+    "test": "dotenv -e .test.env -- jest -i --colors --verbose"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -36,6 +36,7 @@
   "devDependencies": {
     "apidoc": "^0.51.1",
     "apidoc-markdown": "^7.1.0",
+    "dotenv-cli": "^6.0.0",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-prettier-standard": "^4.0.1",

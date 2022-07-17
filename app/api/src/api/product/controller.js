@@ -1,4 +1,4 @@
-const { notFound, validationError } = require('../../utils/httpResponse')
+const { notFound } = require('../../utils/httpResponse')
 const { success } = require('../../utils/httpResponse')
 const {
   toOrder,
@@ -7,6 +7,7 @@ const {
 } = require('../../utils/httpToSequelize')
 const { Product, Inventory } = require('./model')
 const { toDTO } = require('./dto')
+const core = require('core')
 
 const index = async ({ query }, res, next) => {
   try {
@@ -30,14 +31,18 @@ const index = async ({ query }, res, next) => {
 
 const create = ({ body }, res, next) =>
   Product.create(
-    { ...body, inventory: { quantity: body.inventory.quantity } },
+    {
+      ...body,
+      inventory: {
+        quantity: core.product.toSingleLevel(body.forms, body.inventory)
+      }
+    },
     { include: Inventory }
   )
     .then((product) => {
       return { data: toDTO(product) }
     })
     .then(success(res, 201))
-    .catch(validationError(res))
     .catch(next)
 
 const update = ({ body, params: { id } }, res, next) =>
@@ -50,13 +55,21 @@ const update = ({ body, params: { id } }, res, next) =>
         return product
       }
 
-      await Inventory.update(body.inventory, {
-        where: { id: product.inventory.id }
-      })
+      const newQuantity = core.product.toSingleLevel(
+        body.forms ? body.forms : product.forms,
+        body.inventory
+      )
+
+      await Inventory.update(
+        { quantity: newQuantity },
+        {
+          where: { id: product.inventory.id }
+        }
+      )
 
       return product
     })
-    .then((product) => Product.findByPk(product.id, { include: Inventory }))
+    .then(() => Product.findByPk(id, { include: Inventory }))
     .then((product) => {
       return { data: toDTO(product) }
     })

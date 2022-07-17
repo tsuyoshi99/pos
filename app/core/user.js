@@ -1,3 +1,3 @@
-const roles = ["user"];
+const roles = ["admin", "sale"];
 
 module.exports = { roles };

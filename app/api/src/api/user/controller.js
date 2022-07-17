@@ -1,4 +1,4 @@
-const { notFound, validationError } = require('../../utils/httpResponse')
+const { notFound } = require('../../utils/httpResponse')
 const { success } = require('../../utils/httpResponse')
 const {
   toOrder,
@@ -33,7 +33,6 @@ const create = ({ body }, res, next) =>
       return { data: toDTO(user) }
     })
     .then(success(res, 201))
-    .catch(validationError(res))
     .catch(next)
 
 const update = ({ body, params: { id } }, res, next) =>

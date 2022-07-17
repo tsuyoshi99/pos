@@ -1,6 +1,8 @@
 const { isCelebrateError } = require('celebrate')
+const { ValidationError } = require('sequelize')
 const { logger } = require('../services/logger')
 const { HttpError } = require('../utils/httpError')
+const { sequelizeValidationHandler } = require('../utils/httpResponse')
 
 const errorHandler = (err, _, res, next) => {
   if (err instanceof HttpError) {
@@ -13,6 +15,11 @@ const errorHandler = (err, _, res, next) => {
       }
     })
 
+    return next()
+  }
+
+  if (err instanceof ValidationError) {
+    sequelizeValidationHandler(res, err)
     return next()
   }
 

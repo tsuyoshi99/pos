@@ -1,7 +1,7 @@
 const request = require('supertest')
 const { createUser } = require('../utils/user')
 const { createProduct } = require('../utils/product')
-const { Product } = require('../../src/api/product/model')
+const { Product, Inventory } = require('../../src/api/product/model')
 const sequelize = require('../../src/services/sequelize')
 const loadExpress = require('../../src/services/express')
 const { generateToken } = require('../utils/auth')
@@ -9,25 +9,33 @@ const { clearDatabase } = require('../utils/database')
 
 describe('product routes', () => {
   const productData = {
-    name: 'test product',
-    description: 'test description',
-    price: 10.0,
-    inventory: { quantity: 10 },
+    name: 'test123 prasdfoduct',
     forms: [
       {
         name: 'box',
         price: 10,
-        coefficient: 0
+        coefficient: 1
       },
       {
         name: 'tablet',
-        price: 5,
-        coefficient: 10
+        price: 10,
+        coefficient: 5
       },
       {
         name: 'pill',
-        price: 1,
-        coefficient: 10
+        price: 10,
+        coefficient: 24
+      }
+    ],
+    inventory: [
+      {
+        quantity: 1000
+      },
+      {
+        quantity: 500
+      },
+      {
+        quantity: 5
       }
     ]
   }
@@ -68,35 +76,42 @@ describe('product routes', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(productData)
         .expect(201)
-      expect(res.body.data).toMatchObject(productData)
+      expect(res.body.data).toBeDefined()
+      expect(res.body.data).toMatchObject({
+        name: 'test123 prasdfoduct',
+        description: null,
+        price: null,
+        quantity: 132005,
+        inventory: [
+          {
+            name: 'box',
+            coefficient: 1,
+            price: 10,
+            quantity: 1100
+          },
+          {
+            name: 'tablet',
+            coefficient: 5,
+            price: 10,
+            quantity: 0
+          },
+          {
+            name: 'pill',
+            coefficient: 24,
+            price: 10,
+            quantity: 5
+          }
+        ]
+      })
 
       const createdProduct = await Product.findOne({
-        where: { id: res.body.data.id }
+        where: { id: res.body.data.id },
+        include: Inventory
       })
 
       expect(createdProduct.get()).toBeDefined()
       expect(createdProduct.get()).toMatchObject({
-        id: 1,
-        name: 'test product',
-        description: 'test description',
-        price: '10.00',
-        forms: [
-          {
-            name: 'box',
-            price: 10,
-            coefficient: 0
-          },
-          {
-            name: 'tablet',
-            price: 5,
-            coefficient: 10
-          },
-          {
-            name: 'pill',
-            price: 1,
-            coefficient: 10
-          }
-        ]
+        inventory: { quantity: '132005.00' }
       })
     })
 
@@ -108,27 +123,62 @@ describe('product routes', () => {
   describe('put /products/:id', () => {
     test('should return updated user', async () => {
       const createdProduct = await createProduct(productData)
+      const updateProductData = {
+        name: 'test123',
+        inventory: [
+          {
+            quantity: 100
+          },
+          {
+            quantity: 0
+          },
+          {
+            quantity: 100
+          }
+        ]
+      }
+
       const updatedProductData = {
-        name: 'updatedName',
-        description: 'updatedDescription',
-        price: 15.0
+        name: 'test123',
+        quantity: 12100,
+        inventory: [
+          {
+            name: 'box',
+            coefficient: 1,
+            price: 10,
+            quantity: 100
+          },
+          {
+            name: 'tablet',
+            coefficient: 5,
+            price: 10,
+            quantity: 4
+          },
+          {
+            name: 'pill',
+            coefficient: 24,
+            price: 10,
+            quantity: 4
+          }
+        ]
       }
 
       const res = await request(app)
         .put(`/products/${createdProduct.get().id}`)
         .set('Authorization', `Bearer ${token}`)
-        .send(updatedProductData)
+        .send(updateProductData)
         .expect(200)
 
       expect(res.body.data).toMatchObject(updatedProductData)
 
       const updatedProduct = await Product.findOne({
-        where: { id: createdProduct.id }
+        where: { id: createdProduct.id },
+        include: Inventory
       })
       expect(updatedProduct.get()).toBeDefined()
       expect(updatedProduct.get()).toMatchObject({
-        ...updatedProductData,
-        price: updatedProductData.price.toFixed(2)
+        name: updatedProductData.name,
+        inventory: { quantity: '12100.00' }
       })
     })
   })

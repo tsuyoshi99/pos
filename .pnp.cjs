@@ -3609,6 +3609,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["core", "workspace:app/core"],\
             ["cors", "npm:2.8.5"],\
             ["dotenv", "npm:16.0.1"],\
+            ["dotenv-cli", "npm:6.0.0"],\
             ["eslint", "npm:8.19.0"],\
             ["eslint-config-prettier", "virtual:e655ec26102bea55c39ba2cd0028b24c58e8ffbe73a0b6d8a85348da0c3a6e2e39c8d0ce94a8ae6c0e037fbe04dd9ef4c900bcd5f174ca6cb4a48ddcb08dbb72#npm:8.5.0"],\
             ["eslint-config-prettier-standard", "virtual:e655ec26102bea55c39ba2cd0028b24c58e8ffbe73a0b6d8a85348da0c3a6e2e39c8d0ce94a8ae6c0e037fbe04dd9ef4c900bcd5f174ca6cb4a48ddcb08dbb72#npm:4.0.1"],\
@@ -4989,7 +4990,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./app/core/",\
           "packageDependencies": [\
             ["core", "workspace:app/core"],\
-            ["jest", "virtual:773ba41409701b6ba5b86a7517951822cd09528a4da37482082c6f01f3806e6ac01ac9ed13881a355da33b687aaa69ebc02986a3f0c0ff300c98c690c0e76dc8#npm:28.1.1"]\
+            ["jest", "virtual:773ba41409701b6ba5b86a7517951822cd09528a4da37482082c6f01f3806e6ac01ac9ed13881a355da33b687aaa69ebc02986a3f0c0ff300c98c690c0e76dc8#npm:28.1.1"],\
+            ["joi", "npm:17.6.0"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -5506,6 +5508,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/dotenv-npm-16.0.1-d99e72bb95-f459ffce07.zip/node_modules/dotenv/",\
           "packageDependencies": [\
             ["dotenv", "npm:16.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["dotenv-cli", [\
+        ["npm:6.0.0", {\
+          "packageLocation": "./.yarn/cache/dotenv-cli-npm-6.0.0-a5881469d0-3db5a363ee.zip/node_modules/dotenv-cli/",\
+          "packageDependencies": [\
+            ["dotenv-cli", "npm:6.0.0"],\
+            ["cross-spawn", "npm:7.0.3"],\
+            ["dotenv", "npm:16.0.1"],\
+            ["dotenv-expand", "npm:8.0.3"],\
+            ["minimist", "npm:1.2.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["dotenv-expand", [\
+        ["npm:8.0.3", {\
+          "packageLocation": "./.yarn/cache/dotenv-expand-npm-8.0.3-3f30d1947a-128ce90ac8.zip/node_modules/dotenv-expand/",\
+          "packageDependencies": [\
+            ["dotenv-expand", "npm:8.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
