@@ -19,27 +19,28 @@ describe('sale routes', () => {
     await clearDatabase()
 
     const productData = {
-      name: 'test product',
-      description: 'test description',
-      price: 10.0,
-      inventory: { quantity: 10 },
+      name: 'test123',
+      price: 10,
       forms: [
         {
           name: 'box',
           price: 10,
-          coefficient: 0
+          coefficient: 1
         },
         {
           name: 'tablet',
-          price: 5,
-          coefficient: 10
+          price: 10,
+          coefficient: 5
         },
         {
           name: 'pill',
-          price: 1,
-          coefficient: 10
+          price: 10,
+          coefficient: 24
         }
-      ]
+      ],
+      inventory: {
+        quantity: 20000
+      }
     }
 
     const product1 = await createProduct(productData)
@@ -47,14 +48,34 @@ describe('sale routes', () => {
 
     saleData.items = [
       {
-        id: product1.id,
-        price: product1.price,
-        quantity: 10
+        productId: product1.id,
+        price: parseFloat(product1.price),
+        quantity: [
+          {
+            quantity: 10
+          },
+          {
+            quantity: 5
+          },
+          {
+            quantity: 0
+          }
+        ]
       },
       {
-        id: product2.id,
-        price: product2.price,
-        quantity: 20
+        productId: product2.id,
+        price: parseFloat(product2.price),
+        quantity: [
+          {
+            quantity: 10
+          },
+          {
+            quantity: 0
+          },
+          {
+            quantity: 5
+          }
+        ]
       }
     ]
 
@@ -91,22 +112,40 @@ describe('sale routes', () => {
         .send(saleData)
         .expect(201)
 
+      expect(res.body.data).toBeDefined()
       expect(res.body.data).toMatchObject({
-        id: 1,
         items: [
           {
             id: 1,
-            name: 'test product',
-            description: 'test description',
-            price: 10,
-            quantity: 10
+            name: 'test123',
+            description: null,
+            quantity: [
+              {
+                quantity: 10
+              },
+              {
+                quantity: 5
+              },
+              {
+                quantity: 0
+              }
+            ]
           },
           {
             id: 2,
-            name: 'test product',
-            description: 'test description',
-            price: 10,
-            quantity: 20
+            name: 'test123',
+            description: null,
+            quantity: [
+              {
+                quantity: 10
+              },
+              {
+                quantity: 0
+              },
+              {
+                quantity: 5
+              }
+            ]
           }
         ],
         total: 300,

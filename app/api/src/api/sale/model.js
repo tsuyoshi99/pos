@@ -21,8 +21,9 @@ const SalesProducts = sequelize.define(
         key: 'id'
       }
     },
-    price: { type: DataTypes.DECIMAL(12, 2) },
-    quantity: { type: DataTypes.DECIMAL(12, 2) }
+    quantity: {
+      type: DataTypes.JSONB()
+    }
   },
   { timestamps: false }
 )

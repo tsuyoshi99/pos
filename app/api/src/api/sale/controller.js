@@ -1,4 +1,4 @@
-const { notFound, validationError } = require('../../utils/httpResponse')
+const { notFound } = require('../../utils/httpResponse')
 const { success } = require('../../utils/httpResponse')
 const {
   toOrder,
@@ -7,7 +7,10 @@ const {
 } = require('../../utils/httpToSequelize')
 const Sale = require('./model')
 const { toDTO } = require('./dto')
-const { Product } = require('../product/model')
+const { Product, Inventory } = require('../product/model')
+const sequelize = require('../../services/sequelize')
+const core = require('core')
+const { HttpError } = require('../../utils/httpError')
 
 const index = async ({ query }, res, next) => {
   try {
@@ -29,24 +32,70 @@ const index = async ({ query }, res, next) => {
   }
 }
 
-const create = async ({ body, user }, res, next) =>
-  Sale.create({ userId: user.id })
-    .then(async (sale) => {
-      const addingProducts = body.items.map((item) => {
-        return sale.addProduct(item.id, {
-          through: { quantity: item.quantity, price: item.price }
-        })
-      })
+const create = async ({ body, user }, res, next) => {
+  try {
+    const result = await sequelize.transaction(async (t) => {
+      const sale = await Sale.create({ userId: user.id }, { transaction: t })
 
-      await Promise.all(addingProducts)
+      const products = []
+      // validate each item
+      for (const item of body.items) {
+        const product = await Product.findByPk(
+          item.productId,
+          {
+            include: Inventory
+          },
+          { transaction: t }
+        )
+
+        const [ok, err] = core.sale.validation.validateSaleItems(product, item)
+
+        if (err) {
+          throw new HttpError(400, err)
+        }
+
+        if (!ok) {
+          throw new HttpError(400, core.error.saleInvalidItem)
+        }
+
+        products.push(product)
+      }
+
+      // deduct inventory
+      for (const [i, product] of products.entries()) {
+        const inventory = await product.getInventory({ transaction: t })
+
+        await inventory.update(
+          {
+            quantity:
+              parseFloat(product.inventory.quantity) -
+              core.product.toSingleLevel(product.forms, body.items[i].quantity)
+          },
+          { transaction: t }
+        )
+      }
+
+      // assign all the product
+      for (const item of body.items) {
+        await sale.addProduct(item.productId, {
+          through: {
+            quantity: item.quantity,
+            price: item.price
+          },
+          transaction: t
+        })
+      }
 
       return sale
     })
-    .then((sale) => Sale.findByPk(sale.id, { include: Product }))
-    .then((sale) => ({ data: toDTO(sale) }))
-    .then(success(res, 201))
-    .catch(validationError(res))
-    .catch(next)
+
+    const sale = await Sale.findByPk(result.id, { include: Product })
+
+    return success(res, 201)({ data: toDTO(sale) })
+  } catch (error) {
+    return next(error)
+  }
+}
 
 const destroy = ({ params: { id } }, res, next) =>
   Sale.findByPk(id)

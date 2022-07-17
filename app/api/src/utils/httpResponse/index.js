@@ -1,4 +1,4 @@
-const { notFound, validationError } = require('./error')
+const { notFound, sequelizeValidationHandler } = require('./error')
 const { success } = require('./success')
 
-module.exports = { success, notFound, validationError }
+module.exports = { success, notFound, sequelizeValidationHandler }

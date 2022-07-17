@@ -1,6 +1,7 @@
 const { celebrate, Joi, Segments } = require('celebrate')
 const { Router } = require('express')
 const { create, index, destroy } = require('./controller')
+const core = require('core')
 
 const router = new Router()
 
@@ -52,17 +53,7 @@ router.get(
 router.post(
   '/',
   celebrate({
-    [Segments.BODY]: {
-      items: Joi.array()
-        .items(
-          Joi.object({
-            id: Joi.number().integer().required(),
-            quantity: Joi.number().required(),
-            price: Joi.number().required()
-          }).required()
-        )
-        .min(1)
-    }
+    [Segments.BODY]: core.sale.validation.create
   }),
   create
 )

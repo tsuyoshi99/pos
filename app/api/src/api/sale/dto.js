@@ -1,3 +1,4 @@
+const core = require('core')
 const toDTO = (sale) => {
   return {
     id: sale.id,
@@ -5,13 +6,12 @@ const toDTO = (sale) => {
       id: item.id,
       name: item.name,
       description: item.description,
-      price: parseFloat(item.salesProducts.price),
-      quantity: parseFloat(item.salesProducts.quantity)
+      quantity: item.salesProducts.quantity.map((level, i) => {
+        return { ...level, name: item.forms[i].name }
+      })
     })),
     total: sale.products.reduce((total, item) => {
-      total +=
-        parseFloat(item.salesProducts.price) *
-        parseFloat(item.salesProducts.quantity)
+      total += core.sale.calculateTotal(item.forms, item.salesProducts.quantity)
 
       return total
     }, 0),
