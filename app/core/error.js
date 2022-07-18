@@ -16,7 +16,7 @@ const error = {
     name: "FORBIDDEN",
     description: "you're not allowed to access these resources",
   },
-  // product section
+  // sale section
   saleInvalidItem: {
     name: "SALE_INVALID_ITEM",
     description: "check each item",
