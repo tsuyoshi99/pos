@@ -12,8 +12,8 @@ const core = require('core')
 const index = async ({ query }, res, next) => {
   try {
     const result = await Product.findAndCountAll({
-      where: toWhere(query.filter, ['name', 'description', 'price']),
-      order: toOrder(query, ['name', 'description', 'price']),
+      where: toWhere(query.filter, ['id', 'name', 'description', 'price']),
+      order: toOrder(query, ['id', 'name', 'description', 'price']),
       ...toLimitAndOffset(query),
       include: Inventory
     })

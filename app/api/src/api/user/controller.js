@@ -12,7 +12,7 @@ const index = async ({ query }, res, next) => {
   try {
     const result = await User.findAndCountAll({
       where: toWhere(query.filter, ['id']),
-      order: toOrder(query, ['name', 'email']),
+      order: toOrder(query, ['id', 'name', 'email']),
       ...toLimitAndOffset(query)
     })
 

@@ -15,8 +15,8 @@ const { HttpError } = require('../../utils/httpError')
 const index = async ({ query }, res, next) => {
   try {
     const result = await Sale.findAndCountAll({
-      where: toWhere(query.filter, ['createdAt']),
-      order: toOrder(query, ['createdAt']),
+      where: toWhere(query.filter, ['id', 'createdAt']),
+      order: toOrder(query, ['id', 'createdAt']),
       ...toLimitAndOffset(query),
       include: Product
     })
