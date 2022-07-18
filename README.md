@@ -16,6 +16,17 @@ yarn workpace ui dev
 
 ## API Repo
 
+Create .env file and paste this in:
+
+```
+ENV="development"
+PORT=7070
+JWT_SECRET=1NyMkstsubPyWOotDaIaIZ5ZmAu7zM3k
+POSTGRES_URL=postgres://rest:rest123@localhost:5432/rest
+SALT=10
+```
+
+
 Run API in Local Environment: 
 
 ```
