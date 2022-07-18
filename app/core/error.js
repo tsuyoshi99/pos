@@ -18,26 +18,30 @@ const error = {
   },
   // sale section
   saleInvalidItem: {
-    name: "SALE_INVALID_ITEM",
+    name: "SALE-INVALID_ITEM",
     description: "check each item",
   },
+  saleProductNotFound: {
+    name: "SALE-PRODUCT_NOT_FOUND",
+    description: "product not found",
+  },
   saleInvalidForms: {
-    name: "PRODUCT_INVALID_FORMS",
+    name: "SALE-INVALID_FORMS",
     description: "check each item quantity",
   },
   saleOutOfStock: {
-    name: "PRODUCT_OUT_OF_STOCK",
+    name: "SALE-OUT_OF_STOCK",
     description: "check each item quantity",
   },
   // get request section
   filterInvalidExpression: {
-    name: "FILTER_INVALID_EXPRESSION",
+    name: "FILTER-INVALID_EXPRESSION",
   },
   filterInvalidField: {
-    name: "FILTER_INVALID_FIELD",
+    name: "FILTER-INVALID_FIELD",
   },
   filterInvalidOperator: {
-    name: "FILTER_INVALID_OPERATOR",
+    name: "FILTER-INVALID_OPERATOR",
   },
 };
 

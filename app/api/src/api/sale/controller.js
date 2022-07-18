@@ -48,6 +48,10 @@ const create = async ({ body, user }, res, next) => {
           { transaction: t }
         )
 
+        if (!product) {
+          throw new HttpError(400, core.error.saleProductNotFound)
+        }
+
         const [ok, err] = core.sale.validation.validateSaleItems(product, item)
 
         if (err) {
@@ -76,11 +80,15 @@ const create = async ({ body, user }, res, next) => {
       }
 
       // assign all the product
-      for (const item of body.items) {
+      for (const [itemIndex, item] of body.items.entries()) {
         await sale.addProduct(item.productId, {
           through: {
-            quantity: item.quantity,
-            price: item.price
+            quantity: item.quantity.map((form, formIndex) => {
+              return {
+                price: products[itemIndex].forms[formIndex].price,
+                ...form
+              }
+            })
           },
           transaction: t
         })
