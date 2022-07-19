@@ -13,6 +13,10 @@ function PointOfSale(props) {
   const { activeProduct, setActiveProduct } = props.activeProduct;
   const { cart, cartUI, addActiveProductToCart } = props.cartStore;
 
+  function selectOnFocus(e) {
+    e.target.select();
+  }
+
   function handleAddToCart() {
     // setActiveModal(null);
     addActiveProductToCart(activeProduct);
@@ -63,38 +67,37 @@ function PointOfSale(props) {
             </div>
           </div>
 
-          {/* Product List */}
-          <div className="grid grid-cols-1 md:grid-cols-5">
+          <div className="grid grid-cols-1 md:grid-cols-5 w-full">
             {/* Order List */}
-            {
-              <div className="col-span-2 md:ml-8 md:order-last">
-                <div className="grid grid-cols-3">
-                  <div className="text-xl font-semibold">Product</div>
-                  <div className="text-xl font-semibold">Quantity</div>
-                  <div className="text-xl font-semibold">Price</div>
-                </div>
 
-                {cartUI.items.length !== 0 ? (
-                  cartUI.items.map((product, index) => (
-                    <React.Fragment key={index}>
-                      <OrderItem product={product} />
-                    </React.Fragment>
-                  ))
-                ) : (
-                  <div>No items in cart</div>
-                )}
-                <div className="divider my-0"></div>
-                <div className="grid grid-cols-3">
-                  <div></div>
-                  <div className="text-lg font-semibold">Total</div>
-                  <div className="text-lg font-semibold">$ cartTotal</div>
-                </div>
-                <button className="btn btn-primary w-full my-4">
-                  Check Out
-                </button>
+            <div className="col-span-2 md:ml-8 md:order-last mt-4">
+              <div className="grid grid-cols-3">
+                <div className="text-xl font-semibold">Product</div>
+                <div className="text-xl font-semibold">Quantity</div>
+                <div className="text-xl font-semibold">Price</div>
               </div>
-            }
 
+              {cartUI.items.length !== 0 ? (
+                cartUI.items.map((product, index) => (
+                  <React.Fragment key={index}>
+                    <OrderItem product={product} />
+                  </React.Fragment>
+                ))
+              ) : (
+                <div className="flex justify-center border-2 rounded-md p-2 mb-3 mt-5 bg-slate-50 ease-in-out duration-300 hover:drop-shadow-md">
+                  No item in cart
+                </div>
+              )}
+              <div className="divider my-0"></div>
+              <div className="grid grid-cols-3">
+                <div></div>
+                <div className="text-lg font-semibold">Total</div>
+                <div className="text-lg font-semibold">$ cartTotal</div>
+              </div>
+              <button className="btn btn-primary w-full my-4">Check Out</button>
+            </div>
+
+            {/* Product Card List */}
             <div className="col-span-3 grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
               {products.map((product, index) => (
                 <div className="cursor-pointer" key={index}>
@@ -108,20 +111,23 @@ function PointOfSale(props) {
                 className="modal modal-bottom sm:modal-middle cursor-pointer"
               >
                 <label className="modal-box relative" htmlFor="">
-                  <h3 className="text-lg font-bold">
-                    Select a coefficient for this product
+                  <h3 className="text-lg font-bold mb-2">
+                    Select Quantity of {activeProduct.name}
                   </h3>
                   {activeProduct !== {} &&
                     activeProduct.inventory.map((form, index) => {
                       return (
                         <div key={index}>
-                          <label className="block my-2">
+                          <label className="block my-3">
                             <input
                               type="number"
                               min="0"
+                              onFocus={selectOnFocus}
                               className="input input-bordered w-fit"
-                              value={form.quantity}
-                              // onChange Handler
+                              value={form.quantity} // form.quantity
+                              onChange={(e) => {
+                                form.quantity = Number(e.target.value);
+                              }}
                             />
                             <span className="ml-4 text-lg font-semibold">
                               {form.name}

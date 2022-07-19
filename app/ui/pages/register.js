@@ -82,6 +82,7 @@ function Register(props) {
     })
       .then((res) => {
         queueSnackbar("Successfully registered", { variant: "success" });
+        queueSnackbar("Redirecting to Login page...", { variant: "info" });
         router.push("/login");
       })
       .catch((error) => {

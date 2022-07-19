@@ -2,7 +2,6 @@ import { observable, action, computed, makeObservable } from "mobx";
 import axios from "../axios";
 
 class CartStore {
-  @observable cart = { items: [{}] };
   @observable cartUI = { items: [] };
 
   constructor() {
@@ -18,34 +17,47 @@ class CartStore {
 
   @action addActiveProductToCart = (activeProduct) => {
     if (!this.productExist(activeProduct)) {
-      let tempForm = [];
-      activeProduct.inventory.forEach((form) => {
-        tempForm.push({
-          price: form.price,
-          quantity: form.quantity,
-        });
-      });
-      const tempProduct = { productId: activeProduct.id, quantity: tempForm };
-      this.cart.items.push(tempProduct);
+      // let tempForm = [];
+      // activeProduct.inventory.forEach((form) => {
+      //   tempForm.push({
+      //     price: form.price,
+      //     quantity: form.quantity,
+      //   });
+      // });
+      // const tempProduct = { productId: activeProduct.id, quantity: tempForm };
+      // this.cart.items.push(tempProduct);
       this.cartUI.items.push(activeProduct);
     } else {
-      // this.removeFromCart(activeProduct);
-      // this.addActiveProductToCart(activeProduct);
       console.log("product already exist");
     }
   };
 
   @action submitCarttoSale = () => {
+    let cart = { items: [{}] };
+    this.cartUI.items.forEach((product) => {
+      let tempForm = [];
+      product.inventory.forEach((form) => {
+        tempForm.push({
+          price: form.price,
+          quantity: form.quantity,
+        });
+      });
+      cart.items.push({
+        productId: product.id,
+        quantity: tempForm,
+      });
+    });
     return axios.post("/sales", this.cart);
     // don't forget to clear cart;
   };
 
   @action
-  removeFromCart = (product) => {};
+  removeFromCart = (product) => {
+    // TODO: set product quantity to 0 based on index
+  };
 
   @action
   clearCart = () => {
-    this.cart = { items: [] };
     this.cartUI = { items: [] };
   };
 }
