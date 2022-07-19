@@ -9,18 +9,18 @@ import OrderItem from "../components/pos/OrderItem";
 import { inject, observer } from "mobx-react";
 
 function PointOfSale(props) {
-  const { cart, addToCart, cartTotal, activeModal, setActiveModal } =
-    props.cartStore;
   const { products, setProducts, getAllProducts } = props.productStore;
+  const { activeProduct, setActiveProduct } = props.activeProduct;
+  const { cart, cartUI, addActiveProductToCart } = props.cartStore;
 
   function handleAddToCart() {
-    addToCart(activeModal);
     // setActiveModal(null);
+    addActiveProductToCart(activeProduct);
   }
 
   React.useEffect(() => {
     getAllProducts();
-  }, [getAllProducts, setProducts]);
+  }, []);
 
   return (
     <React.Fragment>
@@ -66,7 +66,7 @@ function PointOfSale(props) {
           {/* Product List */}
           <div className="grid grid-cols-1 md:grid-cols-5">
             {/* Order List */}
-            {cart.length !== 0 && (
+            {
               <div className="col-span-2 md:ml-8 md:order-last">
                 <div className="grid grid-cols-3">
                   <div className="text-xl font-semibold">Product</div>
@@ -74,20 +74,26 @@ function PointOfSale(props) {
                   <div className="text-xl font-semibold">Price</div>
                 </div>
 
-                {cart.map((product, index) => (
-                  <OrderItem product={product} key={index} />
-                ))}
+                {cartUI.items.length !== 0 ? (
+                  cartUI.items.map((product, index) => (
+                    <React.Fragment key={index}>
+                      <OrderItem product={product} />
+                    </React.Fragment>
+                  ))
+                ) : (
+                  <div>No items in cart</div>
+                )}
                 <div className="divider my-0"></div>
                 <div className="grid grid-cols-3">
                   <div></div>
                   <div className="text-lg font-semibold">Total</div>
-                  <div className="text-lg font-semibold">$ {cartTotal}</div>
+                  <div className="text-lg font-semibold">$ cartTotal</div>
                 </div>
                 <button className="btn btn-primary w-full my-4">
                   Check Out
                 </button>
               </div>
-            )}
+            }
 
             <div className="col-span-3 grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
               {products.map((product, index) => (
@@ -105,36 +111,25 @@ function PointOfSale(props) {
                   <h3 className="text-lg font-bold">
                     Select a coefficient for this product
                   </h3>
-                  {activeModal.forms.map((form, index) => {
-                    return (
-                      <div key={index}>
-                        <label className="block my-2">
-                          <input
-                            type="number"
-                            min="0"
-                            className="input input-bordered w-fit"
-                            value={activeModal.forms[index].quantity}
-                            onChange={(e) => {
-                              setActiveModal({
-                                ...activeModal,
-                                forms: [
-                                  ...activeModal.forms.slice(0, index),
-                                  {
-                                    ...activeModal.forms[index],
-                                    quantity: e.target.value,
-                                  },
-                                  ...activeModal.forms.slice(index + 1),
-                                ],
-                              });
-                            }}
-                          />
-                          <span className="ml-4 text-lg font-semibold">
-                            {form.name}
-                          </span>
-                        </label>
-                      </div>
-                    );
-                  })}
+                  {activeProduct !== {} &&
+                    activeProduct.inventory.map((form, index) => {
+                      return (
+                        <div key={index}>
+                          <label className="block my-2">
+                            <input
+                              type="number"
+                              min="0"
+                              className="input input-bordered w-fit"
+                              value={form.quantity}
+                              // onChange Handler
+                            />
+                            <span className="ml-4 text-lg font-semibold">
+                              {form.name}
+                            </span>
+                          </label>
+                        </div>
+                      );
+                    })}
                   <div className="modal-action">
                     <label
                       htmlFor="my-modal"
@@ -160,4 +155,8 @@ function PointOfSale(props) {
   );
 }
 
-export default inject("cartStore", "productStore")(observer(PointOfSale));
+export default inject(
+  "productStore",
+  "activeProduct",
+  "cartStore"
+)(observer(PointOfSale));

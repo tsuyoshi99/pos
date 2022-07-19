@@ -6,6 +6,7 @@ import CartStore from "../stores/CartStore";
 import ProductStore from "../stores/ProductStore";
 import AuthStore from "../stores/AuthStore";
 import ErrorMsgStore from "../stores/ErrorMsgStore";
+import ActiveProduct from "../stores/ActiveProduct";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -15,6 +16,7 @@ function MyApp({ Component, pageProps }) {
         productStore={ProductStore}
         authStore={AuthStore}
         errorMsgStore={ErrorMsgStore}
+        activeProduct={ActiveProduct}
       >
         <Component {...pageProps} />
       </Provider>
