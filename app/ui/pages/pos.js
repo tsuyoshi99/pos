@@ -2,32 +2,71 @@ import * as React from "react";
 import Head from "next/head";
 import styles from "../styles/index.module.scss";
 
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Autocomplete from "@mui/material/Autocomplete";
-import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
-
 import NavBar from "../components/NavBar";
-import ProductCard from "../components/ProductCard";
-import OrderItem from "../components/OrderItem";
+import ProductCard from "../components/pos/ProductCard";
+import OrderItem from "../components/pos/OrderItem";
 
 import { inject, observer } from "mobx-react";
+import { useSnackbar } from "notistack";
 
 function PointOfSale(props) {
-  const { cart, addToCart, cartTotal } = props.cartStore;
   const { products, setProducts, getAllProducts } = props.productStore;
+  const { activeProduct, setActiveProduct } = props.activeProduct;
+  const {
+    cart,
+    cartUI,
+    productExist,
+    addActiveProductToCart,
+    submitCarttoSale,
+    clearCart,
+    cartTotal,
+  } = props.cartStore;
 
-  // React.useEffect(() => {
-  //   getAllProducts()
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setProducts(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response.data);
-  //     });
-  // }, [getAllProducts, setProducts]);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  function queueSnackbar(message, options) {
+    enqueueSnackbar(message, {
+      ...options,
+      action: (key) => (
+        <button
+          key={key}
+          className="white-text mr-2"
+          onClick={() => closeSnackbar(key)}
+        >
+          CLOSE
+        </button>
+      ),
+    });
+  }
+
+  function selectOnFocus(e) {
+    e.target.select();
+  }
+
+  function handleAddToCart() {
+    // setActiveModal(null);
+    addActiveProductToCart(activeProduct);
+  }
+
+  function handleCheckOut() {
+    queueSnackbar("Checking out...", { variant: "info" });
+    submitCarttoSale()
+      .then((res) => {
+        console.log(res);
+        queueSnackbar("Checkout successful!", { variant: "success" });
+        clearCart();
+      })
+      .catch((err) => {
+        if (err.response.data.error) {
+          console.log(err.response.data.error);
+          queueSnackbar(err.response.data.error.message, { variant: "error" });
+        } else queueSnackbar(err.message, { variant: "error" });
+      });
+  }
+
+  React.useEffect(() => {
+    getAllProducts();
+  }, []);
 
   return (
     <React.Fragment>
@@ -44,84 +83,133 @@ function PointOfSale(props) {
 
         <main className={styles.main}>
           {/* Search Bar */}
-          <div className={styles.wFull}>
-            <Stack spacing={2} sx={{ maxWidth: 300, mb: 2, pr: 2 }}>
-              <Autocomplete
-                freeSolo
-                id="free-solo-2-demo"
-                disableClearable
-                options={products.map((option) => option.title)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Search input"
-                    InputProps={{
-                      ...params.InputProps,
-                      type: "search",
-                    }}
-                  />
-                )}
+          <div className="form-control mb-2 w-full">
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="Search…"
+                className="input input-bordered w-full md:w-auto"
               />
-            </Stack>
+              <button className="btn btn-square">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
 
-          {/* Product List */}
-          <Grid container spacing={2}>
-            <Grid item xs>
-              <Grid container spacing={2}>
-                {products.map((product, index) => (
-                  <a
-                    href="#"
-                    onClick={() => {
-                      addToCart(product);
-                    }}
-                    key={index}
-                  >
-                    <ProductCard title={product.title} price={product.price} />
-                  </a>
-                ))}
-              </Grid>
-            </Grid>
-
+          <div className="grid grid-cols-1 md:grid-cols-5 w-full">
             {/* Order List */}
-            {cart.length !== 0 && (
-              <Grid item xs={12} sm={6} md={4} lg={4}>
-                <Grid container direction="row" spacing={2}>
-                  <Grid item xs={4}>
-                    <h3>Product</h3>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <h3>Quantity</h3>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <h3>Price</h3>
-                  </Grid>
-                </Grid>
 
-                {cart.map((product, index) => (
-                  <OrderItem product={product} key={index} />
-                ))}
-                <div>
-                  <Divider light />
-                  <Grid container direction="row" spacing={2}>
-                    <Grid item xs={4}>
-                      {/* <h3>Product</h3> */}
-                    </Grid>
-                    <Grid item xs={4}>
-                      <h3>Total</h3>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <h3>$ {cartTotal}</h3>
-                    </Grid>
-                  </Grid>
+            <div className="col-span-2 md:ml-8 md:order-last mt-4">
+              <div className="grid grid-cols-3">
+                <div className="text-xl font-semibold">Product</div>
+                <div className="text-xl font-semibold">Quantity</div>
+                <div className="text-xl font-semibold">Price</div>
+              </div>
+
+              {cartUI.items.length > 0 ? (
+                cartUI.items.map((product, index) => (
+                  <React.Fragment key={index}>
+                    <OrderItem product={product} />
+                  </React.Fragment>
+                ))
+              ) : (
+                <div className="flex justify-center border-2 rounded-md p-2 mb-3 mt-5 bg-slate-50 ease-in-out duration-300 hover:drop-shadow-md">
+                  No item in cart
                 </div>
-              </Grid>
-            )}
-          </Grid>
+              )}
+              <div className="divider my-0"></div>
+              <div className="grid grid-cols-3">
+                <div></div>
+                <div className="text-lg font-semibold">Total</div>
+                <div className="text-lg font-semibold">$ {cartTotal}</div>
+              </div>
+              <button
+                className="btn btn-primary w-full my-4"
+                onClick={handleCheckOut}
+              >
+                Check Out
+              </button>
+            </div>
+
+            {/* Product Card List */}
+            <div className="col-span-3 grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+              {products.map((product, index) => (
+                <div className="cursor-pointer" key={index}>
+                  <ProductCard product={product} id={product.id} />
+                </div>
+              ))}
+              {/* Modal */}
+              <input type="checkbox" id="my-modal" className="modal-toggle" />
+              <label
+                htmlFor="my-modal"
+                className="modal modal-bottom sm:modal-middle cursor-pointer"
+              >
+                <label className="modal-box relative" htmlFor="">
+                  <h3 className="text-lg font-bold mb-2">
+                    Select Quantity of {activeProduct.name}
+                  </h3>
+                  {activeProduct !== {} &&
+                    activeProduct.inventory.map((form, index) => {
+                      return (
+                        <div key={index}>
+                          <label className="block my-3">
+                            <input
+                              type="number"
+                              min="0"
+                              onFocus={selectOnFocus}
+                              className="input input-bordered w-fit"
+                              value={form.quantity} // form.quantity
+                              onChange={(e) => {
+                                form.quantity = Number(e.target.value);
+                              }}
+                            />
+                            <span className="ml-4 text-lg font-semibold">
+                              {form.name}
+                            </span>
+                          </label>
+                        </div>
+                      );
+                    })}
+                  <div className="modal-action">
+                    <label
+                      htmlFor="my-modal"
+                      className="btn btn-outline btn-primary"
+                    >
+                      Cancel
+                    </label>
+                    <label
+                      htmlFor="my-modal"
+                      className="btn btn-primary"
+                      onClick={handleAddToCart}
+                    >
+                      Confirm
+                    </label>
+                  </div>
+                </label>
+              </label>
+            </div>
+          </div>
         </main>
       </div>
     </React.Fragment>
   );
 }
 
-export default inject("cartStore", "productStore")(observer(PointOfSale));
+export default inject(
+  "productStore",
+  "activeProduct",
+  "cartStore"
+)(observer(PointOfSale));
