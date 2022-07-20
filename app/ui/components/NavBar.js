@@ -1,15 +1,6 @@
 import * as React from "react";
 import styles from "../styles/index.module.scss";
-import Box from "@mui/material/Box";
 import Link from "next/link";
-
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import InventoryIcon from "@mui/icons-material/Inventory";
 
 const profile = ["Profile", "Logout"];
 const menu = [
@@ -20,6 +11,10 @@ const menu = [
   {
     title: "Inventory",
     link: "/pm",
+  },
+  {
+    title: "Sales History",
+    link: "/sales",
   },
 ];
 
@@ -48,32 +43,30 @@ const NavBar = () => {
             tabIndex="0"
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li>
-              <Link href="/">
-                <a>Point of Sale</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/pm">
-                <a>Inventory</a>
-              </Link>
-            </li>
+            {menu.map((item, index) => {
+              return (
+                <li key={index}>
+                  <Link href={item.link}>
+                    <a>{item.title}</a>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <a className="btn btn-ghost normal-case text-xl">POS System</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
-          <li>
-            <Link href="/">
-              <a>Point of Sale</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/pm">
-              <a>Inventory</a>
-            </Link>
-          </li>
+          {menu.map((item, index) => {
+            return (
+              <li key={index}>
+                <Link href={item.link}>
+                  <a>{item.title}</a>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="navbar-end">

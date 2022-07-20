@@ -1,10 +1,5 @@
 import styles from "../styles/index.module.scss";
 import * as React from "react";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
-import Button from "@mui/material/Button";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";
 import { validateNumber } from "core/validation";
@@ -33,24 +28,25 @@ function AddProduct(props) {
     enqueueSnackbar(message, {
       ...options,
       action: (key) => (
-        <Button
+        <button
           key={key}
-          style={{ color: "white" }}
-          size="small"
+          className="white-text mr-2"
           onClick={() => closeSnackbar(key)}
         >
           CLOSE
-        </Button>
+        </button>
       ),
     });
   }
 
-  function handleAddConfig() {
+  function handleAddConfig(event) {
+    event.preventDefault();
     setProductConfigCount(productConfigCount + 1);
     setConfigList([...configList, createConfig("", "", "")]);
   }
 
-  function handleRemoveConfig() {
+  function handleRemoveConfig(event) {
+    event.preventDefault();
     if (productConfigCount > 1) {
       setConfigList([...configList.slice(0, -1)]);
       setProductConfigCount(productConfigCount - 1);
@@ -76,6 +72,34 @@ function AddProduct(props) {
     setConfigList([createConfig("", "", "")]);
   }
 
+  function validateForm() {
+    if (name.length === 0) {
+      queueSnackbar("Name is required", { variant: "error" });
+      return false;
+    }
+    if (description.length === 0) {
+      queueSnackbar("Description is required", { variant: "error" });
+      return false;
+    }
+    if (configList[0].name.length === 0) {
+      queueSnackbar("At least one Indicator is required", { variant: "error" });
+      return false;
+    }
+    if (configList[0].coefficient.length === 0) {
+      queueSnackbar("At least one Coefficient is required", {
+        variant: "error",
+      });
+      return false;
+    }
+    if (configList[0].price.length === 0) {
+      queueSnackbar("At least one level of Price is required", {
+        variant: "error",
+      });
+      return false;
+    }
+    return true;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     // format configList
@@ -84,16 +108,13 @@ function AddProduct(props) {
       element.price = Number(element.price);
     });
 
-    // validate configList
-    // ToDo: validate configList
+    if (!validateForm()) return;
 
     const obj = {
       name: name,
       description: description,
       forms: configList,
-      inventory: {
-        quantity: 0,
-      },
+      inventory: [{ quantity: 0 }],
     };
     console.log(obj);
     queueSnackbar("Creating New Product...", { variant: "info" });
@@ -105,13 +126,15 @@ function AddProduct(props) {
         queueSnackbar("Product Created", { variant: "success" });
       })
       .catch((err) => {
-        console.log(err.response.data);
-        queueSnackbar(err.response.data, { variant: "error" });
+        if (err.response.data) {
+          console.log(err.response.data);
+          queueSnackbar(err.response.data, { variant: "error" });
+        } else queueSnackbar(err.message, { variant: "error" });
       });
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <div className="form-control w-full">
         <label className="label">
           <span className="label-text">Product Name</span>
@@ -152,7 +175,7 @@ function AddProduct(props) {
                   placeholder="Indicator..."
                   onFocus={selectOnFocus}
                   className="input input-bordered w-full"
-                  value={configList[index]["name"]}
+                  value={config["name"]}
                   onChange={(text) => {
                     handleConfigChange(index, "name")(text);
                   }}
@@ -170,7 +193,7 @@ function AddProduct(props) {
                   onFocus={selectOnFocus}
                   inputprops={{ readOnly: index == 0 ? true : false }}
                   className="input input-bordered w-full"
-                  value={index == 0 ? 1 : configList[index]["coefficient"]}
+                  value={index == 0 ? 1 : config["coefficient"]}
                   onChange={(text) => {
                     handleConfigChange(index, "coefficient")(text);
                   }}
@@ -180,7 +203,7 @@ function AddProduct(props) {
                 <button
                   aria-label="remove"
                   className="btn btn-circle"
-                  onClick={() => handleRemoveConfig()}
+                  onClick={(e) => handleRemoveConfig(e)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -197,14 +220,6 @@ function AddProduct(props) {
                   </svg>
                 </button>
               </div>
-
-              <Box
-                sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
-              >
-                <IconButton aria-label="remove" onClick={handleRemoveConfig}>
-                  <RemoveCircleOutlineOutlinedIcon />
-                </IconButton>
-              </Box>
             </div>
             <div className="flex mb-2">
               <div className="form-control w-full mb-2 pr-2">
@@ -218,7 +233,7 @@ function AddProduct(props) {
                   placeholder="Price for Each..."
                   onFocus={selectOnFocus}
                   className="input input-bordered w-full"
-                  value={configList[index]["price"]}
+                  value={config["price"]}
                   onChange={(text) => {
                     handleConfigChange(index, "price")(text);
                   }}
@@ -228,7 +243,7 @@ function AddProduct(props) {
                 <button
                   aria-label="add-new"
                   className="btn btn-circle"
-                  onClick={handleAddConfig}
+                  onClick={(e) => handleAddConfig(e)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -246,13 +261,6 @@ function AddProduct(props) {
                   </svg>
                 </button>
               </div>
-              <Box
-                sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}
-              >
-                <IconButton aria-label="add-new" onClick={handleAddConfig}>
-                  <AddCircleOutlineOutlinedIcon />
-                </IconButton>
-              </Box>
             </div>
           </div>
         );
@@ -268,13 +276,14 @@ function AddProduct(props) {
           </label>
         </div>
         <input
-          type="submit"
+          type="button"
           className="modal-action btn"
           htmlFor="add-product-modal"
           value="Create"
+          onClick={(e) => handleSubmit(e)}
         />
       </div>
-    </form>
+    </div>
   );
 }
 

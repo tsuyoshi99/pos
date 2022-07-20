@@ -1,12 +1,10 @@
 import * as React from "react";
 import Head from "next/head";
 import styles from "../styles/index.module.scss";
-import Button from "@mui/material/Button";
 import { useSnackbar } from "notistack";
 
 import NavBar from "../components/NavBar";
 import AddProduct from "../components/AddProduct";
-import ConfirmDialog from "../components/ConfirmDialog";
 import { inject, observer } from "mobx-react";
 
 function ProductManagement(props) {
@@ -23,14 +21,13 @@ function ProductManagement(props) {
     enqueueSnackbar(message, {
       ...options,
       action: (key) => (
-        <Button
+        <button
           key={key}
-          style={{ color: "white" }}
-          size="small"
+          className="white-text mr-2"
           onClick={() => closeSnackbar(key)}
         >
           CLOSE
-        </Button>
+        </button>
       ),
     });
   }
@@ -105,7 +102,7 @@ function ProductManagement(props) {
               {/* <!-- head --> */}
               <thead>
                 <tr>
-                  <th></th>
+                  <th className="text-center">ID</th>
                   <th>Name</th>
                   <th>Indicator</th>
                   <th>Price for Each</th>

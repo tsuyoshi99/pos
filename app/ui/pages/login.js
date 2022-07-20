@@ -1,6 +1,5 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
+import Link from "next/link";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
@@ -22,21 +21,20 @@ function LogIn(props) {
     showPassword: false,
   });
 
-  const queueSnackbar = (message, options) => {
+  function queueSnackbar(message, options) {
     enqueueSnackbar(message, {
       ...options,
       action: (key) => (
-        <Button
+        <button
           key={key}
-          style={{ color: "white" }}
-          size="small"
+          className="white-text mr-2"
           onClick={() => closeSnackbar(key)}
         >
           CLOSE
-        </Button>
+        </button>
       ),
     });
-  };
+  }
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -205,14 +203,12 @@ function LogIn(props) {
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-500">
                 No account?
-                <Link
-                  href="/register"
-                  className="text-blue-500 hover:text-blue-700 transition-colors duration-200 ease-in-out"
-                >
-                  Sign up
+                <Link href="/register">
+                  <a className="text-blue-500 hover:text-blue-700 transition-colors duration-200 ease-in-out">
+                    Sign up
+                  </a>
                 </Link>
               </p>
-
               <button
                 type="submit"
                 className="inline-block px-5 py-3 ml-3 text-sm font-medium text-white bg-blue-500 rounded-lg"
