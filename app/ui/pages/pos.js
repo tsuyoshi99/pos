@@ -7,11 +7,37 @@ import ProductCard from "../components/pos/ProductCard";
 import OrderItem from "../components/pos/OrderItem";
 
 import { inject, observer } from "mobx-react";
+import { useSnackbar } from "notistack";
 
 function PointOfSale(props) {
   const { products, setProducts, getAllProducts } = props.productStore;
   const { activeProduct, setActiveProduct } = props.activeProduct;
-  const { cart, cartUI, addActiveProductToCart } = props.cartStore;
+  const {
+    cart,
+    cartUI,
+    productExist,
+    addActiveProductToCart,
+    submitCarttoSale,
+    clearCart,
+    cartTotal,
+  } = props.cartStore;
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  function queueSnackbar(message, options) {
+    enqueueSnackbar(message, {
+      ...options,
+      action: (key) => (
+        <button
+          key={key}
+          className="white-text mr-2"
+          onClick={() => closeSnackbar(key)}
+        >
+          CLOSE
+        </button>
+      ),
+    });
+  }
 
   function selectOnFocus(e) {
     e.target.select();
@@ -20,6 +46,22 @@ function PointOfSale(props) {
   function handleAddToCart() {
     // setActiveModal(null);
     addActiveProductToCart(activeProduct);
+  }
+
+  function handleCheckOut() {
+    queueSnackbar("Checking out...", { variant: "info" });
+    submitCarttoSale()
+      .then((res) => {
+        console.log(res);
+        queueSnackbar("Checkout successful!", { variant: "success" });
+        clearCart();
+      })
+      .catch((err) => {
+        if (err.response.data.error) {
+          console.log(err.response.data.error);
+          queueSnackbar(err.response.data.error.message, { variant: "error" });
+        } else queueSnackbar(err.message, { variant: "error" });
+      });
   }
 
   React.useEffect(() => {
@@ -77,7 +119,7 @@ function PointOfSale(props) {
                 <div className="text-xl font-semibold">Price</div>
               </div>
 
-              {cartUI.items.length !== 0 ? (
+              {cartUI.items.length > 0 ? (
                 cartUI.items.map((product, index) => (
                   <React.Fragment key={index}>
                     <OrderItem product={product} />
@@ -92,9 +134,14 @@ function PointOfSale(props) {
               <div className="grid grid-cols-3">
                 <div></div>
                 <div className="text-lg font-semibold">Total</div>
-                <div className="text-lg font-semibold">$ cartTotal</div>
+                <div className="text-lg font-semibold">$ {cartTotal}</div>
               </div>
-              <button className="btn btn-primary w-full my-4">Check Out</button>
+              <button
+                className="btn btn-primary w-full my-4"
+                onClick={handleCheckOut}
+              >
+                Check Out
+              </button>
             </div>
 
             {/* Product Card List */}

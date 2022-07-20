@@ -19,7 +19,7 @@ function OrderItem(props) {
                 <button
                   className="btn btn-square btn-error my-1"
                   onClick={() => {
-                    // item.quantity = 0;
+                    item.quantity = 0;
                   }}
                 >
                   <svg
@@ -45,35 +45,6 @@ function OrderItem(props) {
         </React.Fragment>
       ))}
     </React.Fragment>
-
-    // <Grid container direction="row" spacing={2}>
-    //   <Grid item xs={4}>
-    //     <p>{props.product.name}</p>
-    //   </Grid>
-    //   <Grid item xs={4}>
-    //     <p>
-    //       x {props.product.quantity} {props.product.indicator}
-    //     </p>
-    //   </Grid>
-    //   <Grid
-    //     item
-    //     xs={4}
-    //     container
-    //     justifyContent="space-between"
-    //     direction="row"
-    //   >
-    //     <p>$ {props.product.price}</p>
-    //     <IconButton
-    //       aria-label="delete"
-    //       color="error"
-    //       onClick={() => {
-    //         removeFromCart(props.product);
-    //       }}
-    //     >
-    //       <DeleteIcon />
-    //     </IconButton>
-    //   </Grid>
-    // </Grid>
   );
 }
 

@@ -116,10 +116,10 @@ function ProductManagement(props) {
                 {products.map((product, index) => {
                   return (
                     <tr key={product.id}>
-                      <th className="text-center">{product.id}</th>
+                      <td className="text-center">{product.id}</td>
                       <td>{capitalize(product.name)}</td>
                       <td>
-                        {product.forms.map((form, index) => {
+                        {product.inventory.map((form, index) => {
                           return (
                             <div key={index} className={styles.indicator}>
                               {capitalize(form.name)}
@@ -128,7 +128,7 @@ function ProductManagement(props) {
                         })}
                       </td>
                       <td>
-                        {product.forms.map((form, index) => {
+                        {product.inventory.map((form, index) => {
                           return (
                             <div key={index} className={styles.indicator}>
                               {form.price}
