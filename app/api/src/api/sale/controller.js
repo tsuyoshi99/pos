@@ -8,6 +8,7 @@ const {
 const Sale = require('./model')
 const { toDTO } = require('./dto')
 const { Product, Inventory } = require('../product/model')
+const User = require('../user/model')
 const sequelize = require('../../services/sequelize')
 const core = require('core')
 const { HttpError } = require('../../utils/httpError')
@@ -18,7 +19,7 @@ const index = async ({ query }, res, next) => {
       where: toWhere(query.filter, ['id', 'createdAt']),
       order: toOrder(query, ['id', 'createdAt']),
       ...toLimitAndOffset(query),
-      include: Product
+      include: [Product, User]
     })
 
     return success(res)({
@@ -97,7 +98,7 @@ const create = async ({ body, user }, res, next) => {
       return sale
     })
 
-    const sale = await Sale.findByPk(result.id, { include: Product })
+    const sale = await Sale.findByPk(result.id, { include: [Product, User] })
 
     return success(res, 201)({ data: toDTO(sale) })
   } catch (error) {
