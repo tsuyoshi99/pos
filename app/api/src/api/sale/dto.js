@@ -1,4 +1,6 @@
 const core = require('core')
+const { toDTO: toUserDTO } = require('../user/dto')
+
 const toDTO = (sale) => {
   return {
     id: sale.id,
@@ -15,7 +17,7 @@ const toDTO = (sale) => {
 
       return total
     }, 0),
-    userId: sale.userId
+    user: toUserDTO(sale.user)
   }
 }
 
