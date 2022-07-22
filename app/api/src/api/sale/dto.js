@@ -17,6 +17,7 @@ const toDTO = (sale) => {
 
       return total
     }, 0),
+    createdAt: sale.createdAt,
     user: toUserDTO(sale.user)
   }
 }
