@@ -3,6 +3,7 @@ import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";
 import { validateNumber } from "core/validation";
+import core from "core";
 
 function createConfig(coefficient, indicator, price) {
   return {
@@ -72,32 +73,43 @@ function AddProduct(props) {
     setConfigList([createConfig("", "", "")]);
   }
 
-  function validateForm() {
-    if (name.length === 0) {
+  function validateForm(obj) {
+    let flag = true;
+    if (obj.name.length === 0) {
       queueSnackbar("Name is required", { variant: "error" });
-      return false;
+      flag = false;
     }
-    if (description.length === 0) {
+    if (obj.description.length === 0) {
       queueSnackbar("Description is required", { variant: "error" });
-      return false;
+      flag = false;
     }
-    if (configList[0].name.length === 0) {
-      queueSnackbar("At least one Indicator is required", { variant: "error" });
-      return false;
-    }
-    if (configList[0].coefficient.length === 0) {
-      queueSnackbar("At least one Coefficient is required", {
-        variant: "error",
-      });
-      return false;
-    }
-    if (configList[0].price.length === 0) {
-      queueSnackbar("At least one level of Price is required", {
-        variant: "error",
-      });
-      return false;
-    }
-    return true;
+    obj.forms.map((form, index) => {
+      if (form.name.length === 0) {
+        queueSnackbar(`Indicator at level ${index + 1} is required`, {
+          variant: "error",
+        });
+        flag = false;
+      }
+      if (form.coefficient.length === 0) {
+        queueSnackbar(`Coefficient at level ${index + 1} is required`, {
+          variant: "error",
+        });
+        flag = false;
+      }
+      if (form.price.length === 0) {
+        queueSnackbar(`Price at level ${index + 1} is required`, {
+          variant: "error",
+        });
+        flag = false;
+      }
+      if (form.price === 0 || !validateNumber(form.price)) {
+        queueSnackbar(`Price at level ${index + 1} must be a number`, {
+          variant: "error",
+        });
+        flag = false;
+      }
+    });
+    return flag;
   }
 
   function handleSubmit(event) {
@@ -110,14 +122,13 @@ function AddProduct(props) {
       inventory.push({ quantity: 0 });
     });
 
-    if (!validateForm()) return;
-
     const obj = {
       name: name,
       description: description,
       forms: configList,
       inventory: inventory,
     };
+    if (!validateForm(obj)) return;
     console.log(obj);
     queueSnackbar("Creating New Product...", { variant: "info" });
     addProduct(obj)
@@ -197,7 +208,7 @@ function AddProduct(props) {
                     min="0"
                     placeholder="Coefficient..."
                     onFocus={selectOnFocus}
-                    inputprops={{ readOnly: index == 0 ? true : false }}
+                    disabled={index == 0}
                     className="input input-bordered w-full"
                     value={index == 0 ? 1 : config["coefficient"]}
                     onChange={(text) => {
