@@ -161,28 +161,28 @@ function PointOfSale(props) {
                   <h3 className="text-lg font-bold mb-2">
                     Select Quantity of {activeProduct.name}
                   </h3>
-                  {activeProduct !== {} &&
-                    activeProduct.inventory.map((form, index) => {
-                      return (
-                        <div key={index}>
-                          <label className="block my-3">
+                  <div>
+                    {activeProduct !== {} &&
+                      activeProduct.inventory.map((form, index) => {
+                        return (
+                          <label className="grid grid-cols-3 my-3" key={index}>
                             <input
                               type="number"
                               min="0"
                               onFocus={selectOnFocus}
-                              className="input input-bordered w-fit"
+                              className="input input-bordered col-span-2"
                               value={form.quantity} // form.quantity
                               onChange={(e) => {
                                 form.quantity = Number(e.target.value);
                               }}
                             />
-                            <span className="ml-4 text-lg font-semibold">
+                            <span className="ml-4 text-lg font-semibold capitalize">
                               {form.name}
                             </span>
                           </label>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                  </div>
                   <div className="modal-action">
                     <label
                       htmlFor="my-modal"

@@ -11,7 +11,7 @@ function SalesHistory(props) {
 
   React.useEffect(() => {
     getAllSales();
-  }, [getAllSales]);
+  }, []);
 
   return (
     <React.Fragment>
@@ -27,11 +27,13 @@ function SalesHistory(props) {
         </Head>
 
         <main className={styles.main}>
-          <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {sales.map((sale) => {
-              <div className="cursor-pointer" key={sale.id}>
-                <SaleCard saleProduct={sale} />
-              </div>;
+              return (
+                <div className="cursor-pointer" key={sale.id}>
+                  <SaleCard saleHistory={sale} />
+                </div>
+              );
             })}
           </div>
         </main>

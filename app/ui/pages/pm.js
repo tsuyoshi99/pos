@@ -6,16 +6,12 @@ import { useSnackbar } from "notistack";
 import NavBar from "../components/NavBar";
 import AddProduct from "../components/AddProduct";
 import { inject, observer } from "mobx-react";
+import ConfirmDialog from "../components/ConfirmDialog";
 
 function ProductManagement(props) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const {
-    products,
-    addProductVisible,
-    toggleAddProductVisible,
-    getAllProducts,
-    deleteProduct,
-  } = props.productStore;
+  const { products, getAllProducts, deleteProduct } = props.productStore;
+  const [currentId, setCurrentId] = React.useState(null);
 
   function queueSnackbar(message, options) {
     enqueueSnackbar(message, {
@@ -36,6 +32,8 @@ function ProductManagement(props) {
     deleteProduct(id).then((res) => {
       queueSnackbar("Product Deleted!", { variant: "success" });
       getAllProducts();
+      const checkbox = document.getElementById("confirm-dialog");
+      checkbox.checked = !checkbox.checked;
     });
   }
 
@@ -61,6 +59,7 @@ function ProductManagement(props) {
         </Head>
 
         <main className={styles.main}>
+          {/* Create New Product Button */}
           <div className="mb-4 w-full">
             <label
               className="btn gap-2 modal-button"
@@ -90,13 +89,9 @@ function ProductManagement(props) {
             id="add-product-modal"
             className="modal-toggle"
           />
-          <label htmlFor="add-product-modal" className="modal cursor-pointer">
-            <label className="modal-box relative" htmlFor="">
-              <h3 className="text-xl font-bold mb-4">Create New Product</h3>
-              <AddProduct />
-            </label>
-          </label>
+          <AddProduct htmlFor="add-product-modal" />
 
+          {/* Product Table */}
           <div className="overflow-x-auto w-full">
             <table className="table w-full">
               {/* <!-- head --> */}
@@ -112,7 +107,7 @@ function ProductManagement(props) {
               <tbody>
                 {products.map((product, index) => {
                   return (
-                    <tr key={product.id}>
+                    <tr key={index}>
                       <td className="text-center">{product.id}</td>
                       <td>{capitalize(product.name)}</td>
                       <td>
@@ -134,6 +129,7 @@ function ProductManagement(props) {
                         })}
                       </td>
                       <td className="text-center">
+                        {/* Update Button */}
                         <button className="btn btn-square mr-4">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -150,27 +146,46 @@ function ProductManagement(props) {
                             <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
                           </svg>
                         </button>
-                        <button
-                          className="btn btn-square"
-                          onClick={() => handleDeleteProduct(product.id)}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#f2f2f2"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
+                        {/* Delete Button */}
+                        <>
+                          <label
+                            className="btn btn-square modal-button"
+                            htmlFor="confirm-dialog"
+                            onClick={() => setCurrentId(product.id)}
                           >
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                          </svg>
-                        </button>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="#f2f2f2"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <polyline points="3 6 5 6 21 6"></polyline>
+                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                              <line x1="10" y1="11" x2="10" y2="17"></line>
+                              <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                          </label>
+                          <input
+                            type="checkbox"
+                            id="confirm-dialog"
+                            className="modal-toggle"
+                          />
+                          <ConfirmDialog
+                            htmlFor="confirm-dialog"
+                            title="Are you sure?"
+                            message="This action cannot be undone."
+                            cancelText="Cancel"
+                            confirmText="Delete"
+                            onConfirm={() => {
+                              handleDeleteProduct(currentId);
+                            }}
+                          />
+                        </>
                       </td>
                     </tr>
                   );
