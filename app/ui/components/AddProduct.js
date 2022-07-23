@@ -3,7 +3,6 @@ import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";
 import { validateNumber } from "core/validation";
-import core from "core";
 
 function createConfig(coefficient, indicator, price) {
   return {

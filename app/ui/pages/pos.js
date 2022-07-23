@@ -184,15 +184,12 @@ function PointOfSale(props) {
                       })}
                   </div>
                   <div className="modal-action">
-                    <label
-                      htmlFor="my-modal"
-                      className="btn btn-outline btn-primary"
-                    >
+                    <label htmlFor="my-modal" className="btn btn-outline">
                       Cancel
                     </label>
                     <label
                       htmlFor="my-modal"
-                      className="btn btn-primary"
+                      className="btn"
                       onClick={handleAddToCart}
                     >
                       Confirm

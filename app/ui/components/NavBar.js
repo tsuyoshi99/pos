@@ -1,6 +1,8 @@
 import * as React from "react";
 import styles from "../styles/index.module.scss";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { hasCookie, deleteCookie } from "cookies-next";
 
 const profile = ["Profile", "Logout"];
 const menu = [
@@ -19,6 +21,42 @@ const menu = [
 ];
 
 const NavBar = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    deleteCookie("accessToken");
+    router.replace("/login");
+  };
+
+  const Profile = () => {
+    return (
+      <div className="dropdown dropdown-end">
+        <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
+          <div className="w-10 rounded-full">
+            <img src="https://source.unsplash.com/random" />
+          </div>
+        </label>
+        <ul
+          tabIndex="0"
+          className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+        >
+          <li>
+            <a className="justify-between">
+              Profile
+              <span className="badge">New</span>
+            </a>
+          </li>
+          <li>
+            <a>Settings</a>
+          </li>
+          <li onClick={handleLogout}>
+            <a>Logout</a>
+          </li>
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -70,9 +108,13 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link href="/login">
-          <a className="btn">Login</a>
-        </Link>
+        {hasCookie("accessToken") ? (
+          <Profile />
+        ) : (
+          <Link href="/login">
+            <a className="btn">Login</a>
+          </Link>
+        )}
       </div>
     </div>
   );
