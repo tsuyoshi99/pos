@@ -1,11 +1,10 @@
 import * as React from "react";
 import Head from "next/head";
-import styles from "../styles/index.module.scss";
 
 import NavBar from "../components/NavBar";
 import ProductCard from "../components/pos/ProductCard";
 import OrderItem from "../components/pos/OrderItem";
-
+import Script from "next/script";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";
 
@@ -71,7 +70,7 @@ function PointOfSale(props) {
   return (
     <React.Fragment>
       <NavBar />
-      <div className={styles.container}>
+      <div className="contain">
         <Head>
           <title>Point of Sale</title>
           <meta
@@ -81,9 +80,9 @@ function PointOfSale(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className={styles.main}>
+        <main className="main">
           {/* Search Bar */}
-          <div className="form-control mb-2 w-full">
+          <div className="form-control mb-2">
             <div className="input-group">
               <input
                 type="text"
@@ -201,6 +200,23 @@ function PointOfSale(props) {
           </div>
         </main>
       </div>
+      <div id="scrollToTop">
+        <span>Go Up</span>
+      </div>
+      <Script id="scroll-to-top">
+        {`
+        $(window).on('scroll',function() {
+          if (window.scrollY > window.outerHeight) {
+            $('#scrollToTop').addClass('active')
+          } else {
+            $('#scrollToTop').removeClass('active')
+          }
+        })
+
+        $('#scrollToTop').on('click',function() {
+          $("html, body").animate({ scrollTop: 0 }, 500);
+        })`}
+      </Script>
     </React.Fragment>
   );
 }

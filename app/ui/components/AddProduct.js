@@ -1,4 +1,3 @@
-import styles from "../styles/index.module.scss";
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";

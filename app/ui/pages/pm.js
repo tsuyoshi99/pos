@@ -1,6 +1,5 @@
 import * as React from "react";
 import Head from "next/head";
-import styles from "../styles/index.module.scss";
 import { useSnackbar } from "notistack";
 
 import NavBar from "../components/NavBar";
@@ -48,7 +47,7 @@ function ProductManagement(props) {
   return (
     <React.Fragment>
       <NavBar />
-      <div className={styles.container}>
+      <div className="contain">
         <Head>
           <title>Product Management</title>
           <meta
@@ -58,7 +57,7 @@ function ProductManagement(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className={styles.main}>
+        <main className="main">
           {/* Create New Product Button */}
           <div className="mb-4 w-full">
             <label
@@ -113,7 +112,7 @@ function ProductManagement(props) {
                       <td>
                         {product.inventory.map((form, index) => {
                           return (
-                            <div key={index} className={styles.indicator}>
+                            <div key={index} className="indicator">
                               {capitalize(form.name)}
                             </div>
                           );
@@ -122,7 +121,7 @@ function ProductManagement(props) {
                       <td>
                         {product.inventory.map((form, index) => {
                           return (
-                            <div key={index} className={styles.indicator}>
+                            <div key={index} className="indicator">
                               {form.price}
                             </div>
                           );

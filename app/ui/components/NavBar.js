@@ -1,5 +1,4 @@
 import * as React from "react";
-import styles from "../styles/index.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { hasCookie, deleteCookie } from "cookies-next";

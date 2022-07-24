@@ -11411,7 +11411,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.5"],\
             ["react", "npm:18.1.0"],\
             ["react-dom", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:18.1.0"],\
-            ["sass", "npm:1.52.3"],\
+            ["sass", "npm:1.54.0"],\
             ["styled-jsx", "virtual:74707690b71f8ff0104fd45e4adfdca7c147978c4207c7c6573963c67e8e2a52b5eacc9442714f0aac4e351794c3176e766bac73bb16f1aa18ffc99603c7c1d3#npm:5.0.2"]\
           ],\
           "packagePeers": [\
@@ -13433,10 +13433,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["sass", [\
-        ["npm:1.52.3", {\
-          "packageLocation": "./.yarn/cache/sass-npm-1.52.3-039a7e1961-175a073c0e.zip/node_modules/sass/",\
+        ["npm:1.54.0", {\
+          "packageLocation": "./.yarn/cache/sass-npm-1.54.0-1408852d8f-7d3acf124d.zip/node_modules/sass/",\
           "packageDependencies": [\
-            ["sass", "npm:1.52.3"],\
+            ["sass", "npm:1.54.0"],\
             ["chokidar", "npm:3.5.3"],\
             ["immutable", "npm:4.1.0"],\
             ["source-map-js", "npm:1.0.2"]\
@@ -14908,7 +14908,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.1.0"],\
             ["react-dom", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:18.1.0"],\
-            ["sass", "npm:1.52.3"],\
+            ["sass", "npm:1.54.0"],\
             ["tailwindcss", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:3.1.6"]\
           ],\
           "linkType": "SOFT"\
