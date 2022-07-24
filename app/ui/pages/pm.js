@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useSnackbar } from "notistack";
 
 import NavBar from "../components/NavBar";
-import AddProduct from "../components/AddProduct";
+import AddProduct from "../components/pm/AddProduct";
 import { inject, observer } from "mobx-react";
 import ConfirmDialog from "../components/ConfirmDialog";
 
@@ -98,6 +98,7 @@ function ProductManagement(props) {
                 <tr>
                   <th className="text-center">ID</th>
                   <th>Name</th>
+                  <th>Quantity</th>
                   <th>Indicator</th>
                   <th>Price for Each</th>
                   <th></th>
@@ -109,6 +110,15 @@ function ProductManagement(props) {
                     <tr key={index}>
                       <td className="text-center">{product.id}</td>
                       <td>{capitalize(product.name)}</td>
+                      <td>
+                        {product.inventory.map((form, index) => {
+                          return (
+                            <div key={index} className="indicator">
+                              {form.quantity}
+                            </div>
+                          );
+                        })}
+                      </td>
                       <td>
                         {product.inventory.map((form, index) => {
                           return (

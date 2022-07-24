@@ -2,6 +2,8 @@ import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";
 import { validateNumber } from "core/validation";
+import core from "core";
+import Joi from "joi";
 
 function createConfig(coefficient, indicator, price) {
   return {
@@ -22,6 +24,7 @@ function AddProduct(props) {
   ]);
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const create = core.product.validation.create;
 
   function queueSnackbar(message, options) {
     enqueueSnackbar(message, {
@@ -126,6 +129,10 @@ function AddProduct(props) {
       forms: configList,
       inventory: inventory,
     };
+
+    // const res = await create.validateAsync(obj);
+    // console.log(res);
+
     if (!validateForm(obj)) return;
     console.log(obj);
     queueSnackbar("Creating New Product...", { variant: "info" });

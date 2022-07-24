@@ -82,7 +82,7 @@ function PointOfSale(props) {
 
         <main className="main">
           {/* Search Bar */}
-          <div className="form-control mb-2">
+          <div className="form-control mb-2 w-full">
             <div className="input-group">
               <input
                 type="text"
