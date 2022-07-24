@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import styles from "../styles/index.module.scss";
 import { inject, observer } from "mobx-react";
 
 import NavBar from "../components/NavBar";
@@ -11,12 +10,12 @@ function SalesHistory(props) {
 
   React.useEffect(() => {
     getAllSales();
-  }, [getAllSales]);
+  }, []);
 
   return (
     <React.Fragment>
       <NavBar />
-      <div className={styles.container}>
+      <div className="contain">
         <Head>
           <title>Sales History</title>
           <meta
@@ -26,12 +25,14 @@ function SalesHistory(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className={styles.main}>
-          <div>
+        <main className="main">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {sales.map((sale) => {
-              <div className="cursor-pointer" key={sale.id}>
-                <SaleCard saleProduct={sale} />
-              </div>;
+              return (
+                <div className="cursor-pointer" key={sale.id}>
+                  <SaleCard saleHistory={sale} />
+                </div>
+              );
             })}
           </div>
         </main>

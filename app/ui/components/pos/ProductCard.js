@@ -12,7 +12,7 @@ function ProductCard(props) {
         <div className="card-actions justify-end mt-2">
           <label
             htmlFor="my-modal"
-            className="btn btn-sm lg:btn-md btn-outline btn-primary"
+            className="btn btn-sm lg:btn-md btn-outline"
             onClick={() => {
               setActiveProduct(props.product);
             }}

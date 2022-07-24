@@ -1,11 +1,10 @@
 import * as React from "react";
 import Head from "next/head";
-import styles from "../styles/index.module.scss";
 
 import NavBar from "../components/NavBar";
 import ProductCard from "../components/pos/ProductCard";
 import OrderItem from "../components/pos/OrderItem";
-
+import Script from "next/script";
 import { inject, observer } from "mobx-react";
 import { useSnackbar } from "notistack";
 
@@ -71,7 +70,7 @@ function PointOfSale(props) {
   return (
     <React.Fragment>
       <NavBar />
-      <div className={styles.container}>
+      <div className="contain">
         <Head>
           <title>Point of Sale</title>
           <meta
@@ -81,7 +80,7 @@ function PointOfSale(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className={styles.main}>
+        <main className="main">
           {/* Search Bar */}
           <div className="form-control mb-2 w-full">
             <div className="input-group">
@@ -161,38 +160,35 @@ function PointOfSale(props) {
                   <h3 className="text-lg font-bold mb-2">
                     Select Quantity of {activeProduct.name}
                   </h3>
-                  {activeProduct !== {} &&
-                    activeProduct.inventory.map((form, index) => {
-                      return (
-                        <div key={index}>
-                          <label className="block my-3">
+                  <div>
+                    {activeProduct !== {} &&
+                      activeProduct.inventory.map((form, index) => {
+                        return (
+                          <label className="grid grid-cols-3 my-3" key={index}>
                             <input
                               type="number"
                               min="0"
                               onFocus={selectOnFocus}
-                              className="input input-bordered w-fit"
+                              className="input input-bordered col-span-2"
                               value={form.quantity} // form.quantity
                               onChange={(e) => {
                                 form.quantity = Number(e.target.value);
                               }}
                             />
-                            <span className="ml-4 text-lg font-semibold">
+                            <span className="ml-4 text-lg font-semibold capitalize">
                               {form.name}
                             </span>
                           </label>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                  </div>
                   <div className="modal-action">
-                    <label
-                      htmlFor="my-modal"
-                      className="btn btn-outline btn-primary"
-                    >
+                    <label htmlFor="my-modal" className="btn btn-outline">
                       Cancel
                     </label>
                     <label
                       htmlFor="my-modal"
-                      className="btn btn-primary"
+                      className="btn"
                       onClick={handleAddToCart}
                     >
                       Confirm
@@ -204,6 +200,23 @@ function PointOfSale(props) {
           </div>
         </main>
       </div>
+      <div id="scrollToTop">
+        <span>Go Up</span>
+      </div>
+      <Script id="scroll-to-top">
+        {`
+        $(window).on('scroll',function() {
+          if (window.scrollY > window.outerHeight) {
+            $('#scrollToTop').addClass('active')
+          } else {
+            $('#scrollToTop').removeClass('active')
+          }
+        })
+
+        $('#scrollToTop').on('click',function() {
+          $("html, body").animate({ scrollTop: 0 }, 500);
+        })`}
+      </Script>
     </React.Fragment>
   );
 }

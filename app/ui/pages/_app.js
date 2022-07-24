@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../styles/globals.scss";
 
 import { SnackbarProvider } from "notistack";
 import { Provider } from "mobx-react";

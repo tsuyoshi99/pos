@@ -15,7 +15,21 @@ function OrderItem(props) {
                 x {item.quantity} {item.name}
               </div>
               <div className="flex flex-row items-center justify-between">
-                <div>$ {item.price}</div>
+                {/* <div>$ {item.price}</div> */}
+                <div>
+                  <span className="mr-1">$</span>
+                  <input
+                    type="number"
+                    min="1"
+                    onFocus={(e) => e.target.select()}
+                    className="input max-h-8 w-16 p-1 text-base bg-transparent"
+                    value={item.price} // form.quantity
+                    onChange={(e) => {
+                      item.price = Number(e.target.value);
+                    }}
+                  />
+                </div>
+
                 <button
                   className="btn btn-square btn-error my-1"
                   onClick={() => {

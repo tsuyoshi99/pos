@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-exports.create = {
+exports.create = Joi.object({
   name: Joi.string(),
   description: Joi.string(),
   price: Joi.number(),
@@ -31,7 +31,7 @@ exports.create = {
     .min(1)
     .max(10)
     .required(),
-};
+});
 
 exports.update = {
   name: Joi.string(),

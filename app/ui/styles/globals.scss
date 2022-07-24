@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: #f9f9f9;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.contain {
+  padding: 0 2rem;
+}
+
+.main {
+  min-height: 90vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+// .card {
+//   margin: 1rem;
+//   padding: 1.5rem;
+//   text-align: left;
+//   color: inherit;
+//   text-decoration: none;
+//   border: 1px solid #eaeaea;
+//   border-radius: 10px;
+//   transition: color 0.15s ease, border-color 0.15s ease;
+//   width: 250px;
+// }
+
+// .card:hover,
+// .card:focus,
+// .card:active {
+//   cursor: pointer;
+//   color: #0070f3;
+//   border-color: #0070f3;
+// }
+
+// .card h2 {
+//   margin: 0 0 1rem 0;
+//   font-size: 1.5rem;
+// }
+
+// .card p {
+//   margin: 0;
+//   font-size: 1.25rem;
+//   line-height: 1.5;
+// }
+
+#scrollToTop {
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+  box-shadow: 0 0 14px -5px rgba(0, 0, 0, 0.5);
+  border-radius: 100%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  font-family: "Arial";
+  align-items: center;
+  justify-content: center;
+  margin-bottom: -12rem;
+  transition: margin-bottom 0.2s;
+
+  &.active {
+    margin-bottom: 0;
+  }
+}
+
+@import 'navbar';
+@import 'pm';
