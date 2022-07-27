@@ -9,7 +9,7 @@ exports.create = Joi.object({
       Joi.object({
         name: Joi.string().required(),
         price: Joi.number().required(),
-        coefficient: Joi.number().allow(1).default(1),
+        coefficient: Joi.number().valid(1).default(1),
       })
     )
     .items(
