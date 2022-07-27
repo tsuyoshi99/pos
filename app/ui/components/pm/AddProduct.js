@@ -20,7 +20,7 @@ function AddProduct(props) {
 
   const [productConfigCount, setProductConfigCount] = React.useState(1);
   const [configList, setConfigList] = React.useState([
-    createConfig("", "", ""),
+    createConfig("1", "", ""),
   ]);
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -44,7 +44,7 @@ function AddProduct(props) {
   function handleAddConfig(event) {
     event.preventDefault();
     setProductConfigCount(productConfigCount + 1);
-    setConfigList([...configList, createConfig("", "", "")]);
+    setConfigList([...configList, createConfig("1", "", "")]);
   }
 
   function handleRemoveConfig(event) {
@@ -71,13 +71,14 @@ function AddProduct(props) {
     setName("");
     setDescription("");
     setProductConfigCount(1);
-    setConfigList([createConfig("", "", "")]);
+    setConfigList([createConfig("1", "", "")]);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
     // format configList
     let inventory = [];
+    // console.log(configList);
     configList.forEach((element) => {
       element.coefficient = Number(element.coefficient);
       element.price = Number(element.price);
@@ -91,7 +92,7 @@ function AddProduct(props) {
       inventory: inventory,
     };
 
-    console.log(obj);
+    // console.log(obj);
     try {
       const res = create.validate(obj);
       if (res.error) {
@@ -104,7 +105,7 @@ function AddProduct(props) {
       addProduct(obj)
         .then((res) => {
           getAllProducts();
-          console.log(res);
+          // console.log(res);
           toggleAddProductVisible(false);
           queueSnackbar("Product Created", { variant: "success" });
           const checkbox = document.getElementById("add-product-modal");
@@ -178,12 +179,12 @@ function AddProduct(props) {
                   <input
                     id={`coefficient${index}`}
                     type="number"
-                    min="0"
+                    min="1"
                     placeholder="Coefficient..."
                     onFocus={selectOnFocus}
                     disabled={index == 0}
                     className="input input-bordered w-full"
-                    value={index == 0 ? 1 : config["coefficient"]}
+                    value={index == 0 ? "1" : config["coefficient"]}
                     onChange={(text) => {
                       handleConfigChange(index, "coefficient")(text);
                     }}
@@ -219,7 +220,7 @@ function AddProduct(props) {
                   <input
                     id={`price${index}`}
                     type="number"
-                    min="0"
+                    min="1"
                     placeholder="Price for Each..."
                     onFocus={selectOnFocus}
                     className="input input-bordered w-full"
