@@ -74,45 +74,6 @@ function AddProduct(props) {
     setConfigList([createConfig("", "", "")]);
   }
 
-  function validateForm(obj) {
-    let flag = true;
-    if (obj.name.length === 0) {
-      queueSnackbar("Name is required", { variant: "error" });
-      flag = false;
-    }
-    if (obj.description.length === 0) {
-      queueSnackbar("Description is required", { variant: "error" });
-      flag = false;
-    }
-    obj.forms.map((form, index) => {
-      if (form.name.length === 0) {
-        queueSnackbar(`Indicator at level ${index + 1} is required`, {
-          variant: "error",
-        });
-        flag = false;
-      }
-      if (form.coefficient.length === 0) {
-        queueSnackbar(`Coefficient at level ${index + 1} is required`, {
-          variant: "error",
-        });
-        flag = false;
-      }
-      if (form.price.length === 0) {
-        queueSnackbar(`Price at level ${index + 1} is required`, {
-          variant: "error",
-        });
-        flag = false;
-      }
-      if (form.price === 0 || !validateNumber(form.price)) {
-        queueSnackbar(`Price at level ${index + 1} must be a number`, {
-          variant: "error",
-        });
-        flag = false;
-      }
-    });
-    return flag;
-  }
-
   function handleSubmit(event) {
     event.preventDefault();
     // format configList
@@ -130,27 +91,34 @@ function AddProduct(props) {
       inventory: inventory,
     };
 
-    // const res = await create.validateAsync(obj);
-    // console.log(res);
-
-    if (!validateForm(obj)) return;
     console.log(obj);
-    queueSnackbar("Creating New Product...", { variant: "info" });
-    addProduct(obj)
-      .then((res) => {
-        getAllProducts();
-        console.log(res);
-        toggleAddProductVisible(false);
-        queueSnackbar("Product Created", { variant: "success" });
-        const checkbox = document.getElementById("add-product-modal");
-        checkbox.checked = !checkbox.checked;
-      })
-      .catch((err) => {
-        if (err.response.data) {
-          console.log(err.response.data);
-          queueSnackbar(err.response.data, { variant: "error" });
-        } else queueSnackbar("err.message", { variant: "error" });
-      });
+    try {
+      const res = create.validate(obj);
+      if (res.error) {
+        // console.log(res);
+        const errMsg = res.error.details[0].message;
+        queueSnackbar(errMsg, { variant: "error" });
+        return;
+      }
+      queueSnackbar("Creating New Product...", { variant: "info" });
+      addProduct(obj)
+        .then((res) => {
+          getAllProducts();
+          console.log(res);
+          toggleAddProductVisible(false);
+          queueSnackbar("Product Created", { variant: "success" });
+          const checkbox = document.getElementById("add-product-modal");
+          checkbox.checked = !checkbox.checked;
+        })
+        .catch((err) => {
+          if (err.response.data) {
+            console.log(err.response.data);
+            queueSnackbar(err.response.data, { variant: "error" });
+          } else queueSnackbar("err.message", { variant: "error" });
+        });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
