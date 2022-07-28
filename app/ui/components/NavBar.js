@@ -107,13 +107,13 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {hasCookie("accessToken") ? (
+        {/* {hasCookie("accessToken") ? (
           <Profile />
         ) : (
           <Link href="/login">
             <a className="btn">Login</a>
           </Link>
-        )}
+        )} */}
       </div>
     </div>
   );

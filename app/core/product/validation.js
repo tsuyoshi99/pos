@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 exports.create = Joi.object({
-  name: Joi.string(),
+  name: Joi.string().required(),
   description: Joi.string(),
   price: Joi.number(),
   forms: Joi.array()

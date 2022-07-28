@@ -34,6 +34,10 @@ class ProductStore {
     return axios.post("/products", product);
   }
 
+  @action updateProduct(inventory, id) {
+    return axios.put(`/products/${id}`, inventory);
+  }
+
   @action deleteProduct(id) {
     return axios.delete(`/products/${id}`);
   }
