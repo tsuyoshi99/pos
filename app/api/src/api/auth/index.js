@@ -22,6 +22,28 @@ const router = new Router()
  * @apiSuccess (200) {string} updatedAt
  * @apiError (400) BadRequest Some parameters or body may contain invalid values.
  */
+router.get('/logout', function (req, res, next) {
+  return res
+    .clearCookie('accessToken')
+    .clearCookie('refreshToken')
+    .send({ data: "You're logged out" })
+})
+
+/**
+ * @api {post} /login Login to existing user
+ * @apiName Login
+ * @apiGroup Auth
+ * @apiPermission user
+ * @apiBody {string} email User's email.
+ * @apiBody {string{8..}} password User's password.
+ * @apiSuccess (200) {string} name
+ * @apiSuccess (200) {string} email
+ * @apiSuccess (200) {string} image
+ * @apiSuccess (200) {string} role
+ * @apiSuccess (200) {string} createdAt
+ * @apiSuccess (200) {string} updatedAt
+ * @apiError (400) BadRequest Some parameters or body may contain invalid values.
+ */
 router.post(
   '/login',
   celebrate(
