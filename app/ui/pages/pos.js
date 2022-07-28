@@ -203,7 +203,7 @@ function PointOfSale(props) {
       <div id="scrollToTop">
         <span>Go Up</span>
       </div>
-      <Script id="scroll-to-top">
+      {/* <Script id="scroll-to-top">
         {`
         $(window).on('scroll',function() {
           if (window.scrollY > window.outerHeight) {
@@ -216,7 +216,7 @@ function PointOfSale(props) {
         $('#scrollToTop').on('click',function() {
           $("html, body").animate({ scrollTop: 0 }, 500);
         })`}
-      </Script>
+      </Script> */}
     </React.Fragment>
   );
 }
