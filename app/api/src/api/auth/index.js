@@ -8,25 +8,13 @@ require('./passport')
 const router = new Router()
 
 /**
- * @api {post} /login Login to existing user
- * @apiName Login
+ * @api {post} /logout Logout
+ * @apiName Logout
  * @apiGroup Auth
  * @apiPermission user
- * @apiBody {string} email User's email.
- * @apiBody {string{8..}} password User's password.
- * @apiSuccess (200) {string} name
- * @apiSuccess (200) {string} email
- * @apiSuccess (200) {string} image
- * @apiSuccess (200) {string} role
- * @apiSuccess (200) {string} createdAt
- * @apiSuccess (200) {string} updatedAt
- * @apiError (400) BadRequest Some parameters or body may contain invalid values.
  */
-router.get('/logout', function (req, res, next) {
-  return res
-    .clearCookie('accessToken')
-    .clearCookie('refreshToken')
-    .send({ data: "You're logged out" })
+router.get('/logout', function (_, res, __) {
+  return res.clearCookie('accessToken').send({ data: "You're logged out" })
 })
 
 /**
@@ -63,6 +51,7 @@ router.post(
 
       const token = signJwt(user)
 
+      res.cookie('', token, { domain: 'localhost' }).json({ data: toDTO(user) })
       return res
         .cookie('accessToken', token, { domain: 'localhost' })
         .json({ data: toDTO(user) })
