@@ -124,6 +124,7 @@ function Register(props) {
 
             <div className="relative">
               <input
+                autoFocus
                 type="email"
                 className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
                 placeholder="Enter email"

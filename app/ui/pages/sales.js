@@ -27,19 +27,23 @@ function SalesHistory(props) {
         </Head>
 
         <main className="main">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {sales.map((sale) => {
-              return (
-                <label
-                  key={sale.id}
-                  htmlFor="sale-detail-modal"
-                  className="cursor-pointer"
-                >
-                  <SaleCard saleHistory={sale} />
-                </label>
-              );
-            })}
-          </div>
+          {sales.length == 0 ? (
+            <div>Sale History Empty</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {sales.map((sale) => {
+                return (
+                  <label
+                    key={sale.id}
+                    htmlFor="sale-detail-modal"
+                    className="cursor-pointer"
+                  >
+                    <SaleCard saleHistory={sale} />
+                  </label>
+                );
+              })}
+            </div>
+          )}
         </main>
       </div>
 
