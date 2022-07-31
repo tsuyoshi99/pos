@@ -20,7 +20,7 @@ function AddProduct(props) {
 
   const [productConfigCount, setProductConfigCount] = React.useState(1);
   const [configList, setConfigList] = React.useState([
-    createConfig("", "", ""),
+    createConfig("1", "", ""),
   ]);
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -44,7 +44,7 @@ function AddProduct(props) {
   function handleAddConfig(event) {
     event.preventDefault();
     setProductConfigCount(productConfigCount + 1);
-    setConfigList([...configList, createConfig("", "", "")]);
+    setConfigList([...configList, createConfig("1", "", "")]);
   }
 
   function handleRemoveConfig(event) {
@@ -71,52 +71,14 @@ function AddProduct(props) {
     setName("");
     setDescription("");
     setProductConfigCount(1);
-    setConfigList([createConfig("", "", "")]);
-  }
-
-  function validateForm(obj) {
-    let flag = true;
-    if (obj.name.length === 0) {
-      queueSnackbar("Name is required", { variant: "error" });
-      flag = false;
-    }
-    if (obj.description.length === 0) {
-      queueSnackbar("Description is required", { variant: "error" });
-      flag = false;
-    }
-    obj.forms.map((form, index) => {
-      if (form.name.length === 0) {
-        queueSnackbar(`Indicator at level ${index + 1} is required`, {
-          variant: "error",
-        });
-        flag = false;
-      }
-      if (form.coefficient.length === 0) {
-        queueSnackbar(`Coefficient at level ${index + 1} is required`, {
-          variant: "error",
-        });
-        flag = false;
-      }
-      if (form.price.length === 0) {
-        queueSnackbar(`Price at level ${index + 1} is required`, {
-          variant: "error",
-        });
-        flag = false;
-      }
-      if (form.price === 0 || !validateNumber(form.price)) {
-        queueSnackbar(`Price at level ${index + 1} must be a number`, {
-          variant: "error",
-        });
-        flag = false;
-      }
-    });
-    return flag;
+    setConfigList([createConfig("1", "", "")]);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
     // format configList
     let inventory = [];
+    // console.log(configList);
     configList.forEach((element) => {
       element.coefficient = Number(element.coefficient);
       element.price = Number(element.price);
@@ -130,27 +92,34 @@ function AddProduct(props) {
       inventory: inventory,
     };
 
-    // const res = await create.validateAsync(obj);
-    // console.log(res);
-
-    if (!validateForm(obj)) return;
-    console.log(obj);
-    queueSnackbar("Creating New Product...", { variant: "info" });
-    addProduct(obj)
-      .then((res) => {
-        getAllProducts();
-        console.log(res);
-        toggleAddProductVisible(false);
-        queueSnackbar("Product Created", { variant: "success" });
-        const checkbox = document.getElementById("add-product-modal");
-        checkbox.checked = !checkbox.checked;
-      })
-      .catch((err) => {
-        if (err.response.data) {
-          console.log(err.response.data);
-          queueSnackbar(err.response.data, { variant: "error" });
-        } else queueSnackbar("err.message", { variant: "error" });
-      });
+    // console.log(obj);
+    try {
+      const res = create.validate(obj);
+      if (res.error) {
+        // console.log(res);
+        const errMsg = res.error.details[0].message;
+        queueSnackbar(errMsg, { variant: "error" });
+        return;
+      }
+      queueSnackbar("Creating New Product...", { variant: "info" });
+      addProduct(obj)
+        .then((res) => {
+          getAllProducts();
+          // console.log(res);
+          toggleAddProductVisible(false);
+          queueSnackbar("Product Created", { variant: "success" });
+          const checkbox = document.getElementById("add-product-modal");
+          checkbox.checked = !checkbox.checked;
+        })
+        .catch((err) => {
+          if (err.response.data) {
+            console.log(err.response.data);
+            queueSnackbar(err.response.data, { variant: "error" });
+          } else queueSnackbar("err.message", { variant: "error" });
+        });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -210,12 +179,12 @@ function AddProduct(props) {
                   <input
                     id={`coefficient${index}`}
                     type="number"
-                    min="0"
+                    min="1"
                     placeholder="Coefficient..."
                     onFocus={selectOnFocus}
                     disabled={index == 0}
                     className="input input-bordered w-full"
-                    value={index == 0 ? 1 : config["coefficient"]}
+                    value={index == 0 ? "1" : config["coefficient"]}
                     onChange={(text) => {
                       handleConfigChange(index, "coefficient")(text);
                     }}
@@ -251,7 +220,7 @@ function AddProduct(props) {
                   <input
                     id={`price${index}`}
                     type="number"
-                    min="0"
+                    min="1"
                     placeholder="Price for Each..."
                     onFocus={selectOnFocus}
                     className="input input-bordered w-full"
