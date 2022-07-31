@@ -2798,6 +2798,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/hoist-non-react-statics", [\
+        ["npm:3.3.1", {\
+          "packageLocation": "./.yarn/cache/@types-hoist-non-react-statics-npm-3.3.1-c0081332b2-2c0778570d.zip/node_modules/@types/hoist-non-react-statics/",\
+          "packageDependencies": [\
+            ["@types/hoist-non-react-statics", "npm:3.3.1"],\
+            ["@types/react", "npm:18.0.15"],\
+            ["hoist-non-react-statics", "npm:3.3.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/istanbul-lib-coverage", [\
         ["npm:2.0.4", {\
           "packageLocation": "./.yarn/cache/@types-istanbul-lib-coverage-npm-2.0.4-734954bb56-a25d7589ee.zip/node_modules/@types/istanbul-lib-coverage/",\
@@ -5341,6 +5352,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["joi", "npm:17.6.0"]\
           ],\
           "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["core-js", [\
+        ["npm:3.24.1", {\
+          "packageLocation": "./.yarn/unplugged/core-js-npm-3.24.1-01484c0f43/node_modules/core-js/",\
+          "packageDependencies": [\
+            ["core-js", "npm:3.24.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["core-js-pure", [\
@@ -8769,6 +8789,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["html-parse-stringify", [\
+        ["npm:3.0.1", {\
+          "packageLocation": "./.yarn/cache/html-parse-stringify-npm-3.0.1-5762cd4b01-334fdebd4b.zip/node_modules/html-parse-stringify/",\
+          "packageDependencies": [\
+            ["html-parse-stringify", "npm:3.0.1"],\
+            ["void-elements", "npm:3.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["http-cache-semantics", [\
         ["npm:4.1.0", {\
           "packageLocation": "./.yarn/cache/http-cache-semantics-npm-4.1.0-860520a31f-974de94a81.zip/node_modules/http-cache-semantics/",\
@@ -8873,6 +8903,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["inflection", "npm:1.13.2"],\
             ["ora", "npm:5.4.1"],\
             ["yargs-parser", "npm:21.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["i18next", [\
+        ["npm:21.8.16", {\
+          "packageLocation": "./.yarn/cache/i18next-npm-21.8.16-f150cc045b-b29d0cfd3e.zip/node_modules/i18next/",\
+          "packageDependencies": [\
+            ["i18next", "npm:21.8.16"],\
+            ["@babel/runtime", "npm:7.18.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["i18next-fs-backend", [\
+        ["npm:1.1.4", {\
+          "packageLocation": "./.yarn/cache/i18next-fs-backend-npm-1.1.4-cb83e9f9ac-7da252aa61.zip/node_modules/i18next-fs-backend/",\
+          "packageDependencies": [\
+            ["i18next-fs-backend", "npm:1.1.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -11429,6 +11478,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["next-i18next", [\
+        ["npm:11.3.0", {\
+          "packageLocation": "./.yarn/cache/next-i18next-npm-11.3.0-1559690ea1-fbce97a4fb.zip/node_modules/next-i18next/",\
+          "packageDependencies": [\
+            ["next-i18next", "npm:11.3.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:11.3.0", {\
+          "packageLocation": "./.yarn/__virtual__/next-i18next-virtual-61ae722411/0/cache/next-i18next-npm-11.3.0-1559690ea1-fbce97a4fb.zip/node_modules/next-i18next/",\
+          "packageDependencies": [\
+            ["next-i18next", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:11.3.0"],\
+            ["@babel/runtime", "npm:7.18.9"],\
+            ["@types/hoist-non-react-statics", "npm:3.3.1"],\
+            ["@types/next", null],\
+            ["@types/react", null],\
+            ["core-js", "npm:3.24.1"],\
+            ["hoist-non-react-statics", "npm:3.3.2"],\
+            ["i18next", "npm:21.8.16"],\
+            ["i18next-fs-backend", "npm:1.1.4"],\
+            ["next", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:12.1.6"],\
+            ["react", "npm:18.1.0"],\
+            ["react-i18next", "virtual:61ae7224116139e1b2b644890af46c1cb3460098a8c489e351767110bc2eb98cdd187e600b5336b17ce4b5a730154c88a036e415f01a81af16b9599166a11b4d#npm:11.18.3"]\
+          ],\
+          "packagePeers": [\
+            "@types/next",\
+            "@types/react",\
+            "next",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["no-case", [\
         ["npm:2.3.2", {\
           "packageLocation": "./.yarn/cache/no-case-npm-2.3.2-5403767f87-8564877319.zip/node_modules/no-case/",\
@@ -12941,6 +13023,42 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "packagePeers": [\
             "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-i18next", [\
+        ["npm:11.18.3", {\
+          "packageLocation": "./.yarn/cache/react-i18next-npm-11.18.3-a6c6b4fe28-05fe3187dd.zip/node_modules/react-i18next/",\
+          "packageDependencies": [\
+            ["react-i18next", "npm:11.18.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:61ae7224116139e1b2b644890af46c1cb3460098a8c489e351767110bc2eb98cdd187e600b5336b17ce4b5a730154c88a036e415f01a81af16b9599166a11b4d#npm:11.18.3", {\
+          "packageLocation": "./.yarn/__virtual__/react-i18next-virtual-94ae36d2ca/0/cache/react-i18next-npm-11.18.3-a6c6b4fe28-05fe3187dd.zip/node_modules/react-i18next/",\
+          "packageDependencies": [\
+            ["react-i18next", "virtual:61ae7224116139e1b2b644890af46c1cb3460098a8c489e351767110bc2eb98cdd187e600b5336b17ce4b5a730154c88a036e415f01a81af16b9599166a11b4d#npm:11.18.3"],\
+            ["@babel/runtime", "npm:7.18.9"],\
+            ["@types/i18next", null],\
+            ["@types/react", null],\
+            ["@types/react-dom", null],\
+            ["@types/react-native", null],\
+            ["html-parse-stringify", "npm:3.0.1"],\
+            ["i18next", "npm:21.8.16"],\
+            ["react", "npm:18.1.0"],\
+            ["react-dom", null],\
+            ["react-native", null]\
+          ],\
+          "packagePeers": [\
+            "@types/i18next",\
+            "@types/react-dom",\
+            "@types/react-native",\
+            "@types/react",\
+            "i18next",\
+            "react-dom",\
+            "react-native",\
             "react"\
           ],\
           "linkType": "HARD"\
@@ -14904,6 +15022,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mobx", "npm:6.6.0"],\
             ["mobx-react", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:7.5.0"],\
             ["next", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:12.1.6"],\
+            ["next-i18next", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:11.3.0"],\
             ["notistack", "virtual:225c9dfb8bfc768c711323a576dd60a4fffe607dc57ef6742abe1d74e6559ae85a5a26ff19d1aea842026a79d3bf4cefc5f41964a38c98a7a1c8315228e027ff#npm:2.0.5"],\
             ["postcss", "npm:8.4.14"],\
             ["prop-types", "npm:15.8.1"],\
@@ -15190,6 +15309,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["assert-plus", "npm:1.0.0"],\
             ["core-util-is", "npm:1.0.2"],\
             ["extsprintf", "npm:1.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["void-elements", [\
+        ["npm:3.1.0", {\
+          "packageLocation": "./.yarn/cache/void-elements-npm-3.1.0-4f43780839-0390f81810.zip/node_modules/void-elements/",\
+          "packageDependencies": [\
+            ["void-elements", "npm:3.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\

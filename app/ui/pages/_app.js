@@ -2,6 +2,7 @@ import "../styles/globals.scss";
 
 import { SnackbarProvider } from "notistack";
 import { Provider } from "mobx-react";
+import { appWithTranslation } from "next-i18next";
 import CartStore from "../stores/CartStore";
 import ProductStore from "../stores/ProductStore";
 import AuthStore from "../stores/AuthStore";
@@ -26,4 +27,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);

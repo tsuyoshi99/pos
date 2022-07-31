@@ -1,6 +1,8 @@
+import { useTranslation } from "next-i18next";
+
 export default function SaleCard(props) {
+  const { t } = useTranslation();
   const sale = props.saleHistory;
-  const date = Date.parse(sale.createdAt);
 
   return (
     <div className="card bg-base-100 shadow-xl border">
@@ -12,7 +14,19 @@ export default function SaleCard(props) {
         </div>
         <div className="flex justify-between">
           <p>Purchased on: </p>
-          <p className="text-end">{date}</p>
+          <p className="text-end">
+            {t("common:date", {
+              val: sale.createdAt,
+              formatParams: {
+                val: {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                },
+              },
+            })}
+          </p>
         </div>
       </div>
     </div>

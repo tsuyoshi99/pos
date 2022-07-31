@@ -6,6 +6,16 @@ import NavBar from "../components/NavBar";
 import SaleCard from "../components/sales/SaleCard";
 import SaleDetail from "../components/sales/SaleDetail";
 
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
+
 function SalesHistory(props) {
   const { sales, getAllSales } = props.salesStore;
 
