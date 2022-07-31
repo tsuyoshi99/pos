@@ -51,7 +51,6 @@ router.post(
 
       const token = signJwt(user)
 
-      res.cookie('', token, { domain: 'localhost' }).json({ data: toDTO(user) })
       return res
         .cookie('accessToken', token, { domain: 'localhost' })
         .json({ data: toDTO(user) })
